@@ -44,7 +44,7 @@ scrape_configs:
 
 === Deploy Prometheus from Container Image
 
-From the https://console-openshift-console.{ROUTE_SUBDOMAIN}/topology/ns/{USER_ID}-project[Topology View for your project^], click on the `+` icon in the header menu, and choose "Container Image"
+From the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project[Topology View for your project^], click on the `+` icon in the header menu, and choose "Container Image"
 
 image::add-container.png[Prometheus, 900]
 
@@ -60,7 +60,7 @@ Leave the rest as-is and select *Create*:
 
 image::search-prometheus-image.png[Prometheus, 800]
 
-On the https://console-openshift-console.{ROUTE_SUBDOMAIN}/topology/ns/{USER_ID}-project[Topology View for your project^], you'll see prometheus spinning up.
+On the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project[Topology View for your project^], you'll see prometheus spinning up.
 
 Finally, mount the ConfigMap into the running container:
 
@@ -257,7 +257,7 @@ oc annotate deployment/people app.openshift.io/connects-to=postgres-database --o
 
 == Confirm deployment
 
-Once the build completes, ensure the app completes its redeployment with this command (or watch the https://console-openshift-console.{ROUTE_SUBDOMAIN}/topology/ns/{USER_ID}-project[Topology View for your project^])
+Once the build completes, ensure the app completes its redeployment with this command (or watch the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project[Topology View for your project^])
 
 [source,sh,role="copypaste"]
 ----
@@ -266,11 +266,11 @@ oc rollout status -w deployment/people
 
 == Test
 
-You'll need to trigger the methods that we've instrumented, so https://people-{USER_ID}-project.{ROUTE_SUBDOMAIN}/names.html[reopen the name cloud^], which will start producing names (and generating metrics):
+You'll need to trigger the methods that we've instrumented, so https://people-{user}-project.{openshift_cluster_ingress_domain}/names.html[reopen the name cloud^], which will start producing names (and generating metrics):
 
 image::names.png[names, 400]
 
-Within about 15-30 seconds, Prometheus should start scraping the metrics. Once again, access the http://prometheus-{USER_ID}-project.{ROUTE_SUBDOMAIN}[Prometheus UI^]. Start typing in the query box to look for metrics that begin with 'name':
+Within about 15-30 seconds, Prometheus should start scraping the metrics. Once again, access the http://prometheus-{user}-project.{openshift_cluster_ingress_domain}[Prometheus UI^]. Start typing in the query box to look for metrics that begin with 'name':
 
 [NOTE]
 ====
@@ -305,7 +305,7 @@ Let's create a Grafana Dashboard for our Quarkus App!
 
 == Install Grafana
 
-Follow the same process as before: On the https://console-openshift-console.{ROUTE_SUBDOMAIN}/topology/ns/{USER_ID}-project[Topology View^], select the `+` icon in the header menu, and choose "Container Image".
+Follow the same process as before: On the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project[Topology View^], select the `+` icon in the header menu, and choose "Container Image".
 
 image::add-container.png[Grafana, 900]
 
@@ -320,7 +320,7 @@ Leave the rest as-is and select *Create*:
 
 image::search-grafana-image.png[Grafana, 700]
 
-On the https://console-openshift-console.{ROUTE_SUBDOMAIN}/topology/ns/{USER_ID}-project[Topology View for your project^], you'll see Grafana spinning up. Once it completes, select on the arrow to access the Grafana UI:
+On the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project[Topology View for your project^], you'll see Grafana spinning up. Once it completes, select on the arrow to access the Grafana UI:
 
 image::grafana-route.png[Prometheus, 700]
 
@@ -347,7 +347,7 @@ image::grafana-datasource-types.png[Grafana, 700]
 
 Fill out the form with the following values:
 
-* *URL*: `http://prometheus.{USER_ID}-project:9090`
+* *URL*: `http://prometheus.{user}-project:9090`
 
 Select *Save & Test* and confirm you get a success message:
 
@@ -359,7 +359,7 @@ With our prometheus data source working, let's make a dashboard.
 
 == Create Dashboard
 
-Back on the http://grafana-{USER_ID}-project.{ROUTE_SUBDOMAIN}[Grafana Home^], select *New Dashboard* to create a new _Dashboard_ to review the metrics.
+Back on the http://grafana-{user}-project.{openshift_cluster_ingress_domain}[Grafana Home^], select *New Dashboard* to create a new _Dashboard_ to review the metrics.
 
 image::grafana-create-dashboard.png[metrics_grafana, 900]
 

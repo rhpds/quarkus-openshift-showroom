@@ -64,7 +64,7 @@ Before starting the dev mode, you need to *append* the following configuration t
 
 [source, properties,role="copypaste",subs="attributes"]
 ----
-%dev.quarkus.dev-ui.hosts={USER_ID}-quarkus-workshop-index-webpage.{ROUTE_SUBDOMAIN}
+%dev.quarkus.dev-ui.hosts={user}-quarkus-workshop-index-webpage.{openshift_cluster_ingress_domain}
 ----
 
 Note that the changes will be automatially saved in the IDE.
@@ -153,7 +153,7 @@ Although your VS Code is running on the Kubernetes cluster, it's running with a 
 
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc login -u {USER_ID} -p {USER_PASSWORD} https://openshift.default.svc:443
+oc login -u {user} -p {password} https://openshift.default.svc:443
 ----
 
 You should see:
@@ -164,8 +164,8 @@ Login successful.
 
 You have access to the following projects and can switch between them with 'oc project <projectname>':
 
-  * {USER_ID}-devspaces
-    {USER_ID}-project
+  * {user}-devspaces
+    {user}-project
 
 Using project "user1-devspaces".
 Welcome! See 'oc help' to get started.
@@ -179,16 +179,16 @@ Deploy the `people` microservice by executing the following shell script in a Co
 
 [source, shell, role="copypaste",subs="attributes"]
 ----
-sh scripts/deploy-people.sh {USER_ID}
+sh scripts/deploy-people.sh {user}
 ----
 
 Wait for the script to complete before continuing.
 
-When the script completes, the app is deployed to OpenShift. You can see it in the https://console-openshift-console.{ROUTE_SUBDOMAIN}[OpenShift Console^]. Login with your assigned username and password (e.g. `{USER_ID}/{USER_PASSWORD}`):
+When the script completes, the app is deployed to OpenShift. You can see it in the https://console-openshift-console.{openshift_cluster_ingress_domain}[OpenShift Console^]. Login with your assigned username and password (e.g. `{user}/{password}`):
 
 image::che-login.png[login,700]
 
-Once logged in, select the name of your project (`{USER_ID}-project`):
+Once logged in, select the name of your project (`{user}-project`):
 
 image::ocpproj.png[project,700]
 
@@ -206,6 +206,6 @@ You have to restore the following configuration to `application.properties` in t
 
 [source, properties,role="copypaste",subs="attributes"]
 ----
-%dev.quarkus.dev-ui.hosts={USER_ID}-quarkus-workshop-index-webpage.{ROUTE_SUBDOMAIN}
+%dev.quarkus.dev-ui.hosts={user}-quarkus-workshop-index-webpage.{openshift_cluster_ingress_domain}
 ----
 ====

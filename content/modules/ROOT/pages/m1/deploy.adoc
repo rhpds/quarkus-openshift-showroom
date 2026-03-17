@@ -10,7 +10,7 @@ Although your VS Code is running on the Kubernetes cluster, it's running with a 
 
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc login -u {USER_ID} -p {USER_PASSWORD} https://openshift.default.svc:443
+oc login -u {user} -p {password} https://openshift.default.svc:443
 ----
 
 You should see:
@@ -21,7 +21,7 @@ Login successful.
 
 You have access to 89 projects, the list has been suppressed. You can list all projects with 'oc projects'
 
-Using project "devspaces-{USER_ID}-qyf6iq".
+Using project "devspaces-{user}-qyf6iq".
 Welcome! See 'oc help' to get started.
 ----
 
@@ -34,7 +34,7 @@ The login session might timeout after long periods of inactivity. If this happen
 
 https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/[Namespaces^] are a top level concept to help you organize your deployments and teams of developers. A namespace allows a community of users (or a user) to organize and manage their content in isolation from other communities. OpenShift _projects_ provide additional functionality for managing Kubernetes namespaces.
 
-For this scenario, a project has been created for you called `{USER_ID}-project`. You will use this project to deploy your developed project in the next step.
+For this scenario, a project has been created for you called `{user}-project`. You will use this project to deploy your developed project in the next step.
 
 == Build and Deploy native image
 
@@ -88,7 +88,7 @@ Rebuild and re-deploy the people application via running the following maven plu
 
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc project {USER_ID}-project &&
+oc project {user}-project &&
 mvn clean package -Pnative -DskipTests -Dquarkus.package.uber-jar=false
 ----
 
@@ -127,7 +127,7 @@ hello quarkus-on-openshift
 Your hostname (the Kubernetes _pod_ in which your app runs) name will be different from the above.
 ====
 
-Now that your app is deployed to OpenShift you can also see it in the https://console-openshift-console.{ROUTE_SUBDOMAIN}[OpenShift Console^]. Login with `{USER_ID}/{USER_PASSWORD}`
+Now that your app is deployed to OpenShift you can also see it in the https://console-openshift-console.{openshift_cluster_ingress_domain}[OpenShift Console^]. Login with `{user}/{password}`
 
 image::che-login.png[login,700]
 
@@ -139,7 +139,7 @@ Then switch to the Topology View:
 
 image::topology.png[topology,300]
 
-Select your project (`{USER_ID}-project`):
+Select your project (`{user}-project`):
 
 image::projlist.png[project,700]
 
