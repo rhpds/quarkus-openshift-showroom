@@ -1,6 +1,6 @@
 = Tracing with MicroProfile OpenTracing
 :experimental:
-:imagesdir: images
+:imagesdir: ../../assets/images
 
 This exercise shows how your Quarkus application can utilize https://opentelemetry.io/[OpenTelemetry (OTel)^] to provide distributed tracing for interactive web applications.
 

@@ -1,6 +1,6 @@
 = Testing
 :experimental:
-:imagesdir: ../assets/images
+:imagesdir: ../../assets/images
 
 Quarkus supports continuous testing, where tests run immediately after code changes have been saved. This allows you to get instant feedback on your code changes. Quarkus detects which tests cover which code, and uses this information to only run the relevant tests when code is changed.
 

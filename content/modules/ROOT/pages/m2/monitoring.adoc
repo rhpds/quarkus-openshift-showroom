@@ -1,6 +1,6 @@
 = Monitoring Quarkus Apps using Micrometer
 :experimental:
-:imagesdir: images
+:imagesdir: ../../assets/images
 
 This exercise demonstrates how your Quarkus application can utilize the https://quarkus.io/guides/micrometer[Micrometer Metrics^] specification through the Micrometer Registry Prometheus extension.
 

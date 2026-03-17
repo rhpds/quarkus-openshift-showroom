@@ -1,5 +1,5 @@
 :experimental:
-:imagesdir: ../assets/images
+:imagesdir: ../../../assets/images
 
 == Mock support
 

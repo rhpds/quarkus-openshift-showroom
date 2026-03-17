@@ -1,6 +1,6 @@
 = Quarkus Extensions
 :experimental:
-:imagesdir: images
+:imagesdir: ../../assets/images
 
 == List extensions
 

@@ -1,4 +1,4 @@
-:imagesdir: ../../assets/images
+:imagesdir: ../../../assets/images
 
 == Custom data in health checks
 
