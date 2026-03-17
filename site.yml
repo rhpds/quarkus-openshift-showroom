@@ -23,6 +23,7 @@ antora:
 asciidoc:
   attributes:
     experimental: true
+    page-pagination: true
     showroom-collection-version: v1.5.2
 
 output:
