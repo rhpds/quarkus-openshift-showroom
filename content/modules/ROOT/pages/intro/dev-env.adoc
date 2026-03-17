@@ -3,7 +3,7 @@
 
 You will use Visual Studio Code (VS Code) based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^]. **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
 
-. Navigate to https://devspaces.{openshift_cluster_ingress_domain}#https://github.com/learn-quarkus/ibm-quarkus-beginners-workshop-m1-labs/tree/ibm-3.27[access the Red Hat OpenShift Dev Spaces instance^] and select *Log in with OpenShift* button:
+. Navigate to https://devspaces.{openshift_cluster_ingress_domain}#https://github.com/learn-quarkus/redhat-quarkus-workshop-labs[access the Red Hat OpenShift Dev Spaces instance^] and select *Log in with OpenShift* button:
 +
 image::login_with_openshift.png[login,800]
 

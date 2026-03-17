@@ -8,6 +8,8 @@ Quarkus is a Kubernetes Native Java stack tailored for GraalVM & OpenJDK HotSpot
 Red Hat offers the fully supported https://access.redhat.com/products/quarkus/[Red Hat build of Quarkus^] with support and maintenance of Quarkus. In this workhop, you will use Quarkus to develop Kubernetes-native microservices and deploy them to OpenShift.
 
 Throughout this lab you'll discover how Quarkus can make your development of cloud native apps faster and more productive.
+
+
 == Workshop Overview
 
 TODO: describe the upcoming content sections, time expectations per section, list of takeaways

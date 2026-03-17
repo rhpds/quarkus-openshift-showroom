@@ -1,6 +1,5 @@
-* xref:index.adoc[Quarkus on OpenShift]
-
-* xref:intro/intro.adoc[Workshop Setup]
+* xref:index.adoc[Introduction]
+** xref:intro/intro.adoc[Workshop Setup]
 ** xref:intro/dev-env.adoc[Web IDE Access]
 
 * xref:m1/basics.adoc[Basic Quarkus Development]

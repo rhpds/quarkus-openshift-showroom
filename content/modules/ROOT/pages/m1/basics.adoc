@@ -10,23 +10,6 @@ image::arch.png[arch,800]
 
 Let's take a look at the *Explorer* menu on the left hand of the IDE. Your Quarkus project was already imported when the workspace was created. 
 
-// . Open the `pom.xml` in the project root directory. Note the version of the IBM Enterprise Build of Quarkus you will use for the workshop today.
-// +
-// [source, xml]
-// ----
-//     <properties>
-//         <compiler-plugin.version>3.14.0</compiler-plugin.version>
-//         <maven.compiler.release>21</maven.compiler.release>
-//         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-//         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-//         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-//         <quarkus.platform.group-id>com.redhat.quarkus.platform</quarkus.platform.group-id>
-//         <quarkus.platform.version>3.27.1.redhat-00003</quarkus.platform.version>
-//         <skipITs>true</skipITs>
-//         <surefire-plugin.version>3.5.3</surefire-plugin.version>
-//     </properties>
-// ----
-
 . The project contains:
 
 * The Maven structure
