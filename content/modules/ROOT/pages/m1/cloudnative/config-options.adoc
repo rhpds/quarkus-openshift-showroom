@@ -1,0 +1,110 @@
+:imagesdir: ../../assets/images
+
+== Quarkus Configuration options
+
+Quarkus itself is configured via the same mechanism as your application. Quarkus reserves the `quarkus.` namespace in `application.properties` for its own configuration.
+
+You can find the https://quarkus.io/guides/all-config[All configuration options^] here:
+
+image::all-config.png[all-config, 700]
+
+[NOTE]
+====
+**Overriding properties at runtime**
+
+As you have seen, in _dev_ mode, properties can be changed at will and reflected in the running app, however once you are ready to package your app for deployment, you'll not be running in _dev_ mode anymore, but rather building and packaging (e.g. into fat JAR or native executable.) Quarkus will do much of its configuration and bootstrap at build time. Most properties will then be read and set during the _build time_ step. To change them, you have to stop the application, re-package it, and restart.
+
+Extensions _do_ define some properties as overridable at runtime. A canonical example is the database URL, username and password which is only known specifically in your target environment. **This is a tradeoff** as the more runtime properties are available, the less build time pre-work Quarkus can do. The list of runtime properties is therefore lean.
+
+You can override these runtime properties with the following mechanisms (in decreasing priority):
+
+* using system properties:
+. for a runner jar: `java -Dquarkus.datasource.password=youshallnotpass -jar target/myapp-runner.jar`
+. for a native executable: `./target/myapp-runner -Dquarkus.datasource.password=youshallnotpass`
+
+* using environment variables:
+. for a runner jar: `QUARKUS_DATASOURCE_PASSWORD=youshallnotpass java -jar target/myapp-runner.jar`
+. for a native executable: `QUARKUS_DATASOURCE_PASSWORD=youshallnotpass ./target/myapp-runner`
+
+Environment variables names are following the conversion rules of https://github.com/eclipse/microprofile-config/blob/master/spec/src/main/asciidoc/configsources.asciidoc#default-configsources[Eclipse MicroProfile Config sources^]
+====
+
+=== Configuration Profiles
+
+Quarkus supports the notion of configuration _profiles_. These allow you to have multiple configuration values in `application.properties` and select between then via a profile name.
+
+The syntax for this is `%\{profile}.config.key=value`. For example if I have the following: (do not copy this code!):
+
+[source,java]
+----
+quarkus.http.port=9090
+%dev.quarkus.http.port=8181
+----
+
+The Quarkus HTTP port will be `9090`, unless the `dev` profile is active, in which case it will be `8181`.
+
+By default Quarkus has three profiles, although it is possible to use as many as you like (just use your custom profile names in `application.properties` and when running the app, and things will match up). The default profiles are:
+
+. `dev` - Activated when in development mode (i.e. `mvn quarkus:dev`)
+. `test` - Activated when running tests (i.e. `mvn verify`)
+. `prod` - The default profile when not running in `dev` or `test` mode
+
+=== Exercise Configuration Profile
+
+Let's give this a go. In your `application.properties`, add a different `message.prefix` for the `prod` profile. To do this, change the content of the `greeting.` properties in `application.properties` to be:
+
+[source,none,role="copypaste"]
+----
+greeting.message=hi
+greeting.name=quarkus in dev mode
+%prod.greeting.name=production quarkus
+----
+
+Verify that in _dev_ mode (which you're currently running in) that:
+
+[source,sh,role="copypaste"]
+----
+curl http://localhost:8080/hello
+----
+
+produces `hi quarkus in dev mode!`.
+
+Next, let's re-build the app as an executable JAR (which will run with the `prod` profile active).
+
+Build an executable JAR using the following command:
+
+[source,sh,role="copypaste"]
+----
+mvn clean package -DskipTests
+---- 
+
+Next, run the fast jar using the following command:
+
+[source,sh,role="copypaste"]
+----
+java -Dquarkus.http.port=8081 -jar target/quarkus-app/quarkus-run.jar
+----
+
+Notice we did not specify any Quarkus profile. When not running in dev mode (`mvn quarkus:dev`), and not running in test mode (`mvn verify`), then the default profile is `prod`.
+
+While the app is running, open a separate Terminal window and test it by running:
+
+[source,sh,role="copypaste"]
+----
+curl http://localhost:8081/hello
+----
+
+What did you get? You should get `hi production quarkus!` indicating that the `prod` profile was active by default. In other sections in this workshop we'll use this feature to override important variables like database credentials.
+
+[NOTE]
+====
+In this example we read configuration properties from `application.properties`. You can also introduce custom configuration sources in the standard MicroProfile Config manner.  https://microprofile.io/project/eclipse/microprofile-config[More Info^]. This would be useful, for example, to read directly from **Kubernetes ConfigMap**.
+====
+
+== Cleanup 
+
+Stop the app that you ran with `java -jar` by pressing kbd:[CTRL+C] in the terminal in which the app runs. Make sure to leave the original Live Coding app running!
+
+== Congratulations
+
+Cloud native encompasses much more than health probes and externalized config. With Quarkus' _container and Kubernetes-first philosophy_, excellent performance, support for many cloud native frameworks, it's a great place to build your next cloud native app.

@@ -1,0 +1,77 @@
+:experimental:
+:imagesdir: ../assets/images
+
+== Injecting a URI
+
+It is also possible to directly inject the URL into the test which can make it easy to use a different client. This is done via the `@TestHTTPResource` annotation.
+
+Let's write a simple test that shows this off to load some static resources. First open the `test.html` file in *src/main/resources/META-INF/resources/*. 
+
+Append the folloing HTML code to the file:
+
+[source,html,role="copypaste"]
+----
+<html>
+<head>
+  <title>Testing with Quarkus</title>
+</head>
+<body>
+  <p>... it's fun and entertaining!</p>
+</body>
+</html>
+----
+
+Our test will verify that the `<title>` tags contain the right content.
+
+Next, create a new test under `src/test/java` in the `org.acme.people` package called `StaticContentTest.java`. Replace this code to the file:
+
+[source, java, role="copypaste"]
+----
+package org.acme.people;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import io.quarkus.test.common.http.TestHTTPResource;
+import io.quarkus.test.junit.QuarkusTest;
+
+@QuarkusTest
+public class StaticContentTest {
+
+    @TestHTTPResource("test.html") // <1>
+    URL url;
+
+    @Test
+    public void testIndexHtml() throws Exception {
+        try (InputStream in = url.openStream()) {
+            String contents = readStream(in);
+            Assertions.assertTrue(contents.contains("<title>Testing with Quarkus</title>"));
+        }
+    }
+
+    private static String readStream(InputStream in) throws IOException {
+        byte[] data = new byte[1024];
+        int r;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        while ((r = in.read(data)) > 0) {
+            out.write(data, 0, r);
+        }
+        return new String(out.toByteArray(), StandardCharsets.UTF_8);
+    }
+}
+----
+<1> The `@TestHTTPResource` annotation allows you to directly inject the URL of the Quarkus instance, the value of the annotation will be the path component of the URL. For now `@TestHTTPResource` allows you to inject URI, URL and String representations of the URL.
+
+The test results will be updated automatically in the terminal:
+
+[source, none]
+----
+All 3 tests are passing (0 skipped), 1 test was run in 451ms. Tests completed at 01:34:45 due to changes to StaticContentTest.class.
+----
+

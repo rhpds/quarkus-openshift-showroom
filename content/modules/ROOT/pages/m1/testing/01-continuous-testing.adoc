@@ -1,0 +1,48 @@
+:experimental:
+:imagesdir: ../assets/images
+
+== Starting Continuous Testing
+
+. Go back to the terminal and at the bottom of the screen you should see the following:
++
+image::ct-resume.png[testshere, 800]
+
+. Press `r` to initate continuous testing. You should see the status change down the bottom of the screen as they are running, and it should finish with the following error:
++
+image::ct-error.png[testshere, 800]
+
+. This is because you changed the greeting in an earlier step. In `GreetingResource`, change `Hola` back to `Hello` (in the `GreetingResource` class) and the tests will run again automatically. 
+. Confirm all tests pass in the terminal:
++
+[source, none]
+----
+INFO  [io.qua.test] (Test runner thread) All tests are now passing
+--
+All 1 test is passing (0 skipped), 1 test was run in 351ms. Tests completed at 01:19:02 due to changes to GreetingResource.class.
+Press [e] to edit command line args (currently ''), [r] to re-run, [o] Toggle test output, [:] for the terminal, [h] for more options>
+----
+
+. Add a new test to the existing `GreetingResourceTest.java` class under the `// add more tests` marker that tests the `/hello/greeting` endpoint by copying this code below the existing test:
+
+[source, java, role="copypaste"]
+----
+    @Test
+    public void testGreetingEndpoint() {
+        given()
+          .pathParam("name", "quarkus")
+          .when().get("/hello/greeting/{name}")
+          .then()
+            .statusCode(200)
+            .body(startsWith("hello "));
+    }
+----
+
+. You will see the new test result instantly in the terminal:
+
+[source, none]
+----
+--
+All 2 tests are passing (0 skipped), 2 tests were run in 401ms. Tests completed at 01:20:05 due to changes to GreetingResourceTest.class.
+Press [e] to edit command line args (currently ''), [r] to re-run, [o] Toggle test output, [:] for the terminal, [h] for more options>
+----
+

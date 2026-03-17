@@ -1,0 +1,38 @@
+:imagesdir: ../assets/images
+= Navigating this Lab
+
+== First Step: Set Your Username!
+
+Look in the box at the top of your screen. Is your username set already? If so it will look like this:
+
+image::alreadyset.png[Set User ID above, 700]
+
+If your username is properly set, then you can move on. **If not, in the above box, enter the user ID you were assigned** like this:
+
+image::setuser.png[Set User ID above, 700]
+
+This will customize the links and copy/paste code for this workshop. If you accidently type the wrong username, just select the green recycle icon to reset it.
+
+== Click-to-Copy
+
+You will see various code and command blocks throughout these exercises which can be copy/pasted directly by clicking on the clipboard icon, in the top right corner:
+
+[source,java,role="copypaste"]
+----
+/* A sample Java snippet that you can copy/paste by clicking */
+public class CopyMeDirectly {
+    public static void main(String[] args) {
+        System.out.println("You can copy this whole class with a click!");
+    }
+}
+----
+
+Simply click once and the whole block is copied to your clipboard, ready to be pasted with kbd:[CTRL+V] (or kbd:[Command+V] on Mac OS).
+
+There are also Linux shell commands that can also be copied and pasted into a Terminal in your Development Environment:
+
+[source,sh,role="copypaste"]
+----
+echo "This is a bash shell command that you can copy/paste by clicking"
+----
+

@@ -1,0 +1,11 @@
+:imagesdir: ../assets/images
+= Next Steps with Quarkus
+:experimental:
+
+== Continue Learning
+
+Continue your learning adventure with these additional Quarkus resources:
+
+* https://developers.redhat.com/products/quarkus[Quarkus on developers.redhat.com]
+* https://developers.redhat.com/e-books[eBooks on Red Hat Developers]
+* https://quarkus.io/books/[Quarkus eBooks on quarkus.io]

@@ -1,18 +1,44 @@
-* xref:index.adoc[What is Showroom?]
+* xref:index.adoc[Quarkus on OpenShift]
 
-.Content Developer Guide
-* xref:quick-start.adoc[Quick Start]
-* xref:content-repo.adoc[Creating a Content Repository]
-* xref:agnosticv-config.adoc[AgnosticV Configuration]
-* xref:ui-config.adoc[UI Configuration]
-* xref:user-data.adoc[User Data and Variables]
-* xref:ocp4-role-reference.adoc[OCP4 Role Reference]
-* xref:vm-role-reference.adoc[VM Role Reference]
+* xref:intro/intro.adoc[Workshop Setup]
+** xref:intro/dev-env.adoc[Web IDE Access]
 
-.Showroom Developer Guide
-* xref:architecture.adoc[Architecture]
-* xref:deployer.adoc[Showroom Deployer]
-* xref:images.adoc[Showroom Images]
-* xref:nookbag.adoc[Nookbag UI]
-* xref:ocp-integration.adoc[OCP Integration]
-* xref:contributing.adoc[Contributing]
+* xref:m1/basics.adoc[Basic Quarkus Development]
+** xref:m1/basics/dev-mode.adoc[Quarkus Dev Mode]
+** xref:m1/basics/live-coding.adoc[Quarkus Live Coding]
+** xref:m1/basics/package-app.adoc[Packaging the application]
+
+** xref:m1/cdi.adoc[Dependency Injection]
+
+** xref:m1/testing.adoc[Testing]
+*** xref:m1/testing/01-continuous-testing.adoc[Starting Continuous Testing]
+*** xref:m1/testing/02-control-continuous-testing.adoc[Controlling Continuous Testing]
+*** xref:m1/testing/03-devui-testing.adoc[Quarkus Dev UI for Testing]
+*** xref:m1/testing/04-inject-uri.adoc[Injecting a URI]
+*** xref:m1/testing/05-injection-into-tests.adoc[Injection into tests]
+*** xref:m1/testing/06-mock-support.adoc[Mock support ]
+
+
+** xref:m1/debugging.adoc[Debugging in Dev Mode]
+** xref:m1/native-images.adoc[Building Native Images]
+
+** xref:m1/cloudnative.adoc[Cloud Native]
+*** xref:m1/cloudnative/custom-data-healthcheck.adoc[Custom data in health checks]
+*** xref:m1/cloudnative/negative-healthcheck.adoc[Negative Health Checks]
+*** xref:m1/cloudnative/liveliness-readiness.adoc[Accessing Liveness and Readiness]
+*** xref:m1/cloudnative/eternal-config.adoc[Externalized Configuration]
+*** xref:m1/cloudnative/config-options.adoc[Quarkus Configuration options]
+
+** xref:m1/deploy.adoc[Deploy to OpenShift]
+
+* xref:m2/advanced.adoc[Advanced Quarkus Development]
+** xref:m2/extensions.adoc[Quarkus Extensions]
+** xref:m2/panache.adoc[Hibernate ORM with Panache]
+** xref:m2/openapi.adoc[Documenting APIs in Quarkus]
+** xref:m2/messaging.adoc[Asynchronous messaging between beans]
+** xref:m2/kafka.adoc[Reactive Streams with Quarkus and Kafka]
+** xref:m2/monitoring.adoc[Monitoring Quarkus Apps using Micrometer]
+** xref:m2/tracing.adoc[Tracing with MicroProfile OpenTracing]
+** xref:m2/security.adoc[Securing Quarkus APIs]
+
+* xref:final/next-steps.adoc[Next steps]

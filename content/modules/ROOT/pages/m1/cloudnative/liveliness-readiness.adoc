@@ -1,0 +1,68 @@
+:imagesdir: ../../assets/images
+
+== Accessing liveness and readiness separately
+
+Quarkus apps can access the two different types using two different endpoints (`/health/live` and `/health/ready`). This is useful when configuring Kubernetes with probes which we'll do later, as it can access each separately (and configure each with different timeouts, periods, failure thresholds, etc). For example, You may want your Readiness probe to wait 30 seconds before starting, but Liveness should wait 2 minutes and only wait 10 seconds between retries.
+
+. Access the two endpoints. Each endpoint will only report on its specific type of probe:
+.. The following command displays only the *two Liveness probes*.
++
+[source, sh, role="copypaste"]
+----
+curl http://localhost:8080/q/health/live
+----
++
+Output:
++
+```
+{
+    "status": "UP",
+    "checks": [
+        {
+            "name": "Health check with data",
+            "status": "UP",
+            "data": {
+                "foo": "fooValue",
+                "bar": "barValue"
+            }
+        },
+        {
+            "name": "Database connection health check",
+            "status": "UP"
+        }
+    ]
+}
+```
+
+.. The following command displays only the *single Readiness Probe*. 
++
+[source, sh, role="copypaste"]
+----
+curl http://localhost:8080/q/health/ready
+----
++
+Output:
++
+```
+{
+    "status": "UP",
+    "checks": [
+        {
+            "name": "Simple health check",
+            "status": "UP"
+        }
+    ]
+}
+```
+
+. Go back to Dev UI and select `Health` in SmallRye Health extension:
++
+image::quarkus-devui-healthui.png[livecoding, 700]
+
+. It shows all health checks:
++
+image::quarkus-devui-healthui2.png[livecoding, 700]
+
+
+Later, when we deploy this to our Kubernetes cluster, we'll configure it to use these endpoints.
+

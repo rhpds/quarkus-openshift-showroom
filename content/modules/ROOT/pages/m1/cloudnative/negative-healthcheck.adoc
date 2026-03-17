@@ -1,0 +1,88 @@
+:imagesdir: ../../assets/images
+
+== Negative Health Checks
+
+In this section we create another health check which simulates a connection to an external service provider such as a database. For simplicity reasons, we'll use an `application.properties` setting to toggle the health check from `DOWN` to `UP`.
+
+Create another Java class in the same package called `DatabaseConnectionHealthCheck.java` with the following code:
+
+[source, java, role="copypaste"]
+----
+package org.acme.people.health;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.health.HealthCheck;
+import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
+import org.eclipse.microprofile.health.Liveness;
+
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+@Liveness
+public class DatabaseConnectionHealthCheck implements HealthCheck {
+
+    @ConfigProperty(name = "database.up", defaultValue = "false")
+    public boolean databaseUp;
+
+    @Override
+    public HealthCheckResponse call() {
+
+        HealthCheckResponseBuilder responseBuilder = HealthCheckResponse.named("Database connection health check");
+
+        try {
+            simulateDatabaseConnectionVerification();
+            responseBuilder.up();
+        } catch (IllegalStateException e) {
+            // cannot access the database
+            responseBuilder.down()
+                    .withData("error", e.getMessage());
+        }
+
+        return responseBuilder.build();
+    }
+
+    private void simulateDatabaseConnectionVerification() {
+        if (!databaseUp) {
+            throw new IllegalStateException("Cannot contact database");
+        }
+    }
+}
+----
+
+Re-run the health check test:
+
+[source, sh, role="copypaste"]
+----
+curl -i http://localhost:8080/q/health/live
+----
+
+You should see at the beginning the HTTP response:
+
+[source,none]
+----
+HTTP/1.1 503 Service Unavailable
+----
+
+And the returned content should begin with `"status": "DOWN"` and you should see in the `checks` array the newly added Database connection health check which is down and the error message explaining why it failed:
+
+[source,json]
+----
+        {
+            "name": "Database connection health check",
+            "status": "DOWN",
+            "data": {
+                "error": "Cannot contact database"
+            }
+        },
+----
+
+== Fix Health Check
+We shouldn't leave this application with a health check in DOWN state. Because we are running Quarkus dev mode, add this to to the end of the `src/main/resources/application.properties` file:
+
+[source,properties, role="copypaste"]
+----
+database.up=true
+----
+
+And access again using the same `curl` command — it should be `UP`!

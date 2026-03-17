@@ -1,0 +1,70 @@
+:experimental:
+:imagesdir: ../assets/images
+
+== Mock support
+
+Quarkus supports the use of mock objects using the CDI `@Alternative` mechanism. To use this simply override the bean you wish to mock with a class in the `src/test/java` directory, and put the `@Alternative` and `@Priority(1)` annotations on the bean. Alternatively, a convenient `io.quarkus.test.Mock` stereotype annotation could be used. This built-in stereotype declares `@Alternative`, `@Priority(1)` and `@Dependent`.
+
+Let's mock our existing `GreetingService`. Although our existing service is pretty simple, in the real world the service might have too many dependencies on external systems to be feasible to call directly.
+
+Create a new class file in `src/test/java` in the `org.acme.people` package called `MockGreetingService.java` with the following code:
+
+[source, java, role="copypaste"]
+----
+package org.acme.people;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import org.acme.people.service.GreetingService;
+import io.quarkus.test.Mock;
+
+@Mock
+@ApplicationScoped
+public class MockGreetingService extends GreetingService {
+
+    @Override
+    public String greeting(String name) {
+        return "hello " + name + " <<<<<<<<<< from mock greeting >>>>>>>>>>";
+    }
+}
+----
+
+Now modify our existing `GreetingServiceTest` class to add a log statement showing the value retrieved during the test. Modify the `testGreetingService` method to look like:
+
+[source, java, role="copypaste"]
+----
+    @Test
+    public void testGreetingService() {
+        LOGGER.info("greeting: " + service.greeting("Quarkus"));
+        Assertions.assertTrue(service.greeting("Quarkus").startsWith("hello Quarkus"));
+    }
+----
+
+The test results of the mock will be updated automatically in the terminal:
+
+[source, none]
+----
+All 4 tests are passing (0 skipped), 1 test was run in 556ms. Tests completed at 01:37:50 due to changes to MockGreetingService.class and 1 other files.
+----
+
+Press `o` to toggle test output and press `r` to re-run the continuous testing. Then, you will see:
+
+[source, none]
+----
+INFO  [GreetingServiceTest] (Test runner thread) greeting: hello Quarkus <<<<<<<<<< from mock greeting >>>>>>>>>>
+----
+
+This confirms that our `MockGreetingService` is being used instead of the original `GreetingService`.
+
+Make sure to press `p` to pause the continuous testing before you go to the next lab:
+
+[source, none]
+----
+Tests paused
+Press [r] to resume testing, [o] Toggle test output, [:] for the terminal, [h] for more options>
+----
+
+== Congratulations!
+
+In this section we covered basic testing of Quarkus Apps using the `@QuarkusTest` and supporting annotations. This is an important part of any software engineering project and with Quarkus, testing has never been easier. For more information on testing with Quarkus, be sure to review the https://quarkus.io/guides/getting-started-testing[Quarkus Testing Guide^].
+
+In the next section we'll talk about how to effectively debug Quarkus applications. On with the show!

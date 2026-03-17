@@ -1,0 +1,39 @@
+:experimental:
+:imagesdir: ../assets/images
+
+== Controlling Continuous Testing
+
+There are various hotkeys you can use to control continuous testing. Pressing `h` will display the following list of commands in the terminal:
+
+[source, none]
+----
+== Continuous Testing
+
+[r] - Re-run all tests
+[f] - Re-run failed tests
+[b] - Toggle 'broken only' mode, where only failing tests are run (disabled)
+[v] - Print failures from the last test run
+[p] - Pause tests
+[o] - Toggle test output (disabled)
+
+== Exceptions
+
+[x] - Open last exception (or project) in IDE (none)
+
+== HTTP
+
+[w] - Open the application in a browser
+[d] - Open the Dev UI in a browser
+
+== System
+
+[s] - Force restart
+[e] - Edits the command line parameters and restarts ()
+[i] - Toggle instrumentation based reload (disabled)
+[l] - Toggle live reload (enabled)
+[j] - Toggle log levels (INFO)
+[h] - Show this help
+[:] - Enter terminal mode
+[q] - Quit the application
+----
+

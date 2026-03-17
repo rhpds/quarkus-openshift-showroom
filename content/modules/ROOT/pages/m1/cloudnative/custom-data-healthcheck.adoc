@@ -1,0 +1,60 @@
+:imagesdir: ../../assets/images
+
+== Custom data in health checks
+
+In the previous step we created a simple health check with only the minimal attributes, namely, the health check name and its state (`UP` or `DOWN`). However, MicroProfile also provides a way for the applications to supply arbitrary data in the form of key/value pairs sent in the health check response. This can be done by using the `withData(key, value)`` method of the health check response builder API. This is useful to provide additional info about passing or failing health checks, to give some indication of the problem when failures are investigated.
+
+Let's create our second health check procedure, a _Liveness_ probe. Create another Java class file in the `org.acme.people.health` package named `DataHealthCheck.java` with the following code:
+
+[source, java, role="copypaste"]
+----
+package org.acme.people.health;
+
+import org.eclipse.microprofile.health.HealthCheck;
+import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.Liveness;
+
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+@Liveness
+public class DataHealthCheck implements HealthCheck {
+
+    @Override
+    public HealthCheckResponse call() {
+        return HealthCheckResponse.named("Health check with data")
+        .up()
+        .withData("foo", "fooValue")
+        .withData("bar", "barValue")
+        .build();
+
+    }
+}
+----
+
+Access the liveness health checks:
+
+[source, sh, role="copypaste"]
+----
+curl http://localhost:8080/q/health/live
+----
+
+You can see that the new health check with data is present in the `checks` array. This check contains a new attribute called `data` which is a JSON object consisting of the properties (e.g. `bar=barValue`) we have defined in our health check procedure above:
+
+[source, sh]
+----
+{
+    "status": "UP",
+    "checks": [
+        {
+            "name": "Health check with data",
+            "status": "UP",
+            "data": {
+                "foo": "fooValue",
+                "bar": "barValue"
+            }
+        }
+    ]
+}
+----
+

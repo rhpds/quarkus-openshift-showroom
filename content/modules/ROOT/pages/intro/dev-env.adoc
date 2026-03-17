@@ -1,0 +1,55 @@
+:imagesdir: ../assets/images
+# Web IDE Access
+
+You will use Visual Studio Code (VS Code) based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^]. **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
+
+. Navigate to https://devspaces.{ROUTE_SUBDOMAIN}#https://github.com/learn-quarkus/ibm-quarkus-beginners-workshop-m1-labs/tree/ibm-3.27[access the Red Hat OpenShift Dev Spaces instance^] and select *Log in with OpenShift* button:
++
+image::login_with_openshift.png[login,800]
+
+
+// TODO: add note how users should login
+. Login using your ID and password
+
+. Click on the *Allow selected permissions* button when prompted
+
+image::auth-access.png[auth-access, 800]
+
+. The next page will display progess as devspaces is *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process.
++
+image::starting-workspace.png[ds, 800]
++
+
+. When prompted with *Do you trust the authors of this repository?* popup, select `Do not ask again for other repositories` to continue using your workspace.
++
+image::trust-author.png[ds, 800]
+
+. In a few seconds, you will have access to your own web-based IDE
++
+image::ds-workspace.png[ds, 800]
+.. Click on `Trust Publishers & Install` when prompted.
++
+image::ds-trust-pub-popup.png[ds, 800]
+
+.. And also click on `Yes, I trust the authors` as indicated below.
++
+image::ds-trust-popup.png[ds, 800]
+
+== Explore the IDE
+
+This workshop's IDE is based on Eclipse Che (which is in turn based on MicroSoft VS Code editor).
+
+. Explore the icons on the left for navigating between project explorer, search, version control (e.g. Git), debugging, and other plugins.  You'll use these during the course of this workshop. Feel free to select them and see what they do:
++
+image::ds-icons.png[cdw, 500]
++
+TIP:  If things get weird or your browser appears, you can simply reload the browser tab to refresh the view.
+
+
+. Many features of VS Code are accessed via *Command Palette*. You can see a few of the tutorials on the *Get Started* page (e.g. _Login/Provision OpenShift Cluster_, _Create Component from Devfile registries webview_, and others).
+
+TIP: If you ever need to run commands that you don't see in a menu, you can press kbd:[F1] to open the command window, or the more traditional kbd:[Control+SHIFT+P] (or kbd:[Command+SHIFT+P] on macOS).
+
+. Keep this browser tab open throughout the course of this workshop.
+
+Ready? Let's go!

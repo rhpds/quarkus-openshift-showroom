@@ -1,0 +1,20 @@
+:imagesdir: ../../assets/images
+
+== Exercise the Quarkus Live Coding capabilities
+
+Quarkus Dev Mode provides a powerful live coding experience. Any changes you make to your Java files or resource files will be automatically picked up and applied to the running application. This means you can see the effects of your changes immediately without having to restart the application.
+
+. In IDE, open the `GreetingResource.java` file in the *src/main/java/org/acme/people/rest* directory and change `return "Hello from Quarkus REST";` to `return "Hola from Quarkus REST";`. 
+. After making this change, reload the same brower tab that was showing `Hello from Quarkus REST`. It should now show `Hola from Quarkus REST`.
+
+Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it a few more times and access the endpoint again. And we're just getting started. Leave the app running so we can continue to change it on the fly in the next section.
+
+[NOTE]
+====
+`mvn quarkus:dev` runs Quarkus in development mode. This enables live reload with background compilation, which means that when you modify your Java files your resource files and refresh your browser these changes will automatically take effect.
+====
+
+[NOTE]
+====
+This will also listen for a debugger on port `5005`. If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line. If you don't want the debugger at all you can use `-Ddebug=false`. We'll use this later.
+====

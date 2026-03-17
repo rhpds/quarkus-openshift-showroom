@@ -1,0 +1,211 @@
+:imagesdir: ../assets/images
+= Advanced Quarkus Development
+:experimental:
+
+== Explore the Project
+
+Let's take a look at the *Explorer* menu on the left hand of the IDE. Your Quarkus project was already imported when the workspace was created. 
+
+// . Open the `pom.xml` in the project root directory. 
+// +
+// [source, xml]
+// ----
+//     <properties>
+//         <compiler-plugin.version>3.14.0</compiler-plugin.version>
+//         <maven.compiler.release>21</maven.compiler.release>
+//         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+//         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+//         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+//         <quarkus.platform.group-id>com.redhat.quarkus.platform</quarkus.platform.group-id>
+//         <quarkus.platform.version>3.27.1.redhat-00003</quarkus.platform.version>
+//         <skipITs>true</skipITs>
+//         <surefire-plugin.version>3.5.3</surefire-plugin.version>
+//     </properties>
+// ----
+
+. The project contains:
+
+* The Maven structure
+* An `org.acme.people.rest.GreetingResource` resource exposed on `/hello`, along with a simple test
+* A landing page that is accessible on `http://localhost:8080` after starting the application
+* The application configuration file
+* Other source files we'll use later
+
+. Navigate to `src -> main -> java -> org.acme.people.rest` in the project tree and select `GreetingResource.java`.
++
+image::initnav.png[VS Code-workspace-terminal, 800]
+
+. This class has a very simple RESTful endpoint definition that returns *hello* to requests on `/hello`.
++
+[source, java]
+----
+@Path("/hello")
+public class GreetingResource {
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return "Hello from Quarkus REST";
+    }
+}
+----
+
++
+[NOTE]
+====
+Compared to vanilla JAX-RS, with Quarkus there is no need to create an `Application` class. It's supported but not required. In addition, only one instance of the resource is created and not one per request. You can configure this using the different `Scoped` annotations (`ApplicationScoped`, `RequestScoped`, etc).
+====
+
+## Running the Application in Quarkus Dev Mode for Living Code
+
+**Live Coding** (also referred to as _Quarkus dev mode_) allows us to run the app and make changes on the fly. Quarkus will automatically re-compile and reload the app when changes are made. This is a powerful and efficient style of developing that you will use throughout the lab.
+
+Before starting the dev mode, you need to *append* the following configuration to `application.properties` in the `src/main/resources` directory. This allows you to access the https://quarkus.io/guides/dev-ui[Dev UI^] from the cloud IDE since the Dev UI is designed for running your localhost.
+
+[source, properties,role="copypaste",subs="attributes"]
+----
+%dev.quarkus.dev-ui.hosts={USER_ID}-quarkus-workshop-index-webpage.{ROUTE_SUBDOMAIN}
+----
+
+Note that the changes will be automatially saved in the IDE.
+
+Open a new terminal windown on the VS Code.
+
+image::new-terminal.png[commands, 600]
+
+Run the following `mvn` (Maven) commands to run Quarkus dev mode in the terminal.
+
+[source, shell,role="copypaste"]
+----
+mvn clean quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.analytics.disabled=true
+----
+
+When the dev mode starts, you will see a popup to access the *welcome* page.
+
+image::cmd-livecoding.png[livecoding, 900]
+
+*Leave this terminal window open throughout the lab!* You will complete the entire lab without shutting down Quarkus Live Coding mode, so be careful not to close the tab (if you do, you re-run it). This is very useful for quick experimentation.
+
+[NOTE]
+====
+The first time you build the app, new dependencies may be downloaded via maven. This should only happen once, after that things will go even faster
+====
+
+[NOTE]
+====
+You may see WARNINGs like `Unrecognized configuration key` or `Duplicate entry`. These are configuration values that will take effect later on and can be safely ignored for now.
+Occasionally you may get an error (e.g. `NullPointerException`) during Live Reloading. In this case, simply close the terminal and restart live coding using the task.
+====
+
+Note the amazingly fast startup time! The app is now running *locally* (within the VS Code container in which the workspace is also running). `localhost` refers to the Kubernetes pod, not *your* laptop (so therefore opening localhost:8080 in your browser will not do anything).
+
+You can also see *Tests paused* by default when a Quarkus application gets started. We will learn more details in the _Testing Quarkus App_ lab.
+
+When you select *Open In New Tab* to access the welcome page, you should see the popup message below. 
+
+image::open-external.png[port, 700]
+
+Select `Open`. A new tab in your web browser will open automatically.
+
+image::welcome-quarkus.png[port, 900]
+
+Select `/hello` enpoint on the Quarkus welcome. You should see the following page:
+
+image::crw-open-page-hello.png[page, 800]
+
+When you fail to access the *hello* endpoint URL, make sure if the new opened tab has the *http* protocol.
+
+You can also test the endpoint using the _curl_ command. Open a *new* terminal by selecting `+` icon:
+
+image::cmd-terminal.png[livecoding, 900]
+
+Invoke the `hello` endpoint using the following _curl_ command:
+
+[source,sh,role="copypaste"]
+----
+curl http://localhost:8080/hello
+----
+
+The output should look like this:
+
+[source,sh]
+----
+Hello from Quarkus REST
+----
+
+Now, let's exercise the **live reload** capabilities of Quarkus. In VS Code, open the `GreetingResource.java` file in the *src/main/java/org/acme/people/rest* directory and change `return "Hello from Quarkus REST";` to `return "Hola from Quarkus REST";` in the editor. After making this change, reload the same brower tab that was showing `Hello from Quarkus REST`. It should now show `Hola from Quarkus REST`.
+
+Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it a few more times and access the endpoint again. And we're just getting started. Leave the app running so we can continue to change it on the fly in the next section.
+
+[NOTE]
+====
+`quarkus:dev` runs Quarkus in development mode. This enables live reload with background compilation, which means that when you modify your Java files your resource files and refresh your browser these changes will automatically take effect.
+====
+
+[NOTE]
+====
+This will also listen for a debugger on port `5005`. If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line. If you don’t want the debugger at all you can use `-Ddebug=false`. We'll use this later.
+====
+
+=== Login to OpenShift
+
+Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. Execute the following command in the VS Code terminal:
+
+[source,sh,role="copypaste",subs="attributes"]
+----
+oc login -u {USER_ID} -p {USER_PASSWORD} https://openshift.default.svc:443
+----
+
+You should see:
+
+[source, none,subs="attributes"]
+----
+Login successful.
+
+You have access to the following projects and can switch between them with 'oc project <projectname>':
+
+  * {USER_ID}-devspaces
+    {USER_ID}-project
+
+Using project "user1-devspaces".
+Welcome! See 'oc help' to get started.
+----
+
+Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
+
+=== Deploy app
+
+Deploy the `people` microservice by executing the following shell script in a CodeReady Workspaces Terminal:
+
+[source, shell, role="copypaste",subs="attributes"]
+----
+sh scripts/deploy-people.sh {USER_ID}
+----
+
+Wait for the script to complete before continuing.
+
+When the script completes, the app is deployed to OpenShift. You can see it in the https://console-openshift-console.{ROUTE_SUBDOMAIN}[OpenShift Console^]. Login with your assigned username and password (e.g. `{USER_ID}/{USER_PASSWORD}`):
+
+image::che-login.png[login,700]
+
+Once logged in, select the name of your project (`{USER_ID}-project`):
+
+image::ocpproj.png[project,700]
+
+In the sidebar menu, switch to the Topology View using the drop-down under Workloads:
+
+image::devperspective.png[perspective, 500]
+
+You can see the single `people` deployment that we just deployed earlier using the CLI:
+
+image::peopledc.png[project,600]
+
+[IMPORTANT]
+====
+You have to restore the following configuration to `application.properties` in the `src/main/resources` directory to access the Dev UI from the cloud IDE since the above bash script overwrote it.
+
+[source, properties,role="copypaste",subs="attributes"]
+----
+%dev.quarkus.dev-ui.hosts={USER_ID}-quarkus-workshop-index-webpage.{ROUTE_SUBDOMAIN}
+----
+====

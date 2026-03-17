@@ -1,0 +1,86 @@
+:imagesdir: ../../assets/images
+
+== Quarkus Dev Mode - An Introduction
+
+
+Quarkus provides a dev mode which greatly aids during development by providing a number of features .n keeping with the mantra of providing developer joy. Some of the features include:
+
+* Live coding: Code -> refresh browser -> repeat. Code changes are automatically reflected in the running application. 
+* Dev UI: visualize and configure extensions as well as access to application logs and testing components
+* Dev Services: Automatic provisioning of unconfigured services such as databases, identity servers, and more.
+* Continuous Testing: Get instant feedback on code changes as tests run in the background on impacted code.
+
+
+== Run the Application in Quarkus Dev Mode
+
+. Open the `application.properties` in the `src/main/resources` directory and append the following configuration to the file. This config allows you to access the https://quarkus.io/guides/dev-ui[Dev UI^] from the cloud IDE since the Dev UI is designed for running your localhost.
++
+[source, properties,role="copypaste",subs="attributes"]
+----
+%dev.quarkus.dev-ui.hosts={USER_ID}-quarkus-workshop-index-webpage.{ROUTE_SUBDOMAIN}
+----
+
+. Open a new terminal windown on the VS Code.
++
+image::new-terminal.png[commands, 600]
+
+. Run the following `mvn` (Maven) commands to run Quarkus dev mode in the terminal.
++
+[source, shell,role="copypaste"]
+----
+mvn clean quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.analytics.disabled=true
+----
+
+. When the dev mode starts, you will see a popup to access the *welcome* page.
++
+image::cmd-livecoding.png[livecoding, 900]
+
+. *Leave this terminal window open throughout the lab!* You will complete the entire lab without shutting down Quarkus Live Coding mode, so be careful not to close the tab (if you do, you re-run it). This is very useful for quick experimentation.
++
+[NOTE]
+====
+The first time you build the app, new dependencies may be downloaded via maven. This should only happen once, after that things will go even faster
+====
+
++
+[NOTE]
+====
+You may see WARNINGs like `Unrecognized configuration key` or `Duplicate entry`. These are configuration values that will take effect later on and can be safely ignored for now.
+Occasionally you may get an error (e.g. `NullPointerException`) during Live Reloading. In this case, simply close the terminal and restart live coding using the task.
+====
+
+. Note the amazingly fast startup time! The app is now running *locally* (within the VS Code container in which the workspace is also running). `localhost` refers to the Kubernetes pod, not *your* laptop (so therefore opening localhost:8080 in your browser will not do anything).
+
+. In the Terminal, you can also see *Tests paused* by default when a Quarkus application gets started. We will learn more details in the _Testing Quarkus App_ lab.
+
+. When you select *Open In New Tab* to access the welcome page, you should see the popup message below. 
++
+image::open-external.png[port, 700]
+
+. Select `Open`. A new tab in your web browser will open automatically.
++
+image::welcome-quarkus.png[port, 900]
+
+. Select `/hello` enpoint on the Quarkus welcome. You should see the following page:
++
+image::crw-open-page-hello.png[page, 800]
+
+. When you fail to access the *hello* endpoint URL, make sure if the new opened tab has the *http* protocol.
+
+. You can also test the endpoint using the _curl_ command. Open a *new* terminal by selecting `+` icon:
++
+image::cmd-terminal.png[livecoding, 900]
+
+. Invoke the `hello` endpoint using the following _curl_ command:
++
+[source,sh,role="copypaste"]
+----
+curl http://localhost:8080/hello
+----
+
+. The output should look like this:
++
+[source,sh]
+----
+Hello from Quarkus REST
+----
