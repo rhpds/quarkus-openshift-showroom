@@ -6,15 +6,17 @@ With our app fully ready for its first cloud native deployment, let's package it
 
 == Login to OpenShift
 
-Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. Execute the following command in the VS Code terminal:
+Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. 
 
+. Execute the following command in the VS Code terminal:
++
 [source,sh,role="copypaste",subs="attributes"]
 ----
 oc login -u {user} -p {password} https://openshift.default.svc:443
 ----
 
-You should see:
-
+. You should see:
++
 [source, none,subs="attributes"]
 ----
 Login successful.
@@ -25,8 +27,8 @@ Using project "devspaces-{user}".
 Welcome! See 'oc help' to get started.
 ----
 
-Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
-
+. Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
++
 [WARNING]
 ====
 The login session might timeout after long periods of inactivity. If this happens, you'll get messages like `Error from server (Forbidden): xxxxx is forbidden: User "system:anonymous" cannot xxxxx`. Simply login again!
@@ -40,146 +42,155 @@ For this scenario, a project has been created for you called `{user}-quarkus`. Y
 
 Quarkus offers the ability to automatically generate OpenShift resources based on sane default and user supplied configuration. The OpenShift extension is actually a wrapper extension that brings together the https://quarkus.io/guides/deploying-to-kubernetes[kubernetes^] and https://quarkus.io/guides/container-image#s2i[container-image-s2i^] extensions with defaults so that it's easier for the user to get started with Quarkus on OpenShift.
 
-Add _openshift_ extension via VS Code Terminal:
-
+. Add _openshift_ extension via VS Code Terminal:
++
 [source,sh,role="copypaste"]
 ----
 mvn quarkus:add-extension -Dextensions="openshift"
 ----
-
++
 you will see:
-
++
 [source,console]
 ----
 [INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-openshift has been installed
 ----
 
-Next, add the following variables in `src/main/resources/application.properties` for deploying the application to OpenShift. native compilation using `Mandrel` builder image:
-
+. Next, add the following variables in `src/main/resources/application.properties` for deploying the application to OpenShift. native compilation using `Mandrel` builder image:
++
 [source,properties,role="copypaste",subs="attributes"]
 ----
-%prod.quarkus.kubernetes-client.trust-certs=true <1>
-%prod.quarkus.kubernetes.deploy=true <2>
-%prod.quarkus.kubernetes.deployment-target=openshift <3>
-%prod.quarkus.openshift.build-strategy=docker <4>
-%prod.quarkus.openshift.route.expose=true <5>
-%prod.quarkus.openshift.route.target-port=http <6>
-%prod.quarkus.openshift.route.tls.termination=edge <7>
-%prod.quarkus.openshift.route.tls.insecure-edge-termination-policy=Allow <8>
-quarkus.openshift.deployment-kind=Deployment <9>
-quarkus.container-image.group={user}-quarkus <10>
-quarkus.container-image.registry=image-registry.openshift-image-registry.svc:5000 <11>
+%prod.quarkus.kubernetes-client.trust-certs=true
+%prod.quarkus.kubernetes.deploy=true
+%prod.quarkus.kubernetes.deployment-target=openshift
+%prod.quarkus.openshift.build-strategy=docker
+%prod.quarkus.openshift.route.expose=true
+%prod.quarkus.openshift.route.target-port=http
+%prod.quarkus.openshift.route.tls.termination=edge
+%prod.quarkus.openshift.route.tls.insecure-edge-termination-policy=Allow
+quarkus.openshift.deployment-kind=Deployment
+quarkus.container-image.group={user}-quarkus
+quarkus.container-image.registry=image-registry.openshift-image-registry.svc:5000
 ----
-<1> We are using self-signed certs in this simple example, so this simply says to the extension to trust them.
-<2> Instructs the extension to deploy to OpenShift after the container image is built
-<3> Instructs the extension to generate and create the OpenShift resources (like `Deployment` and `Service`) after building the container
-<4> Set the Docker build strategy
-<5> Instructs the extension to generate an OpenShift `Route`
-<6> Specify the target port
-<7> Spefify the termination type
-<8> Spefify the desired behavior for insecure connections to a route
-<9> Generate the Deployment resource
-<10> Specify a project where the application is deployed
-<11> Sepcify an internal container registry to push an application image
 
-*Docker build* strategy builds the artifacts (JAR files or a native executable) outside the OpenShift cluster, either locally or in a CI environment, and then provides them to the OpenShift build system together with a Dockerfile. The container is built inside the OpenShift cluster and provided as an image stream.
++
+Let's review what each of the above properties do:
++
+[cols="1,3"]
+|===
+|Property |Description
 
-Rebuild and re-deploy the people application via running the following maven plugin in the VS Code Terminal:
+|prod.quarkus.kubernetes-client.trust-certs |We are using self-signed certs in this simple example, so this simply says to the extension to trust them.
+|prod.quarkus.kubernetes.deploy |Instructs the extension to deploy to OpenShift after the container image is built
+|prod.quarkus.kubernetes.deployment-target |Instructs the extension to generate and create the OpenShift resources (like `Deployment` and `Service`) after building the container
+|prod.quarkus.openshift.build-strategy |Set the Docker build strategy
+|prod.quarkus.openshift.route.expose |Instructs the extension to generate an OpenShift `Route`
+|prod.quarkus.openshift.route.target-port |Specify the target port
+|prod.quarkus.openshift.route.tls.termination |Specify the termination type
+|prod.quarkus.openshift.route.tls.insecure-edge-termination-policy |Specify the desired behavior for insecure connections to a route
+|prod.quarkus.openshift.deployment-kind |Generate the Deployment resource
+|prod.quarkus.openshift.project |Specify a project where the application is deployed
+|prod.quarkus.container-image.registry |Specify an internal container registry to push an application image
+|===
 
+. *Docker build* strategy builds the artifacts (JAR files or a native executable) outside the OpenShift cluster, either locally or in a CI environment, and then provides them to the OpenShift build system together with a Dockerfile. The container is built inside the OpenShift cluster and provided as an image stream.
+
+. Rebuild and re-deploy the people application via running the following maven plugin in the VS Code Terminal:
++
 [source,sh,role="copypaste",subs="attributes"]
 ----
 oc project {user}-quarkus &&
 mvn clean package -Pnative -DskipTests -Dquarkus.package.uber-jar=false
 ----
 
-As you recall, the output of this process is a native Linux binary but also running Source-To-Image(S2I) build processor.
+. As you recall, the output of this process is a native Linux binary but also running Source-To-Image(S2I) build processor.
 
-**Wait for it to finish!**. You should get a **BUILD SUCCESS** message at the end. Once that's done, make sure it's actually done rolling out:
-
+. **Wait for it to finish!**. You should get a **BUILD SUCCESS** message at the end. Once that's done, make sure it's actually done rolling out:
++
 [source,sh,role="copypaste"]
 ----
 oc rollout status -w deployment/people
 ----
 
-Wait for that command to report `deployment "people" successfully rolled out` before continuing.
+. Wait for that command to report `deployment "people" successfully rolled out` before continuing.
 
-And now we can access using `curl` once again. In the Terminal, run this command to access the endpoint:
-
+. And now we can access using `curl` once again. In the Terminal, run this command to access the endpoint:
++
 [source,sh,role="copypaste copypaste"]
 ----
 curl $(oc get route people -o=go-template --template='{{ .spec.host }}')/hello/greeting/quarkus-on-openshift
 ----
-
++
 [NOTE]
 ====
 The above `curl` command constructs the URL to your running app on the cluster using the `oc get route` command.
 ====
 
-You should see:
-
+. You should see:
++
 [source,none]
 ----
 hello quarkus-on-openshift
 ----
-
++
 [NOTE]
 ====
 Your hostname (the Kubernetes _pod_ in which your app runs) name will be different from the above.
 ====
 
-Now that your app is deployed to OpenShift you can also see it in the https://console-openshift-console.{openshift_cluster_ingress_domain}[OpenShift Console^]. Login with `{user}/{password}`
-
+. Now that your app is deployed to OpenShift you can also see it in the https://console-openshift-console.{openshift_cluster_ingress_domain}[OpenShift Console^]. Login with `{user}/{password}`
++
 image::che-login.png[login,700]
 
-Once logged in, switch from the Administrator perspective to the Developer perspective using the dropdown menu at the top of the sidebar: 
-
+. Once logged in, switch from the Administrator perspective to the Developer perspective using the dropdown menu at the top of the sidebar: 
++
 image::devperspective.png[devperspective,300]
 
-Then switch to the Topology View:
-
+. Then switch to the Topology View:
++
 image::topology.png[topology,300]
 
-Select your project (`{user}-quarkus`):
-
+. Select your project (`{user}-quarkus`):
++
 image::projlist.png[project,700]
 
-You can see the single `people` deployment that we deployed earlier using the CLI:
-
+. You can see the single `people` deployment that we deployed earlier using the CLI:
++
 image::peopledc.png[project,700]
 
-Select the circle to get details:
-
+. Select the circle to get details:
++
 image::container1.png[container,700]
 
-Select the **View Logs** link to see the console output from the app:
-
+. Select the **View Logs** link to see the console output from the app:
++
 image::podlogs.png[logs,800]
-
++
 This is the same output you saw earlier when you ran it "locally" with its super-fast startup time.
 
-Go back to the _Topology_ view. Since this app is exposed to the world, a _Route_ was created which you can access using the small arrow in the upper right of the circle. Select the route link:
+. Go back to the _Topology_ view. Since this app is exposed to the world, a _Route_ was created which you can access using the small arrow in the upper right of the circle. Select the route link:
++
+image::routelink.png[logs,40%]
 
-image::routelink.png[logs,600]
-
-You can click on the route link to open up the default Quarkus page that's packaged as part of our workshop application.
+. You can click on the route link to open up the default Quarkus page that's packaged as part of our workshop application.
 
 == Connect MicroProfile health check
 
-Earlier you implemented a series of MicroProfile health checks. To make OpenShift aware of these available health checks and begin using them, run the following commands in a Terminal:
-
+. Earlier you implemented a series of MicroProfile health checks. To make OpenShift aware of these available health checks and begin using them, run the following commands in a Terminal:
++
 [source,sh,role="copypaste"]
 ----
 oc set probe deployment/people --readiness --initial-delay-seconds=5 --period-seconds=5 --failure-threshold=20 --get-url=http://:8080/q//health/ready && oc set probe deployment/people --liveness --initial-delay-seconds=5 --period-seconds=5 --failure-threshold=20  --get-url=http://:8080/q/health/live
 ----
 
-You'll see in the Topology view that the app is re-deployed with the new settings and the old app will be _terminated_ soon after:
-
+. You'll see in the Topology view that the app is re-deployed with the new settings and the old app will be _terminated_ soon after:
++
 image::redeploy.png[logs,600]
 
 
-This configures both a _readiness_ probe (is the app initialized and ready to serve requests?) and a _liveness_ probe (is the app still up and ready to serve requests) with default timeouts. OpenShift will not route any traffic to pods that don't respond successfully to these probes. By editing these, it will trigger a new deployment.
+. This configures both a _readiness_ probe (is the app initialized and ready to serve requests?) and a _liveness_ probe (is the app still up and ready to serve requests) with default timeouts. OpenShift will not route any traffic to pods that don't respond successfully to these probes. By editing these, it will trigger a new deployment.
 
-At this point, the probes will be accessed periodically to ensure the app is healthy.
+. At this point, the probes will be accessed periodically to ensure the app is healthy.
 
 == Congratulations!
 
