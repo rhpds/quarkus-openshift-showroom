@@ -7,8 +7,8 @@ So far we have only covered integration style tests that test the app via HTTP e
 
 Quarkus supports this by allowing you to inject CDI beans into your tests via the `@Inject` annotation (in fact, tests in Quarkus are full CDI beans, so you can use all CDI functionality). Let's create a simple test that tests the greeting service directly without using HTTP.
 
-Create a new test class file in `src/test` in the `org.acme.people` package called `GreetingServiceTest.java`. Use the following code for the file's contents (note we've included the proper imports for you):
-
+. Create a new test class file in `src/test` in the `org.acme.people` package called `GreetingServiceTest.java`. Use the following code for the file's contents (note we've included the proper imports for you):
++
 [source, java, role="copypaste"]
 ----
 package org.acme.people;
@@ -28,7 +28,7 @@ public class GreetingServiceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("GreetingServiceTest");
 
-    @Inject // <1>
+    @Inject // (1)
     GreetingService service;
 
     @Test
@@ -37,10 +37,11 @@ public class GreetingServiceTest {
     }
 }
 ----
-<1> Here we are injecting our `GreetingService` and calling it, just as our RESTful resource endpoint does in the production code.
++
+(1) Here we are injecting our `GreetingService` and calling it, just as our RESTful resource endpoint does in the production code.
 
-You will see new test along with your existing tests run instantly in the terminal once again. Verify the tests are passing.
-
+. You will see new test along with your existing tests run instantly in the terminal once again. Verify the tests are passing.
++
 [NOTE]
 ====
 As mentioned above Quarkus tests are actually full CDI beans, and as such you can apply CDI interceptors as you would normally. As an example, if you want a test method to run within the context of a transaction you can simply apply the `@Transactional` annotation to the method and the transaction interceptor will handle it.

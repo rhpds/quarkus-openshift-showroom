@@ -7,8 +7,8 @@ Quarkus supports the use of mock objects using the CDI `@Alternative` mechanism.
 
 Let's mock our existing `GreetingService`. Although our existing service is pretty simple, in the real world the service might have too many dependencies on external systems to be feasible to call directly.
 
-Create a new class file in `src/test/java` in the `org.acme.people` package called `MockGreetingService.java` with the following code:
-
+. Create a new class file in `src/test/java` in the `org.acme.people` package called `MockGreetingService.java` with the following code:
++
 [source, java, role="copypaste"]
 ----
 package org.acme.people;
@@ -28,8 +28,8 @@ public class MockGreetingService extends GreetingService {
 }
 ----
 
-Now modify our existing `GreetingServiceTest` class to add a log statement showing the value retrieved during the test. Modify the `testGreetingService` method to look like:
-
+. Now modify our existing `GreetingServiceTest` class to add a log statement showing the value retrieved during the test. Modify the `testGreetingService` method to look like:
++
 [source, java, role="copypaste"]
 ----
     @Test
@@ -39,24 +39,24 @@ Now modify our existing `GreetingServiceTest` class to add a log statement showi
     }
 ----
 
-The test results of the mock will be updated automatically in the terminal:
-
+. The test results of the mock will be updated automatically in the terminal:
++
 [source, none]
 ----
 All 4 tests are passing (0 skipped), 1 test was run in 556ms. Tests completed at 01:37:50 due to changes to MockGreetingService.class and 1 other files.
 ----
 
-Press `o` to toggle test output and press `r` to re-run the continuous testing. Then, you will see:
-
+. Press `o` to toggle test output and press `r` to re-run the continuous testing. Then, you will see:
++
 [source, none]
 ----
 INFO  [GreetingServiceTest] (Test runner thread) greeting: hello Quarkus <<<<<<<<<< from mock greeting >>>>>>>>>>
 ----
 
-This confirms that our `MockGreetingService` is being used instead of the original `GreetingService`.
+. This confirms that our `MockGreetingService` is being used instead of the original `GreetingService`.
 
-Make sure to press `p` to pause the continuous testing before you go to the next lab:
-
+. Make sure to press `p` to pause the continuous testing before you go to the next lab:
++
 [source, none]
 ----
 Tests paused

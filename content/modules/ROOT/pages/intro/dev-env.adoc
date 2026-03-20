@@ -9,7 +9,7 @@ image::login_with_openshift.png[login,800]
 
 
 // TODO: add note how users should login
-. Login using your ID and password
+. Login using user ID and password as *{user} / {password}*
 
 . Click on the *Allow selected permissions* button when prompted
 

@@ -5,10 +5,10 @@
 
 Quarkus also provides a new experimental Dev UI, which is available in dev mode (when you start quarkus with mvn quarkus:dev) at `/q/dev` by default. It allows you to quickly visualize all the extensions currently loaded, see their status and go directly to their documentation.
 
-Access the https://{user}-quarkus-workshop-index-webpage.{openshift_cluster_ingress_domain}/q/dev-ui/[Quarkus Dev UI^]
-
+. Access the https://{user}-quarkus-workshop-index-webpage.{openshift_cluster_ingress_domain}/q/dev-ui/[Quarkus Dev UI^]
++
 image::quarkus-devui.png[devui-endpoint, 800]
 
-Select `Continuous Testing` on the left menu, you will that see 2 test cases passed with a green color.
-
+. Select `Continuous Testing` on the left menu, you will that see 2 test cases passed with a green color.
++
 image::quarkus-devui-test-result.png[devui-endpoint, 800]

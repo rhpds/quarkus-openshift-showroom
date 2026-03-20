@@ -21,7 +21,7 @@ Login successful.
 
 You have access to 89 projects, the list has been suppressed. You can list all projects with 'oc projects'
 
-Using project "devspaces-{user}-qyf6iq".
+Using project "devspaces-{user}".
 Welcome! See 'oc help' to get started.
 ----
 
@@ -56,19 +56,19 @@ you will see:
 
 Next, add the following variables in `src/main/resources/application.properties` for deploying the application to OpenShift. native compilation using `Mandrel` builder image:
 
-[source,properties,role="copypaste"]
+[source,properties,role="copypaste",subs="attributes"]
 ----
-%prod.quarkus.kubernetes-client.trust-certs=true<1>
-%prod.quarkus.kubernetes.deploy=true<2>
-%prod.quarkus.kubernetes.deployment-target=openshift<3>
-%prod.quarkus.openshift.build-strategy=docker<4>
-%prod.quarkus.openshift.route.expose=true<5>
-%prod.quarkus.openshift.route.target-port=http<6>
-%prod.quarkus.openshift.route.tls.termination=edge<7>
-%prod.quarkus.openshift.route.tls.insecure-edge-termination-policy=Allow<8>
-quarkus.openshift.deployment-kind=Deployment<9>
-quarkus.container-image.group=%ENTER_USERID_AT_TOP_OF_PAGE%-project<10>
-quarkus.container-image.registry=image-registry.openshift-image-registry.svc:5000<11>
+%prod.quarkus.kubernetes-client.trust-certs=true <1>
+%prod.quarkus.kubernetes.deploy=true <2>
+%prod.quarkus.kubernetes.deployment-target=openshift <3>
+%prod.quarkus.openshift.build-strategy=docker <4>
+%prod.quarkus.openshift.route.expose=true <5>
+%prod.quarkus.openshift.route.target-port=http <6>
+%prod.quarkus.openshift.route.tls.termination=edge <7>
+%prod.quarkus.openshift.route.tls.insecure-edge-termination-policy=Allow <8>
+quarkus.openshift.deployment-kind=Deployment <9>
+quarkus.container-image.group={user}-project <10>
+quarkus.container-image.registry=image-registry.openshift-image-registry.svc:5000 <11>
 ----
 <1> We are using self-signed certs in this simple example, so this simply says to the extension to trust them.
 <2> Instructs the extension to deploy to OpenShift after the container image is built
