@@ -196,4 +196,4 @@ image::redeploy.png[logs,600]
 
 This step covered the deployment of a native Quarkus application on OpenShift. However, there is much more, and the integration with these cloud native platforms (through health checks, configuration management, and monitoring) has been tailored to make Quarkus applications execution very smooth.
 
-This is the end of the *Quarkus Fundamentals Hands-On Lab*. Check back soon for the *Advanced Quarkus Hands-On Lab*, available in Q1 2026.
+This is the end of the *Quarkus Fundamentals Hands-On Lab*. You can now proceed to the  the *Advanced Quarkus Hands-On Module*.

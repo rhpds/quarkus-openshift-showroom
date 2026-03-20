@@ -435,9 +435,9 @@ So, in our `PersonResource` endpoint, we'll start with an empty `result` object 
 [source,java,role="copypaste"]
 ----
             DataTable result = new DataTable();
-            result.setDraw(draw); // <1>
+            result.setDraw(draw); // (1)
 ----
-<1> We initialize the `DataTable` return object with the value passed in, to ensure DataTables redraws in the correct order in case of async returns.
+(1) We initialize the `DataTable` return object with the value passed in, to ensure DataTables redraws in the correct order in case of async returns.
 
 === Implement search logic
 
@@ -447,14 +447,14 @@ Next, if the request includes a search parameter, let's take care of that by inc
 ----
             PanacheQuery<Person> filteredPeople;
 
-            if (searchVal != null && !searchVal.isEmpty()) { // <1>
+            if (searchVal != null && !searchVal.isEmpty()) { // (1)
                 filteredPeople = Person.<Person>find("name like :search",
                     Parameters.with("search", "%" + searchVal + "%"));
             } else {
                 filteredPeople = Person.findAll();
             }
 ----
-<1> If a search value was passed in, use it to search using the Panache `find` method. Otherwise, use `findAll` to skip filtering.
+(1) If a search value was passed in, use it to search using the Panache `find` method. Otherwise, use `findAll` to skip filtering.
 
 === Implement paging logic
 
@@ -573,7 +573,7 @@ You should get up to 2 records returned (since we passed `length=2` in the query
 
 == Deploy to OpenShift
 
-Our production environment needs a "real" database so let's deploy a Postgres database to OpenShift. Back in the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^], select **Software Catalog**, under **Home** on the left.
+Our production environment needs a "real" database so let's deploy a Postgres database to OpenShift. Back in the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^], select **Software Catalog**, under **Ecosystem** on the left.
 
 image::db.png[db, 300]
 
@@ -605,7 +605,7 @@ oc label dc/postgres-database app.kubernetes.io/part-of=people --overwrite && \
 oc annotate deployment/people app.openshift.io/connects-to=postgres-database --overwrite
 ----
 
-This will deploy the database to our new project. Select the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^] to see it:
+This will deploy the database to our new project. Select the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus?view=graph[Topology View^] to see it:
 
 image::database-deployment.png[inventory_db_deployments, 700]
 
