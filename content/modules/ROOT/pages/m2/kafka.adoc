@@ -50,7 +50,7 @@ oc create -f src/main/kubernetes/kafka.yaml
 
 This will cause the Operator to provision a new Kafka cluster. It will take a few minutes to complete.
 
-Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project?view=graph[Topology View^], make sure all the Kafka pods are up and running (with dark blue circles):
+Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus?view=graph[Topology View^], make sure all the Kafka pods are up and running (with dark blue circles):
 
 image::kafkaup.png[topiccreate,800]
 
@@ -264,7 +264,7 @@ The build should take a minute or two to complete.
 
 == Test
 
-Our application should be up and running in a few seconds after the build completes and generating names. To see if it's working, access the https://people-{user}-project.{openshift_cluster_ingress_domain}/names.html[graphical name cloud powered by Quarkus, MicroProfile and Kafka^]. You should see a cloud of names updating every 5 seconds (it may take a few seconds for it to start!):
+Our application should be up and running in a few seconds after the build completes and generating names. To see if it's working, access the https://people-{user}-quarkus.{openshift_cluster_ingress_domain}/names.html[graphical name cloud powered by Quarkus, MicroProfile and Kafka^]. You should see a cloud of names updating every 5 seconds (it may take a few seconds for it to start!):
 
 [NOTE]
 ====

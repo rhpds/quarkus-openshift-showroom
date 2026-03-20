@@ -165,7 +165,7 @@ Login successful.
 You have access to the following projects and can switch between them with 'oc project <projectname>':
 
   * {user}-devspaces
-    {user}-project
+    {user}-quarkus
 
 Using project "user1-devspaces".
 Welcome! See 'oc help' to get started.
@@ -188,7 +188,7 @@ When the script completes, the app is deployed to OpenShift. You can see it in t
 
 image::che-login.png[login,700]
 
-Once logged in, select the name of your project (`{user}-project`):
+Once logged in, select the name of your project (`{user}-quarkus`):
 
 image::ocpproj.png[project,700]
 

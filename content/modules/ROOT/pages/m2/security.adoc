@@ -23,7 +23,7 @@ You can install Keycloak in many ways, including just downloading and extracting
 
 === Deploy Keycloak Database
 
-Keycloak needs a database to store its data. We'll use Postgres. Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project?view=graph[OpenShift web console^], select **Software Catalog**, under **Home** on the left.
+Keycloak needs a database to store its data. We'll use Postgres. Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus?view=graph[OpenShift web console^], select **Software Catalog**, under **Home** on the left.
 
 image::db.png[db, 300]
 
@@ -50,7 +50,7 @@ Let's make the postgresql database icon show its proper logo by running the foll
 
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc -n {user}-project label dc keycloak-postgresql "app.openshift.io/runtime=postgresql" --overwrite
+oc -n {user}-quarkus label dc keycloak-postgresql "app.openshift.io/runtime=postgresql" --overwrite
 ----
 
 Keycloak needs a certificate pair to use for TLS communication. We will use OpenSSL to generate the key pair, and put the public key in the application so that we can refer to it at runtime. Run this command to create it and then create an OpenShift _Secret_ that holds the resulting key pair:
@@ -59,7 +59,7 @@ Keycloak needs a certificate pair to use for TLS communication. We will use Open
 ----
 mkdir -p $PROJECT_SOURCE/src/main/resources/certs/ && \
 openssl req -subj '/CN={openshift_cluster_ingress_domain}/O=Test Keycloak/C=US' -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out $PROJECT_SOURCE/src/main/resources/certs/certificate.pem && \
-oc -n {user}-project create secret tls keycloak-cert-secret --cert $PROJECT_SOURCE/src/main/resources/certs/certificate.pem --key key.pem
+oc -n {user}-quarkus create secret tls keycloak-cert-secret --cert $PROJECT_SOURCE/src/main/resources/certs/certificate.pem --key key.pem
 ----
 This secret will be used in the next step.
 
@@ -84,7 +84,7 @@ spec:
   http:
     tlsSecret: keycloak-cert-secret
   hostname:
-    hostname: keycloak-{user}-project.{openshift_cluster_ingress_domain}
+    hostname: keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}
   db:
     vendor: postgres
     host: keycloak-postgresql
@@ -108,7 +108,7 @@ Let's also visually link Keycloak to its database:
 
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc -n {user}-project annotate statefulset keycloak "app.openshift.io/connects-to=keycloak-postgresql" --overwrite
+oc -n {user}-quarkus annotate statefulset keycloak "app.openshift.io/connects-to=keycloak-postgresql" --overwrite
 ----
 
 === Log into Keycloak
@@ -123,14 +123,14 @@ image::keycloak-adminsecret.png[kc, 800]
 
 `admin` is pretty easy to remember, but you'll probably want to copy the password to your clipboard (using the copy-to-clipboard icon at the far right, or CTRL-C (CMD-C on a Mac)) to use in a moment.
 
-Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project?view=graph[OpenShift web console^] topology page, click the small "open" icon at the upper right of the Keycloak deployment:
+Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus?view=graph[OpenShift web console^] topology page, click the small "open" icon at the upper right of the Keycloak deployment:
 
 image::keycloak-openicon.png[kc, 500]
 
 Log in with the following:
 
 * *Username or email*: `admin`
-* *Password*: The password you retrieved from the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-project/secrets/keycloak-initial-admin[secret^] earlier.
+* *Password*: The password you retrieved from the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-quarkus/secrets/keycloak-initial-admin[secret^] earlier.
 
 image::admin-pw.png[kc, 800]
 
@@ -156,7 +156,7 @@ Run the following command to create this object and cause the Keycloak operator 
 
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc apply -n {user}-project -f $PROJECT_SOURCE/src/main/resources/kc-realm.yaml
+oc apply -n {user}-quarkus -f $PROJECT_SOURCE/src/main/resources/kc-realm.yaml
 ----
 
 You will see a new `Job` created, wait for it to complete (for the circle to turn green) and for the Keycloak pod to automatically restart:
@@ -165,7 +165,7 @@ image::realm-job.png[kc, 500]
 
 === Explore Realm
 
-Go back to the https://keycloak-{user}-project.{openshift_cluster_ingress_domain}/[Keycloak administration console^] and login as `admin` user (using the password from the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-project/secrets/keycloak-initial-admin[Secret^] as before). You should now see a new realm in the Realm dropdown. Select the `quarkus` realm by clicking on it.
+Go back to the https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/[Keycloak administration console^] and login as `admin` user (using the password from the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-quarkus/secrets/keycloak-initial-admin[Secret^] as before). You should now see a new realm in the Realm dropdown. Select the `quarkus` realm by clicking on it.
 
 Within the new realm, click on `Users` to see the pre-created users `admin`, `alice`, and `jdoe`:
 
@@ -207,8 +207,8 @@ Some configuration of the extension is required. Add this to your `application.p
 
 [source,properties,role="copypaste",subs="attributes"]
 ----
-mp.jwt.verify.publickey.location=https://keycloak-{user}-project.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/certs
-mp.jwt.verify.issuer=https://keycloak-{user}-project.{openshift_cluster_ingress_domain}/realms/quarkus
+mp.jwt.verify.publickey.location=https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/certs
+mp.jwt.verify.issuer=https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/realms/quarkus
 smallrye.jwt.client.tls.certificate.path=classpath:certs/certificate.pem
 smallrye.jwt.client.tls.trust-all=true
 ----
@@ -358,7 +358,7 @@ Get a token for user `alice` with this command:
 [source,sh,role="copypaste",subs="attributes"]
 ----
 export ALICE_TOKEN=$(\
-    curl -ks -X POST https://keycloak-{user}-project.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/token \
+    curl -ks -X POST https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/token \
     --user backend-service:secret \
     -H 'content-type: application/x-www-form-urlencoded' \
     -d 'username=alice&password=alice&grant_type=password' | jq --raw-output '.access_token' \
@@ -421,7 +421,7 @@ Obtain an Admin token:
 [source,sh,role="copypaste"]
 ----
 export ADMIN_TOKEN=$(\
-    curl -ks -X POST https://keycloak-{user}-project.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/token \
+    curl -ks -X POST https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/token \
     --user backend-service:secret \
     -H 'content-type: application/x-www-form-urlencoded' \
     -d 'username=admin&password=admin&grant_type=password' | jq --raw-output '.access_token' \
@@ -447,7 +447,7 @@ Set-Cookie: 2a1b392100b8b2cb3705c68f4ecbaf66=1b3560b80b9fad566e105aff1f31f880; p
 Cache-control: private
 
 hello admin, isSecure: false, authScheme: Bearer, hasJWT: true
-Injected issuer: ["https://keycloak-{user}-project.{openshift_cluster_ingress_domain}/realms/quarkus"]
+Injected issuer: ["https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/realms/quarkus"]
 
 Claim Name: [sub] Claim Value: [af134cab-f41c-4675-b141-205f975db679]
 Claim Name: [groups] Claim Value: [[admin, user]]
@@ -508,7 +508,7 @@ Next, add these to your `application.properties` for Keycloak:
 [source,none,role="copypaste",subs="attributes"]
 ----
 # OIDC config
-quarkus.oidc.auth-server-url=https://keycloak-{user}-project.{openshift_cluster_ingress_domain}/realms/quarkus
+quarkus.oidc.auth-server-url=https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/realms/quarkus
 quarkus.oidc.client-id=backend-service
 quarkus.oidc.credentials.secret=secret
 quarkus.http.cors=true
@@ -603,7 +603,7 @@ Refresh the admin token (it may have expired):
 [source,sh,role="copypaste",subs="attributes"]
 ----
 export ADMIN_TOKEN=$(\
-    curl -ks -X POST https://keycloak-{user}-project.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/token \
+    curl -ks -X POST https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/token \
     --user backend-service:secret \
     -H 'content-type: application/x-www-form-urlencoded' \
     -d 'username=admin&password=admin&grant_type=password' | jq --raw-output '.access_token' \
@@ -635,7 +635,7 @@ To access the confidential endpoint, you should obtain an access token for user 
 [source,sh,role="copypaste",subs="attributes"]
 ----
 export JDOE_TOKEN=$(\
-    curl -ks -X POST https://keycloak-{user}-project.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/token \
+    curl -ks -X POST https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/token \
     --user backend-service:secret \
     -H 'content-type: application/x-www-form-urlencoded' \
     -d 'username=jdoe&password=jdoe&grant_type=password' | jq --raw-output '.access_token' \

@@ -34,7 +34,7 @@ The login session might timeout after long periods of inactivity. If this happen
 
 https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/[Namespaces^] are a top level concept to help you organize your deployments and teams of developers. A namespace allows a community of users (or a user) to organize and manage their content in isolation from other communities. OpenShift _projects_ provide additional functionality for managing Kubernetes namespaces.
 
-For this scenario, a project has been created for you called `{user}-project`. You will use this project to deploy your developed project in the next step.
+For this scenario, a project has been created for you called `{user}-quarkus`. You will use this project to deploy your developed project in the next step.
 
 == Build and Deploy native image
 
@@ -67,7 +67,7 @@ Next, add the following variables in `src/main/resources/application.properties`
 %prod.quarkus.openshift.route.tls.termination=edge <7>
 %prod.quarkus.openshift.route.tls.insecure-edge-termination-policy=Allow <8>
 quarkus.openshift.deployment-kind=Deployment <9>
-quarkus.container-image.group={user}-project <10>
+quarkus.container-image.group={user}-quarkus <10>
 quarkus.container-image.registry=image-registry.openshift-image-registry.svc:5000 <11>
 ----
 <1> We are using self-signed certs in this simple example, so this simply says to the extension to trust them.
@@ -88,7 +88,7 @@ Rebuild and re-deploy the people application via running the following maven plu
 
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc project {user}-project &&
+oc project {user}-quarkus &&
 mvn clean package -Pnative -DskipTests -Dquarkus.package.uber-jar=false
 ----
 
@@ -139,7 +139,7 @@ Then switch to the Topology View:
 
 image::topology.png[topology,300]
 
-Select your project (`{user}-project`):
+Select your project (`{user}-quarkus`):
 
 image::projlist.png[project,700]
 

@@ -35,7 +35,7 @@ Each component (microservice) in a distributed trace will contribute its own spa
 
 Jaeger is installed and managed through its Kubernetes Operator (just like AMQ Streams and Kafka that you used in previous exercises).
 
-From the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project[Topology View^], click on **Installed Operators** in the sidebar menu and select **Jaeger**
+From the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^], click on **Installed Operators** in the sidebar menu and select **Jaeger**
 
 image::operators-list.png[operators,800]
 
@@ -49,11 +49,11 @@ Change the name to `jaeger` as shown, and click **Create**:
 
 image::jaegerdone.png[kafkacatalog,800]
 
-This will create a new `Jaeger` Kubernetes object in your namespace, triggering the Operator to deploy Jaeger. In the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project[Topology View^] you'll see Jaeger spin up:
+This will create a new `Jaeger` Kubernetes object in your namespace, triggering the Operator to deploy Jaeger. In the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^] you'll see Jaeger spin up:
 
 image::jaegerspin.png[spin, 600]
 
-Jaeger exposes its collector at different ports for different protocols. Most use the HTTP collector at `jaeger-collector:14268` but other protocols like gRPC are also supported on different ports. You can see them by clicking on the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-project/services/jaeger-collector[Service details^]:
+Jaeger exposes its collector at different ports for different protocols. Most use the HTTP collector at `jaeger-collector:14268` but other protocols like gRPC are also supported on different ports. You can see them by clicking on the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-quarkus/services/jaeger-collector[Service details^]:
 
 image::jaegersvcs.png[spin, 700]
 
@@ -157,7 +157,7 @@ oc rollout status -w deployment/people
 
 == Trigger traces
 
-You'll need to trigger some HTTP endpoints to generate traces. Access the https://people-{user}-project.{openshift_cluster_ingress_domain}/datatable.html[graphical person browser powered by the DataTables library we created earlier^].
+You'll need to trigger some HTTP endpoints to generate traces. Access the https://people-{user}-quarkus.{openshift_cluster_ingress_domain}/datatable.html[graphical person browser powered by the DataTables library we created earlier^].
 
 Exercise the table a bit by paging through the entries and using various search terms to force several RESTful calls back to our app:
 
@@ -165,7 +165,7 @@ image::paging.png[paging,600]
 
 == Inspect traces
 
-Open the https://jaeger-{user}-project.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. By default Jaeger uses the same login details as OpenShift, so click the **Login with OpenShift** button, enter your credentials:
+Open the https://jaeger-{user}-quarkus.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. By default Jaeger uses the same login details as OpenShift, so click the **Login with OpenShift** button, enter your credentials:
 
 * **Username**: `{user}`
 * **Password**: `{password}`
@@ -390,7 +390,7 @@ You should see:
 
 == Inspect traces
 
-Reload the https://jaeger-{user}-project.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. Then, select `GET /person/swpeople` in the Operation and click **Find Traces**.
+Reload the https://jaeger-{user}-quarkus.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. Then, select `GET /person/swpeople` in the Operation and click **Find Traces**.
 
 image::swpeople-search.png[swpeople,800]
 
