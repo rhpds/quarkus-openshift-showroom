@@ -72,7 +72,7 @@ The result of this command is a new `<dependency>` added to our `pom.xml` which 
 
 Select the _Source Control_ view and then select `pom.xml`:
 
-image::gitdiff.png[login,1000]
+image::gitdiff.png[login,1000, link=self,window=blank]
 
 You'll see all the changes to `pom.xml` since you started, including the new extensions we've added.
 

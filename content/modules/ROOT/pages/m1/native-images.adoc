@@ -6,7 +6,7 @@ Let's now produce a native executable for our application. It improves the start
 
 Mandrel is a downstream distribution of the GraalVM community edition. Mandrel's main goal is to provide a native-image release specifically to support https://access.redhat.com/documentation/en-us/red_hat_build_of_quarkus[Quarkus^]. The aim is to align the native-image capabilities from GraalVM with OpenJDK and Red Hat Enterprise Linux libraries to improve maintainability for native Quarkus applications.
 
-image::native-image-process.png[native, 600]
+image::native-image-process.png[native, 600, link=self,window=blank]
 
 GraalVM is already installed for you. Inspect the value of the `GRAALVM_HOME` variable in the Terminal with:
 

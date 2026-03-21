@@ -13,7 +13,7 @@ mvn clean package -DskipTests
 
 . This produces an executable jar file in the `target/quarkus-app/` directory:
 +
-image::jar.png[jar,400]
+image::jar.png[jar,400, link=self,window=blank]
 
 +
 NOTE: `quarkus-run.jar` - being an executable fast jar. Be aware that it's not an über-jar as the dependencies are copied into the `target/lib` directory.

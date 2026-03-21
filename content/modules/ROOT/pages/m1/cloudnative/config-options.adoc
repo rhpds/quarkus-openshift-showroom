@@ -6,7 +6,7 @@ Quarkus itself is configured via the same mechanism as your application. Quarkus
 
 You can find the https://quarkus.io/guides/all-config[All configuration options^] here:
 
-image::all-config.png[all-config, 700]
+image::all-config.png[all-config, 700, link=self,window=blank]
 
 [NOTE]
 ====

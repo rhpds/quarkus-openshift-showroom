@@ -11,11 +11,11 @@ Let's modify the application and add a companion bean.
 
 . In the IDE, right-click on the `org.acme.people.service` package in the project browser and select _New File..._.
 +
-image::newclass.png[newclass,500]
+image::newclass.png[newclass,500, link=self,window=blank]
 
 . Name the file `GreetingService.java`.
 +
-image::classname.png[classname,400]
+image::classname.png[classname,400, link=self,window=blank]
 
 . Next, replace the below code into the class:
 +
@@ -57,7 +57,7 @@ public class GreetingService {
 
 . You will get red error squigglies when you paste this code due to missing import statements:
 +
-image::importerror.png[error,800]
+image::importerror.png[error,800, link=self,window=blank]
 
 . Add the necessary imports below the existing `import` statements near the top of the file:
 +

@@ -5,11 +5,11 @@
 
 . Go back to the terminal and at the bottom of the screen you should see the following:
 +
-image::ct-resume.png[testshere, 800]
+image::ct-resume.png[testshere, 800, link=self,window=blank]
 
 . Press `r` to initate continuous testing. You should see the status change down the bottom of the screen as they are running, and it should finish with the following error:
 +
-image::ct-error.png[testshere, 800]
+image::ct-error.png[testshere, 800, link=self,window=blank]
 
 . This is because you changed the greeting in an earlier step. In `GreetingResource`, change `Hola` back to `Hello` (in the `GreetingResource` class) and the tests will run again automatically. 
 . Confirm all tests pass in the terminal:

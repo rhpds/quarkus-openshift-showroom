@@ -33,7 +33,7 @@ Let's take a look at the *Explorer* menu on the left hand of the IDE. Your Quark
 
 . Navigate to `src -> main -> java -> org.acme.people.rest` in the project tree and select `GreetingResource.java`.
 +
-image::initnav.png[VS Code-workspace-terminal, 800]
+image::initnav.png[VS Code-workspace-terminal, 800, link=self,window=blank]
 
 . This class has a very simple RESTful endpoint definition that returns *hello* to requests on `/hello`.
 +
@@ -71,7 +71,7 @@ Note that the changes will be automatially saved in the IDE.
 
 Open a new terminal windown on the VS Code.
 
-image::new-terminal.png[commands, 600]
+image::new-terminal.png[commands, 600, link=self,window=blank]
 
 Run the following `mvn` (Maven) commands to run Quarkus dev mode in the terminal.
 
@@ -82,7 +82,7 @@ mvn clean quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.analytics.disabled=t
 
 When the dev mode starts, you will see a popup to access the *welcome* page.
 
-image::cmd-livecoding.png[livecoding, 900]
+image::cmd-livecoding.png[livecoding, 900, link=self,window=blank]
 
 *Leave this terminal window open throughout the lab!* You will complete the entire lab without shutting down Quarkus Live Coding mode, so be careful not to close the tab (if you do, you re-run it). This is very useful for quick experimentation.
 
@@ -103,21 +103,21 @@ You can also see *Tests paused* by default when a Quarkus application gets start
 
 When you select *Open In New Tab* to access the welcome page, you should see the popup message below. 
 
-image::open-external.png[port, 700]
+image::open-external.png[port, 700, link=self,window=blank]
 
 Select `Open`. A new tab in your web browser will open automatically.
 
-image::welcome-quarkus.png[port, 900]
+image::welcome-quarkus.png[port, 900, link=self,window=blank]
 
 Select `/hello` enpoint on the Quarkus welcome. You should see the following page:
 
-image::crw-open-page-hello.png[page, 800]
+image::crw-open-page-hello.png[page, 800, link=self,window=blank]
 
 When you fail to access the *hello* endpoint URL, make sure if the new opened tab has the *http* protocol.
 
 You can also test the endpoint using the _curl_ command. Open a *new* terminal by selecting `+` icon:
 
-image::cmd-terminal.png[livecoding, 900]
+image::cmd-terminal.png[livecoding, 900, link=self,window=blank]
 
 Invoke the `hello` endpoint using the following _curl_ command:
 
@@ -186,19 +186,19 @@ Wait for the script to complete before continuing.
 
 When the script completes, the app is deployed to OpenShift. You can see it in the https://console-openshift-console.{openshift_cluster_ingress_domain}[OpenShift Console^]. Login with your assigned username and password (e.g. `{user}/{password}`):
 
-image::che-login.png[login,700]
+image::che-login.png[login,700, link=self,window=blank]
 
 Once logged in, select the name of your project (`{user}-quarkus`):
 
-image::ocpproj.png[project,700]
+image::ocpproj.png[project,700, link=self,window=blank]
 
 In the sidebar menu, switch to the Topology View using the drop-down under Workloads:
 
-image::devperspective.png[perspective, 500]
+image::devperspective.png[perspective, 500, link=self,window=blank]
 
 You can see the single `people` deployment that we just deployed earlier using the CLI:
 
-image::peopledc.png[project,600]
+image::peopledc.png[project,600, link=self,window=blank]
 
 [IMPORTANT]
 ====

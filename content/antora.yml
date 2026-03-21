@@ -1,5 +1,9 @@
 name: modules
 title: Quarkus on OpenShift
 version: ~
+start_page: index.adoc
 nav:
   - modules/ROOT/nav.adoc
+asciidoc:                                                                                                                                                                                  
+    attributes:                 
+      lab_name: Red Hat build of Quarkus on Red Hat OpenShift

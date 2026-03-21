@@ -43,5 +43,5 @@ public class GreetingResourceTest {
 ====
 When creating new tests, always double-check to be sure you are in the `src/test` directory tree, not `src/main`!
 
-image::testshere.png[testshere, 500]
+image::testshere.png[testshere, 500, link=self,window=blank]
 ====

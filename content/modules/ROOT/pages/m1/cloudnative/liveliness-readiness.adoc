@@ -57,11 +57,11 @@ Output:
 
 . Go back to Dev UI and select `Health` in SmallRye Health extension:
 +
-image::quarkus-devui-healthui.png[livecoding, 700]
+image::quarkus-devui-healthui.png[livecoding, 700, link=self,window=blank]
 
 . It shows all health checks:
 +
-image::quarkus-devui-healthui2.png[livecoding, 700]
+image::quarkus-devui-healthui2.png[livecoding, 700, link=self,window=blank]
 
 
 Later, when we deploy this to our Kubernetes cluster, we'll configure it to use these endpoints.

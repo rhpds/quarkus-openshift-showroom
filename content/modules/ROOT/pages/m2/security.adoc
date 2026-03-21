@@ -25,11 +25,11 @@ You can install Keycloak in many ways, including just downloading and extracting
 
 Keycloak needs a database to store its data. We'll use Postgres. Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus?view=graph[OpenShift web console^], select **Software Catalog**, under **Home** on the left.
 
-image::db.png[db, 300]
+image::db.png[db, 300, link=self,window=blank]
 
 Then, Type in `PostgreSQL (Ephemeral)` in the search box, and select the *PostgreSQL (ephemeral)*:
 
-image::db-postgres.png[postrgesdb, 700]
+image::db-postgres.png[postrgesdb, 700, link=self,window=blank]
 
 Select *Instantiate Template*, then override the following values (leaving the rest as their defaults):
 
@@ -38,11 +38,11 @@ Select *Instantiate Template*, then override the following values (leaving the r
 
 Leave the rest as-is, including the username and password, which will be auto-generated for you and you'll refer to them later. Finally, click *Create*:
 
-image::postgres-create2-kc.png[kc, 800]
+image::postgres-create2-kc.png[kc, 800, link=self,window=blank]
 
 You should see a postgres database begin spinning up:
 
-image::postgres-create3-kc.png[kc, 800]
+image::postgres-create3-kc.png[kc, 800, link=self,window=blank]
 
 === Create self-signed certificate
 
@@ -69,7 +69,7 @@ By creating an instance of a `Keycloak` object, the Keycloak operator will proce
 
 Then type `keycloak` into the search box, click on the "Keycloak" item, and click Create:
 
-image::keycloak-create1.png[kc, 800]
+image::keycloak-create1.png[kc, 800, link=self,window=blank]
 
 On the next screen, make sure you're in the _YAML view_, and replace the YAML with the following definition:
 
@@ -100,7 +100,7 @@ Click *Create* to establish this custom resource.
 
 This references the certificate+key pair created earlier, as well as our Postgres database credentials, which are stored in a secret. Click *Create*, and you will see your new keycloak server starting up:
 
-image::keycloak-create2.png[kc, 500]
+image::keycloak-create2.png[kc, 500, link=self,window=blank]
 
 Wait for it to complete (and get a dark blue circle). This should only take a few seconds if everything is working! If it does not after a minute or so, double-check that you entered the right values, and the database secret and certificate secret both exist under the names given.
 
@@ -115,28 +115,28 @@ oc -n {user}-quarkus annotate statefulset keycloak "app.openshift.io/connects-to
 
 When you use the keycloak operator, it will generate an initial administrator username/password in a Secret. Access the secret by clicking on *Secrets*, and find the `keycloak-initial-admin` secret, and click on it:
 
-image::keycloak-secrets1.png[kc, 800]
+image::keycloak-secrets1.png[kc, 800, link=self,window=blank]
 
 Finally, click on *Reveal Values* to see the username (which should be `admin`), and the password:
 
-image::keycloak-adminsecret.png[kc, 800]
+image::keycloak-adminsecret.png[kc, 800, link=self,window=blank]
 
 `admin` is pretty easy to remember, but you'll probably want to copy the password to your clipboard (using the copy-to-clipboard icon at the far right, or CTRL-C (CMD-C on a Mac)) to use in a moment.
 
 Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus?view=graph[OpenShift web console^] topology page, click the small "open" icon at the upper right of the Keycloak deployment:
 
-image::keycloak-openicon.png[kc, 500]
+image::keycloak-openicon.png[kc, 500, link=self,window=blank]
 
 Log in with the following:
 
 * *Username or email*: `admin`
 * *Password*: The password you retrieved from the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-quarkus/secrets/keycloak-initial-admin[secret^] earlier.
 
-image::admin-pw.png[kc, 800]
+image::admin-pw.png[kc, 800, link=self,window=blank]
 
 Once logged in, you should be at the Admin home screen:
 
-image::admin-home.png[kc, 800]
+image::admin-home.png[kc, 800, link=self,window=blank]
 
 == Import Realm
 
@@ -150,7 +150,7 @@ The Keycloak operator can import realms you supply by creating an instance of a 
 
 We have pre-defined a new realm for this lab, in the `inventory/src/main/resources/kc-realm.yaml` file. The file contains a definition of the realm, which you can see by opening the file in DevSpaces:
 
-image::realm-file.png[kc, 800]
+image::realm-file.png[kc, 800, link=self,window=blank]
 
 Run the following command to create this object and cause the Keycloak operator to import the realm via a `Job`:
 
@@ -161,7 +161,7 @@ oc apply -n {user}-quarkus -f $PROJECT_SOURCE/src/main/resources/kc-realm.yaml
 
 You will see a new `Job` created, wait for it to complete (for the circle to turn green) and for the Keycloak pod to automatically restart:
 
-image::realm-job.png[kc, 500]
+image::realm-job.png[kc, 500, link=self,window=blank]
 
 === Explore Realm
 
@@ -169,7 +169,7 @@ Go back to the https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain
 
 Within the new realm, click on `Users` to see the pre-created users `admin`, `alice`, and `jdoe`:
 
-image::new-users.png[kc, 800]
+image::new-users.png[kc, 800, link=self,window=blank]
 
 * `alice` is an ordinary user (will have the `user` role) whose password is `alice`
 * `admin` is an Administrator (has the `admin` and `user` role) and their password is `admin`
@@ -177,7 +177,7 @@ image::new-users.png[kc, 800]
 
 We have also created a _Client_ within the realm that will be used by our backend inventory service called `backend-service`. This enables the service itself to authenticate with Keycloak to retrieve realm data.  Click on **Clients** to see this client.
 
-image::new-client.png[kc, 800]
+image::new-client.png[kc, 800, link=self,window=blank]
 
 Click on **Realm Roles** to see the roles our users are grouped into, `admin`, `confidential`, and `user` (and a few others). For example, clicking on `admin` > `Users in role` you can see only Alex Admin is in this role. In the `user` role, we have all of our fake users.
 

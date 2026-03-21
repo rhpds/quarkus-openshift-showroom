@@ -36,7 +36,7 @@ Operators simplify the process of:
 
 In this exercise, we are going to generate (random) names in one component. These names are written in a Kafka topic (`names`). A second component reads from the `names` Kafka topic and applies some magic conversion to the name (adding an honorific). The result is sent to an _in-memory stream_ consumed by a JAX-RS resource. The data is sent to a browser using https://www.w3.org/TR/eventsource/[_server-sent events_^] and displayed in the browser. It will look like this:
 
-image::names.png[names,800]
+image::names.png[names,800, link=self,window=blank]
 
 === Create Kafka Cluster
 
@@ -52,7 +52,7 @@ This will cause the Operator to provision a new Kafka cluster. It will take a fe
 
 Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus?view=graph[Topology View^], make sure all the Kafka pods are up and running (with dark blue circles):
 
-image::kafkaup.png[topiccreate,800]
+image::kafkaup.png[topiccreate,800, link=self,window=blank]
 
 It may take a few minutes for all of the pods to appear spin up. You can continue to the next step while the Kafka cluster and topics are created.
 
@@ -78,7 +78,7 @@ This will add the necessary entries in your `pom.xml` to bring in the Kafka exte
 
 The app consists of 3 components that pass messages via Kafka and an in-memory stream, then uses SSE to push messages to the browser. It looks like:
 
-image::kafkaarch.png[kafka, 800]
+image::kafkaarch.png[kafka, 800, link=self,window=blank]
 
 == Create name generator
 
@@ -271,7 +271,7 @@ Our application should be up and running in a few seconds after the build comple
 It takes a few seconds to establish the connection to Kafka. If you don't see new names generated every 5 seconds, reload the browser page to re-initialize the SSE stream.
 ====
 
-image::names.png[names,800]
+image::names.png[names,800, link=self,window=blank]
 
 These are the original names streamed through Kafka, altered to add a random honorific like *Sir* or *Madam*, and displayed in a *word cloud* for you to enjoy!
 

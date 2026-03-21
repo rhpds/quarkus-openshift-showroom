@@ -40,15 +40,15 @@ In _Live Coding_ mode, Quarkus apps also listen for debugger connections on port
 
 To connect to the running app, access the _debugger_ by selecting on the debug icon:
 
-image::crwdebug.png[buttons, 600]
+image::crwdebug.png[buttons, 600, link=self,window=blank]
 
 The debugger view will appear with several small buttons used to start/stop execution, step into/over/out of code, and other operations. Ensure that **Attach to App** is selected in the drop-down, and select the **Start Debugging** button to attach the debugger to the app:
 
-image::buttons.png[buttons, 600]
+image::buttons.png[buttons, 600, link=self,window=blank]
 
 Click on `Yes` to enable the *Debug* mode:
 
-image::debug-mode.png[debug-mode, 600]
+image::debug-mode.png[debug-mode, 600, link=self,window=blank]
 
 == Set a Breakpoint
 
@@ -59,7 +59,7 @@ To debug the app, let's step through our function that has the bug. In the left 
 Your line numbers may be different depending on where you placed this code in the file.
 ====
 
-image::break.png[breakpoint,800]
+image::break.png[breakpoint,800, link=self,window=blank]
 
 == Trigger the bug
 
@@ -72,7 +72,7 @@ curl http://localhost:8080/hello/lastletter/foo
 
 This time, the command will appear to hang as the breakpoint has been reached. The line where you set the breakpoint will be highlighted:
 
-image::breakreached.png[breakpointreached]
+image::breakreached.png[breakpointreached, link=self,window=blank]
 
 You will see four main sections of the debug view:
 
@@ -86,13 +86,13 @@ You will see four main sections of the debug view:
 
 Step over the current line by selecting **Step Over**:
 
-image::stepover.png[length, 800]
+image::stepover.png[length, 800, link=self,window=blank]
 
 This will fully execute the current line, and advance to the next line in the code and stop again. (You could also step _into_ methods for deeper debugging).
 
 At this point, `len` is defined (and listed on the right side):
 
-image::len.png[length, 800]
+image::len.png[length, 800, link=self,window=blank]
 
 * **Step Over** again, which executes the line to grab the last letter using `len` an offset to the `substring` method. See the bug? Look at the value of `lastLetter` in the variables list on the right - it's empty!
 
@@ -100,7 +100,7 @@ We need to pass an offset that is one _before_ the end, to get the last letter.
 
 Select the **Continue** button to let the method continue, log the erroneous value to the console, and return the value (your `curl` command may have timed out).
 
-image::debug-continue.png[buttons, 600]
+image::debug-continue.png[buttons, 600, link=self,window=blank]
 
 == Fix the bug
 
@@ -120,7 +120,7 @@ curl http://localhost:8080/hello/lastletter/foo ; echo
 
 The breakpoint will be hit once again. Step over the lines to verify the value of `lastLetter` is correct and you see a proper `Got last letter: o` on the console. before the method returns. You've fixed the bug!
 
-image::fixed.png[length, 800]
+image::fixed.png[length, 800, link=self,window=blank]
 
 [WARNING]
 ====
@@ -131,7 +131,7 @@ Remove the breakpoint by selecting on the red circle to de-highlight it.  Run th
 
 select **Disconnect** button to quit the debugging session.
 
-image::debug-disconnect.png[buttons, 600]
+image::debug-disconnect.png[buttons, 600, link=self,window=blank]
 
 == Congratulations!
 

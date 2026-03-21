@@ -575,11 +575,11 @@ You should get up to 2 records returned (since we passed `length=2` in the query
 
 Our production environment needs a "real" database so let's deploy a Postgres database to OpenShift. Back in the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^], select **Software Catalog**, under **Ecosystem** on the left.
 
-image::db.png[db, 300]
+image::db.png[db, 300, link=self,window=blank]
 
 Then, Type in `PostgreSQL (Ephemeral)` in the search box, and select the *PostgreSQL (ephemeral)*:
 
-image::db-postgres.png[postrgesdb, 700]
+image::db-postgres.png[postrgesdb, 700, link=self,window=blank]
 
 Select *Instantiate Template* and fill in the following fields, leaving the others as their default values:
 
@@ -591,7 +591,7 @@ Select *Instantiate Template* and fill in the following fields, leaving the othe
 * **PostgreSQL Database Name**: `person`
 * **Version of PostgreSQL Image*: `12-el8`
 
-image::db-postgres-values.png[db, 700]
+image::db-postgres-values.png[db, 700, link=self,window=blank]
 
 Select *Create*.
 
@@ -607,7 +607,7 @@ oc annotate deployment/people app.openshift.io/connects-to=postgres-database --o
 
 This will deploy the database to our new project. Select the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus?view=graph[Topology View^] to see it:
 
-image::database-deployment.png[inventory_db_deployments, 700]
+image::database-deployment.png[inventory_db_deployments, 700, link=self,window=blank]
 
 == Rebuild and redeploy app
 
@@ -648,7 +648,7 @@ Back on the https://console-openshift-console.{openshift_cluster_ingress_domain}
 Remember in our `application.properties` we have pre-defined database connections for the `%prod` profile. When Quarkus runs in production, it will connect to the database you just deployed!
 ====
 
-image::database-redeployment.png[inventory_db_deployments, 700]
+image::database-redeployment.png[inventory_db_deployments, 700, link=self,window=blank]
 
 == Access deployed app
 
@@ -663,7 +663,7 @@ curl -s $(oc get route people -o=go-template --template='{{ .spec.host }}')/pers
 
 Now access the http://people-{user}-quarkus.{openshift_cluster_ingress_domain}/datatable.html[graphical person browser powered by the DataTables library^]. It should look like:
 
-image::datatable.png[datatable,800]
+image::datatable.png[datatable,800, link=self,window=blank]
 
 Notice the total number of records reported at the bottom. Type in a single letter, e.g. `F` in the search box and see how responsive the app is. Type additional letters to narrow the search. Rather than having all records loaded in the browser, DataTable makes a call back to our `/person/datatable` REST endpoint to fetch only those records that should be shown, based on page size, current page you're looking at, and any search filters. With a page size of `10` each REST call will only return up to 10 records, no matter how many there are in the database.
 

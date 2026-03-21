@@ -7,8 +7,8 @@ Quarkus also provides a new experimental Dev UI, which is available in dev mode 
 
 . Access the https://{user}-quarkus-workshop-index-webpage.{openshift_cluster_ingress_domain}/q/dev-ui/[Quarkus Dev UI^]
 +
-image::quarkus-devui.png[devui-endpoint, 800]
+image::quarkus-devui.png[devui-endpoint, 800, link=self,window=blank]
 
 . Select `Continuous Testing` on the left menu, you will that see 2 test cases passed with a green color.
 +
-image::quarkus-devui-test-result.png[devui-endpoint, 800]
+image::quarkus-devui-test-result.png[devui-endpoint, 800, link=self,window=blank]

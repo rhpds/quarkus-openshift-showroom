@@ -4,7 +4,7 @@
 
 In this step, you will create a straightforward application serving a `hello` endpoint. To demonstrate dependency injection this endpoint uses a `greeting` bean.
 
-image::arch.png[arch,800]
+image::arch.png[arch,800, link=self,window=blank]
 
 == Explore the Project
 
@@ -20,7 +20,7 @@ Let's take a look at the *Explorer* menu on the left hand of the IDE. Your Quark
 
 . Navigate to `src -> main -> java -> org.acme.people.rest` in the project tree and select `GreetingResource.java`.
 +
-image::initnav.png[VS Code-workspace-terminal, 800]
+image::initnav.png[VS Code-workspace-terminal, 800, link=self,window=blank]
 
 . This class has a very simple RESTful endpoint definition that returns *hello* to requests on `/hello`.
 +

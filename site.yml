@@ -1,7 +1,7 @@
 ---
 site:
-  title: Showroom Template Demo
-  url: https://github.com/rhpds/showroom_template_nookbag
+  title: Red Hat build of Quarkus on Red Hat OpenShift
+  url: https://github.com/rhpds/quarkus-openshift-showroom
   start_page: modules::index.adoc
 
 content:

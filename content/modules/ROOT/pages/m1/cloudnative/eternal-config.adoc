@@ -35,11 +35,11 @@ In the `org.acme.people.rest.GreetingResource` class, add the following fields t
 
 You'll get red squiggly errors underneath `@ConfigProperty`. Hover the cursor over them and select _Quick Fix_:
 
-image::quickfix.png[quickfix, 600]
+image::quickfix.png[quickfix, 600, link=self,window=blank]
 
 and select `Import 'ConfigProperty' (org.eclipse.microprofile.config.inject)`.
 
-image::quickfiximport.png[quickfix, 600]
+image::quickfiximport.png[quickfix, 600, link=self,window=blank]
 
 Do the same for the `java.util.Optional` type to eliminate the errors.
 
@@ -98,11 +98,11 @@ Quarkus Dev UI also allows you to edit the configuration values then the change 
 
 Let's go to the Dev UI, then select `Configuration` on the left menu. Key `greeting` in the search box then it will show *greeting.message* property. Then update the value to `hi` then select `Disk` icon: 
 
-image::quarkus-devui-configeditor.png[quarkus-devui-configeditor, 700]
+image::quarkus-devui-configeditor.png[quarkus-devui-configeditor, 700, link=self,window=blank]
 
 Then, you will see the *Property greeting.message updated*. Make sure if the _application.properties_ file is updated automatically:
 
-image::quarkus-devui-configeditor-update2.png[quarkus-devui-configeditor, 700]
+image::quarkus-devui-configeditor-update2.png[quarkus-devui-configeditor, 700, link=self,window=blank]
 
 Re-run a `curl` command to test the changes:
 

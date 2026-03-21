@@ -22,7 +22,7 @@ Quarkus provides a dev mode which greatly aids during development by providing a
 
 . Open a new terminal windown on the VS Code.
 +
-image::new-terminal.png[commands, 600]
+image::new-terminal.png[commands, 600, link=self,window=blank]
 
 . Run the following `mvn` (Maven) commands to run Quarkus dev mode in the terminal.
 +
@@ -33,7 +33,7 @@ mvn clean quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.analytics.disabled=t
 
 . When the dev mode starts, you will see a popup to access the *welcome* page.
 +
-image::cmd-livecoding.png[livecoding, 900]
+image::cmd-livecoding.png[livecoding, 900, link=self,window=blank]
 
 . *Leave this terminal window open throughout the lab!* You will complete the entire lab without shutting down Quarkus Live Coding mode, so be careful not to close the tab (if you do, you re-run it). This is very useful for quick experimentation.
 +
@@ -55,21 +55,21 @@ Occasionally you may get an error (e.g. `NullPointerException`) during Live Relo
 
 . When you select *Open In New Tab* to access the welcome page, you should see the popup message below. 
 +
-image::open-external.png[port, 700]
+image::open-external.png[port, 700, link=self,window=blank]
 
 . Select `Open`. A new tab in your web browser will open automatically.
 +
-image::welcome-quarkus.png[port, 900]
+image::welcome-quarkus.png[port, 900, link=self,window=blank]
 
 . Select `/hello` enpoint on the Quarkus welcome. You should see the following page:
 +
-image::crw-open-page-hello.png[page, 800]
+image::crw-open-page-hello.png[page, 800, link=self,window=blank]
 
 . When you fail to access the *hello* endpoint URL, make sure if the new opened tab has the *http* protocol.
 
 . You can also test the endpoint using the _curl_ command. Open a *new* terminal by selecting `+` icon:
 +
-image::cmd-terminal.png[livecoding, 900]
+image::cmd-terminal.png[livecoding, 900, link=self,window=blank]
 
 . Invoke the `hello` endpoint using the following _curl_ command:
 +

@@ -44,7 +44,7 @@ This will add the extension below to your `pom.xml`:
 
 When you go back to Dev UI, you will see a new `SmallRye Health` extension:
 
-image::quarkus-devui-health.png[native, 800]
+image::quarkus-devui-health.png[native, 800, link=self,window=blank]
 
 
 With no code, Quarkus still provides a default health check which may be enough for you if all you need is to know the app started. Try to access the `/health/ready` endpoint on the Terminal:

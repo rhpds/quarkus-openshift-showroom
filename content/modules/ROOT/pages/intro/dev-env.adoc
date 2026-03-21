@@ -1,11 +1,11 @@
 :imagesdir: ../assets/images
-# Web IDE Access
+= Web IDE Access
 
 You will use Visual Studio Code (VS Code) based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^]. **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
 
 . Navigate to https://devspaces.{openshift_cluster_ingress_domain}#https://github.com/learn-quarkus/redhat-quarkus-workshop-labs[access the Red Hat OpenShift Dev Spaces instance^] and select *Log in with OpenShift* button:
 +
-image::login_with_openshift.png[login,800]
+image::login_with_openshift.png[login,800, link=self,window=blank]
 
 
 // TODO: add note how users should login
@@ -13,27 +13,27 @@ image::login_with_openshift.png[login,800]
 
 . Click on the *Allow selected permissions* button when prompted
 
-image::auth-access.png[auth-access, 800]
+image::auth-access.png[auth-access, 800, link=self,window=blank]
 
 . The next page will display progess as devspaces is *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process.
 +
-image::starting-workspace.png[ds, 800]
+image::starting-workspace.png[ds, 800, link=self,window=blank]
 +
 
 . When prompted with *Do you trust the authors of this repository?* popup, select `Do not ask again for other repositories` to continue using your workspace.
 +
-image::trust-author.png[ds, 800]
+image::trust-author.png[ds, 800, link=self,window=blank]
 
 . In a few seconds, you will have access to your own web-based IDE
 +
-image::ds-workspace.png[ds, 800]
+image::ds-workspace.png[ds, 800, link=self,window=blank]
 .. Click on `Trust Publishers & Install` when prompted.
 +
-image::ds-trust-pub-popup.png[ds, 800]
+image::ds-trust-pub-popup.png[ds, 800, link=self,window=blank]
 
 .. And also click on `Yes, I trust the authors` as indicated below.
 +
-image::ds-trust-popup.png[ds, 800]
+image::ds-trust-popup.png[ds, 800, link=self,window=blank]
 
 == Explore the IDE
 
@@ -41,7 +41,7 @@ This workshop's IDE is based on Eclipse Che (which is in turn based on MicroSoft
 
 . Explore the icons on the left for navigating between project explorer, search, version control (e.g. Git), debugging, and other plugins.  You'll use these during the course of this workshop. Feel free to select them and see what they do:
 +
-image::ds-icons.png[cdw, 500]
+image::ds-icons.png[cdw, 500, link=self,window=blank]
 +
 TIP:  If things get weird or your browser appears, you can simply reload the browser tab to refresh the view.
 

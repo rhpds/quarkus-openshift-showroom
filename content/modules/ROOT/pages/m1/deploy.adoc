@@ -140,37 +140,37 @@ Your hostname (the Kubernetes _pod_ in which your app runs) name will be differe
 
 . Now that your app is deployed to OpenShift you can also see it in the https://console-openshift-console.{openshift_cluster_ingress_domain}[OpenShift Console^]. Login with `{user}/{password}`
 +
-image::che-login.png[login,700]
+image::che-login.png[login,700, link=self,window=blank]
 
 . Once logged in, switch from the Administrator perspective to the Developer perspective using the dropdown menu at the top of the sidebar: 
 +
-image::devperspective.png[devperspective,300]
+image::devperspective.png[devperspective,300, link=self,window=blank]
 
 . Then switch to the Topology View:
 +
-image::topology.png[topology,300]
+image::topology.png[topology,300, link=self,window=blank]
 
 . Select your project (`{user}-quarkus`):
 +
-image::projlist.png[project,700]
+image::projlist.png[project,700, link=self,window=blank]
 
 . You can see the single `people` deployment that we deployed earlier using the CLI:
 +
-image::peopledc.png[project,700]
+image::peopledc.png[project,700, link=self,window=blank]
 
 . Select the circle to get details:
 +
-image::container1.png[container,700]
+image::container1.png[container,700, link=self,window=blank]
 
 . Select the **View Logs** link to see the console output from the app:
 +
-image::podlogs.png[logs,800]
+image::podlogs.png[logs,800, link=self,window=blank]
 +
 This is the same output you saw earlier when you ran it "locally" with its super-fast startup time.
 
 . Go back to the _Topology_ view. Since this app is exposed to the world, a _Route_ was created which you can access using the small arrow in the upper right of the circle. Select the route link:
 +
-image::routelink.png[logs,40%]
+image::routelink.png[logs,40%, link=self,window=blank]
 
 . You can click on the route link to open up the default Quarkus page that's packaged as part of our workshop application.
 
@@ -185,7 +185,7 @@ oc set probe deployment/people --readiness --initial-delay-seconds=5 --period-se
 
 . You'll see in the Topology view that the app is re-deployed with the new settings and the old app will be _terminated_ soon after:
 +
-image::redeploy.png[logs,600]
+image::redeploy.png[logs,600, link=self,window=blank]
 
 
 . This configures both a _readiness_ probe (is the app initialized and ready to serve requests?) and a _liveness_ probe (is the app still up and ready to serve requests) with default timeouts. OpenShift will not route any traffic to pods that don't respond successfully to these probes. By editing these, it will trigger a new deployment.
