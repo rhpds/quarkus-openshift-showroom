@@ -36,6 +36,6 @@ Continue your learning adventure with these additional Quarkus resources:
 * https://access.redhat.com/products/quarkus/[Red Hat Build of Quarkus^]
 * https://developers.redhat.com/products/quarkus[Quarkus on Red Hat Developers^]
 
-== Feedback                            
-                                                                                                                                                                                             
+== Feedback
+
 We'd love to hear your feedback! Please complete our workshop survey [TODO: insert survey link] to help us improve future workshops. Your input is invaluable in shaping the learning experience for others. Thank you!
