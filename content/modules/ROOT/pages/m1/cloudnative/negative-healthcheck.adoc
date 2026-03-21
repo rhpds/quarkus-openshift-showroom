@@ -85,4 +85,4 @@ We shouldn't leave this application with a health check in DOWN state. Because w
 database.up=true
 ----
 
-And access again using the same `curl` command — it should be `UP`!
+And access again using the same `curl` command - it should be `UP`!

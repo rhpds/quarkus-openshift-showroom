@@ -2,10 +2,40 @@
 = Next Steps with Quarkus
 :experimental:
 
+== What You've Learned 
+
+Throughout this workshop, you accomplished:
+
+* Developed cloud-native microservices using Quarkus and Red Hat OpenShift
+* Implemented dependency injection, testing, and debugging workflows
+* Deployed applications using Quarkus OpenShift extensions
+* Integrated databases with Hibernate ORM and Panache
+* Implemented monitoring, tracing, and security features
+* Built and deployed native executables to OpenShift
+
+
+== Key Takeaways
+
+* Quarkus provides sub-second startup times and low memory footprint
+* Red Hat OpenShift integration streamlines cloud-native deployment
+* Panache simplifies database operations with minimal code
+* OpenTelemetry and Micrometer enable production-ready observability  
+
 == Continue Learning
 
 Continue your learning adventure with these additional Quarkus resources:
 
-* https://developers.redhat.com/products/quarkus[Quarkus on developers.redhat.com]
-* https://developers.redhat.com/e-books[eBooks on Red Hat Developers]
-* https://quarkus.io/books/[Quarkus eBooks on quarkus.io]
+* https://developers.redhat.com/products/quarkus[Quarkus on developers.redhat.com^]
+* https://developers.redhat.com/e-books[eBooks on Red Hat Developers^]
+* https://quarkus.io/books/[Quarkus eBooks on quarkus.io^]
+
+
+== References
+
+* https://quarkus.io/guides/[Official Quarkus Guides^]
+* https://access.redhat.com/products/quarkus/[Red Hat Build of Quarkus^]
+* https://developers.redhat.com/products/quarkus[Quarkus on Red Hat Developers^]
+
+== Feedback                            
+                                                                                                                                                                                             
+We'd love to hear your feedback! Please complete our workshop survey [TODO: insert survey link] to help us improve future workshops. Your input is invaluable in shaping the learning experience for others. Thank you!

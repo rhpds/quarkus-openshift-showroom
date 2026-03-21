@@ -15,7 +15,7 @@ The metrics can be read remotely using JSON format or the https://prometheus.io/
 First, let's install Prometheus. Prometheus is an open-source systems monitoring and alerting toolkit featuring:
 
 * a multi-dimensional https://prometheus.io/docs/concepts/data_model/[data model^] with time series data identified by metric name and key/value pairs
-* https://prometheus.io/docs/prometheus/latest/querying/basics/[PromQL^], a flexible query language to leverage this dimensionality
+* https://prometheus.io/docs/prometheus/latest/querying/basics/[PromQL^], a flexible query language to use this dimensionality
 * time series collection happens via a pull model over HTTP
 
 To install it, first create a Kubernetes ConfigMap that will hold the Prometheus configuration. In the Terminal, run the following:

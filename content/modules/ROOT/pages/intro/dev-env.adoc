@@ -8,7 +8,6 @@ You will use Visual Studio Code (VS Code) based on https://developers.redhat.com
 image::login_with_openshift.png[login,800, link=self,window=blank]
 
 
-// TODO: add note how users should login
 . Login using user ID and password as *{user} / {password}*
 
 . Click on the *Allow selected permissions* button when prompted
