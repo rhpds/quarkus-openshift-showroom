@@ -2,9 +2,21 @@
 = Quarkus Basics
 :experimental:
 
-In this step, you will create a straightforward application serving a `hello` endpoint. To demonstrate dependency injection this endpoint uses a `greeting` bean.
 
-image::arch.png[arch,800, link=self,window=blank]
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Understand the benefits of Quarkus the supersonic subatomic Java
+* Use Quarkus Dev Mode for rapid development with live reload capabilities
+* Implement RESTful endpoints using JAX-RS and dependency injection with CDI 
+* Write and execute automated tests with JUnit and Quarkus testing extensions
+* Debug Quarkus applications effectively in development mode
+* Build native executable images using GraalVM for cloud deployments
+* Implement cloud-native patterns including health checks and externalized configuration
+* Deploy Quarkus applications to Red Hat OpenShift with automated build strategies
+* Setup MicroProfile health checks for liveness and readiness probes
+* Learn how to use Quarkus configuration profiles to externalize configuration and manage different environments
 
 == Explore the Project
 
@@ -17,6 +29,13 @@ Let's take a look at the *Explorer* menu on the left hand of the IDE. Your Quark
 * A landing page that is accessible on `http://localhost:8080` after starting the application
 * The application configuration file
 * Other source files we'll use later
+
+== Your first Quarkus application
+
+In this step, you will create a straightforward application serving a `hello` endpoint. To demonstrate dependency injection this endpoint uses a `greeting` bean.
+
+image::arch.png[arch,800, link=self,window=blank]
+
 
 . Navigate to `src -> main -> java -> org.acme.people.rest` in the project tree and select `GreetingResource.java`.
 +

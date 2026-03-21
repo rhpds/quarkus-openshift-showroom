@@ -2,6 +2,21 @@
 = Advanced Quarkus Development
 :experimental:
 
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Discover and integrate Quarkus extensions for enterprise capabilities 
+* Implement database persistence using Hibernate ORM with Panache
+* Document RESTful APIs using OpenAPI and Swagger UI
+* Build reactive applications with asynchronous messaging and Apache Kafka
+* Monitor application performance using Micrometer and Prometheus
+* Visualize metrics with Grafana dashboards for production observability
+* Implement distributed tracing using OpenTelemetry and Jaeger
+* Secure APIs with JWT Bearer Token authentication and Red Hat build of Keycloak
+* Apply Role-Based Access Control (RBAC) for microservices authorization
+* Deploy production-ready, enterprise-grade Quarkus applications to Red Hat OpenShift
+
 == Explore the Project
 
 Let's take a look at the *Explorer* menu on the left hand of the IDE. Your Quarkus project was already imported when the workspace was created. 
