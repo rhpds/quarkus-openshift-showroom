@@ -93,7 +93,7 @@ Since our environment here is Linux, you can _just run it_. Run the following co
 
 [source,sh,role="copypaste"]
 ----
-./target/people-1.0-SNAPSHOT-runner -Dquarkus.http.port=8081
+./target/people-1.0.0-SNAPSHOT-runner -Dquarkus.http.port=8081
 ----
 
 We use port `8081` here to avoid conflicting with our already-running development mode Quarkus app.
@@ -102,7 +102,7 @@ Notice the amazingly fast startup time:
 
 [source,none,role="copypaste"]
 ----
-INFO  [io.quarkus] (main) people 1.0-SNAPSHOT native (powered by Quarkus 3.27.1.redhat-00003) started in 0.024s. Listening on: http://0.0.0.0:8081
+INFO  [io.quarkus] (main) people 1.0.0-SNAPSHOT native (powered by Quarkus 3.27.1.redhat-00003) started in 0.024s. Listening on: http://0.0.0.0:8081
 ----
 
 That's *24* milliseconds to start up.

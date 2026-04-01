@@ -2,7 +2,9 @@
 
 == Accessing liveness and readiness separately
 
-Quarkus apps can access the two different types using two different endpoints (`/health/live` and `/health/ready`). This is useful when configuring Kubernetes with probes which we'll do later, as it can access each separately (and configure each with different timeouts, periods, failure thresholds, etc). For example, You may want your Readiness probe to wait 30 seconds before starting, but Liveness should wait 2 minutes and only wait 10 seconds between retries.
+Quarkus apps can access the two different types using two different endpoints (`/health/live` and `/health/ready`). This is useful when configuring Kubernetes with probes which we'll do later, as it can access each separately (and configure each with different timeouts, periods, failure thresholds, etc). 
+
+For example, you may want the Readiness probe to wait for 30 seconds before starting, but Liveness should wait 2 minutes and only wait 10 seconds between retries.
 
 . Access the two endpoints. Each endpoint will only report on its specific type of probe:
 .. The following command displays only the *two Liveness probes*.

@@ -21,10 +21,14 @@ oc login -u {user} -p {password} https://openshift.default.svc:443
 ----
 Login successful.
 
-You have access to 89 projects, the list has been suppressed. You can list all projects with 'oc projects'
+You have access to the following projects and can switch between them with 'oc project <projectname>':
+
+  * user-{user}-devspaces
+    user-{user}-quarkus
+
+Using project "user-{user}-devspaces"
 
 Using project "devspaces-{user}".
-Welcome! See 'oc help' to get started.
 ----
 
 . Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
@@ -132,27 +136,23 @@ The above `curl` command constructs the URL to your running app on the cluster u
 ----
 hello quarkus-on-openshift
 ----
-+
-[NOTE]
-====
-Your hostname (the Kubernetes _pod_ in which your app runs) name will be different from the above.
-====
 
 . Now that your app is deployed to OpenShift you can also see it in the https://console-openshift-console.{openshift_cluster_ingress_domain}[OpenShift Console^]. Login with `{user}/{password}`
 +
 image::che-login.png[login,700, link=self,window=blank]
 
-. Once logged in, switch from the Administrator perspective to the Developer perspective using the dropdown menu at the top of the sidebar: 
+. Once logged in, you can view a list of your projects : 
 +
-image::devperspective.png[devperspective,300, link=self,window=blank]
+image::loggedin-console.png[devperspective, link=self,window=blank]
 
-. Then switch to the Topology View:
+. Select the `{user}-quarkus` project to view Overview of the project:
 +
-image::topology.png[topology,300, link=self,window=blank]
+image::quarkus-project-overview.png[project,700, link=self,window=blank]
 
-. Select your project (`{user}-quarkus`):
+. Click on  *Workloads -> Topology* navigation menu on the left to view the topology of your project.
+
 +
-image::projlist.png[project,700, link=self,window=blank]
+image::topology.png[topology,link=self,window=blank]
 
 . You can see the single `people` deployment that we deployed earlier using the CLI:
 +
@@ -171,8 +171,14 @@ This is the same output you saw earlier when you ran it "locally" with its super
 . Go back to the _Topology_ view. Since this app is exposed to the world, a _Route_ was created which you can access using the small arrow in the upper right of the circle. Select the route link:
 +
 image::routelink.png[logs,40%, link=self,window=blank]
+. This will open a new tab in your browser with the URL to your app, and append `/hello` endpoint to the end of the URL to access the endpoint.
++
+You can also access the URL by clicking on this link: https://people-{user}-quarkus.apps.{openshift_cluster_ingress_domain}/hello[hello endpoint^]
++
+You should see the output `hi production quarkus!`:
++
+image::hello-openshift.png[logs,80%, link=self,window=blank]
 
-. You can click on the route link to open up the default Quarkus page that's packaged as part of our workshop application.
 
 == Connect MicroProfile health check
 
