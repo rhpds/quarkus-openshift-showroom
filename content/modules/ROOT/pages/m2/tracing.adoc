@@ -1,4 +1,4 @@
-= Tracing with MicroProfile OpenTracing
+= Distributed Tracing with OpenTelemetry and Tempo
 :experimental:
 :imagesdir: ../../assets/images
 
@@ -12,9 +12,9 @@ OpenTelemetry Metrics and Logging are not yet supported.
 
 In a distributed cloud-native application, multiple microservices are collaborating to deliver the expected functionality. If you have hundreds of services, how do you debug an individual request as it travels through a distributed system? For Java enterprise developers, the OpenTelemetry framework enables you to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) which helps you analyze your application performance and behavior. Let's find out how.
 
-== Install Jaeger
+== Install Tempo
 
-https://www.jaegertracing.io/[Jaeger^] is a distributed tracing system originally created by Uber (the ride sharing company). It is used for monitoring and troubleshooting microservices-based distributed systems, including:
+https://grafana.com/docs/tempo/latest/[Tempo^] is a distributed tracing system created by Grafana Labs. It is used for monitoring and troubleshooting microservices-based distributed systems, including:
 
 * Distributed context propagation
 * Distributed transaction monitoring
@@ -22,7 +22,7 @@ https://www.jaegertracing.io/[Jaeger^] is a distributed tracing system originall
 * Service dependency analysis
 * Performance / latency optimization
 
-You'll use the Jaeger as a backend to collect the telemetry data because Jaeger exposes a _collector_ through which apps (like our People app) report tracing details. Jaeger stores and reports on this tracing activity.
+You'll use Tempo as a backend to collect the telemetry data because Tempo exposes a _collector_ through which apps (like our People app) report tracing details. Tempo stores and reports on this tracing activity.
 
 [NOTE]
 ====
@@ -33,35 +33,48 @@ At the highest level, a _trace_ tells the story of a transaction or workflow as 
 Each component (microservice) in a distributed trace will contribute its own span or spans.
 ====
 
-Jaeger is installed and managed through its Kubernetes Operator (just like AMQ Streams and Kafka that you used in previous exercises).
+Tempo is installed and managed through its Kubernetes Operator (just like AMQ Streams and Kafka that you used in previous exercises).
 
-From the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^], click on **Installed Operators** in the sidebar menu and select **Jaeger**
+From the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project[Topology View^], click on **Installed Operators** in the sidebar menu and select **Tempo**
 
-image::operators-list.png[operators,800, link=self,window=blank]
+image::operators-list.png[operators,800]
 
-Select **Create Jaeger**:
+Select **Create TempoMonolithic**:
 
-image::jaegers-list.png[jaegers,800, link=self,window=blank]
+image::jaegers-list.png[jaegers,800]
 
-This will open a dialog for you to configure the Jaeger service before it's installed.
+This will open a dialog for you to configure the Tempo service before it's installed.
 
-Change the name to `jaeger` as shown, and click **Create**:
+Change the input type to YAML, then paste in the following:
 
-image::jaegerdone.png[kafkacatalog,800, link=self,window=blank]
+```
+apiVersion: tempo.grafana.com/v1alpha1
+kind: TempoMonolithic
+metadata:
+  name: tempo
+spec:
+  storage:
+    traces:
+      backend: memory
+  jaegerui:
+    enabled: true
+```
 
-This will create a new `Jaeger` Kubernetes object in your namespace, triggering the Operator to deploy Jaeger. In the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^] you'll see Jaeger spin up:
+image::jaegerdone.png[kafkacatalog,800]
 
-image::jaegerspin.png[spin, 600, link=self,window=blank]
+This will create a new `TempoMonolithic` Kubernetes object in your namespace, triggering the Operator to deploy Tempo. In the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-project[Topology View^] you'll see Tempo spin up:
 
-Jaeger exposes its collector at different ports for different protocols. Most use the HTTP collector at `jaeger-collector:14268` but other protocols like gRPC are also supported on different ports. You can see them by clicking on the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-quarkus/services/jaeger-collector[Service details^]:
+image::jaegerspin.png[spin, 600]
 
-image::jaegersvcs.png[spin, 700, link=self,window=blank]
+Tempo exposes its collector at different ports for different protocols. Most use the HTTP collector at `tempo-collector:14268` but other protocols like gRPC are also supported on different ports. You can see them by clicking on the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-project/services/tempo-collector[Service details^]:
+
+image::jaegersvcs.png[spin, 700]
 
 The endpoint on port `14250` is the one we'll use for our app.
 
 == Install OpenTelemetry Collector
 
-OpenTelemetry Collector enables you to offload data quickly alongside your application services in terms of retries, batching, encryption or even sensitive data filtering. You will create an OpenTelemetry Collector to send the telemetry data to the Jaeger server.
+OpenTelemetry Collector enables you to offload data quickly alongside your application services in terms of retries, batching, encryption or even sensitive data filtering. You will create an OpenTelemetry Collector to send the telemetry data to the Tempo server.
 
 View the `otel.yml` in the *src/main/kubernetes* directory.
 
@@ -74,7 +87,10 @@ metadata:
 spec:
   config:
     exporters:
-      debug: {}
+      otlp/tempo:
+        endpoint: tempo-distributor:4317
+        tls:
+          insecure: true
     receivers:
       otlp:
         protocols:
@@ -85,10 +101,8 @@ spec:
     service:
       pipelines:
         traces:
-          exporters:
-            - debug
-          receivers:
-            - otlp
+          receivers: [otlp]
+          exporters: [otlp/tempo]
 ----
 
 Then, run the following `oc` command in the VS Code terminal to setup your otel-collector:
@@ -100,11 +114,11 @@ oc apply -f src/main/kubernetes/otel.yml
 
 Go back to the Topology view, you will see the otel-collector deployed.
 
-image::devconsole-otel.png[devconsole-otel,800, link=self,window=blank]
+image::devconsole-otel.png[devconsole-otel,800]
 
 == Add OpenTelemetry to Quarkus
 
-With Jaeger installed, let's turn back to our Quarkus app. Like other exercises, we'll need the following extensions to enable OpenTelemetry in our app. Install it with:
+With Tempo installed, let's turn back to our Quarkus app. Like other exercises, we'll need the following extensions to enable OpenTelemetry in our app. Install it with:
 
 [source,sh,role="copypaste"]
 ----
@@ -129,9 +143,9 @@ Next, open the `application.properties` file (in the `src/main/resources` direct
 
 [source,none,role="copypaste"]
 ----
-%prod.quarkus.otel.exporter.otlp.traces.endpoint=http://jaeger-collector-headless:4317 <1>
+%prod.quarkus.otel.exporter.otlp.traces.endpoint=http://otel-collector:4317 <1>
 ----
-<1> gRPC endpoint (Jaeger collector service) to send spans.
+<1> gRPC endpoint (Tempo collector service) to send spans.
 
 == Test it out
 
@@ -157,26 +171,26 @@ oc rollout status -w deployment/people
 
 == Trigger traces
 
-You'll need to trigger some HTTP endpoints to generate traces. Access the https://people-{user}-quarkus.{openshift_cluster_ingress_domain}/datatable.html[graphical person browser powered by the DataTables library we created earlier^].
+You'll need to trigger some HTTP endpoints to generate traces. Access the https://people-{user}-project.{openshift_cluster_ingress_domain}/datatable.html[graphical person browser powered by the DataTables library we created earlier^].
 
 Exercise the table a bit by paging through the entries and using various search terms to force several RESTful calls back to our app:
 
-image::paging.png[paging,600, link=self,window=blank]
+image::paging.png[paging,600]
 
 == Inspect traces
 
-Open the https://jaeger-{user}-quarkus.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. By default Jaeger uses the same login details as OpenShift, so click the **Login with OpenShift** button, enter your credentials:
+Open the https://tempo-{user}-project.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. By default, Tempo offers a Jaeger UI that uses the same login details as OpenShift, so click the **Login with OpenShift** button and enter your credentials:
 
 * **Username**: `{user}`
 * **Password**: `{password}`
 
-Then, click **Allow Selected Permissions** to allow Jaeger to access your account details. You'll end up on the Jaeger query page. Using the menu on the left, select the `people` Service, and click **Find Traces**. Jaeger will show the collected traces on the right:
+Then, click **Allow Selected Permissions** to allow Tempo to access your account details. You'll end up on the Jaeger query page. Using the menu on the left, select the `people` Service, and click **Find Traces**. Jaeger will show the collected traces on the right:
 
-image::find1.png[jaeger,600, link=self,window=blank]
+image::find1.png[tempo,600]
 
 Select one of the traces from "a few seconds ago" to show the individual _spans_ of each trace:
 
-image::trace1.png[jaeger,600, link=self,window=blank]
+image::trace1.png[tempo,600]
 
 You can see that this trace (along with the others) shows the incoming HTTP GET operation to the `/datatable` endpoint we created earlier, along with the time it took, and other ancillary info about the request. Not terribly interesting as it's a single call, but you can imagine with a real world app and multiple microservices working together, that traces could reveal a lot of detail.
 
@@ -390,17 +404,17 @@ You should see:
 
 == Inspect traces
 
-Reload the https://jaeger-{user}-quarkus.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. Then, select `GET /person/swpeople` in the Operation and click **Find Traces**.
+Reload the https://tempo-{user}-project.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. Then, select `GET /person/swpeople` in the Operation and click **Find Traces**.
 
-image::swpeople-search.png[swpeople,800, link=self,window=blank]
+image::swpeople-search.png[swpeople,800]
 
 The new trace should appear the top with multiple spans. Select it to display details:
 
-image::swpeople.png[swpeople,800, link=self,window=blank]
+image::swpeople.png[swpeople,800]
 
 You can see that this trace (along with the others) shows multiple spans: the incoming HTTP GET operation to the `/swperson` endpoint we created earlier, and the external calls to the Star Wars API. Expand the traces to show the detail:
 
-image::swpeopleext.png[swpeopleext,800, link=self,window=blank]
+image::swpeopleext.png[swpeopleext,800]
 
 == Extra credit: Explicit method tracing
 
@@ -412,5 +426,5 @@ If you have time after this workshop, add a `@Traced` annotation to some of the 
 
 == Congratulations!
 
-You've seen how to enable automatic tracing for JAX-RS methods as well as create custom tracers for non-JAX-RS methods and external services by using MicroProfile OpenTracing. This specification makes it easy for Quarkus developers to instrument services with distributed tracing for learning, debugging, performance tuning, and general analysis of behavior.
+You've seen how to enable automatic tracing for JAX-RS methods as well as create custom tracers for non-JAX-RS methods and external services by using OpenTelemetry and Tempo. This specification makes it easy for Quarkus developers to instrument services with distributed tracing for learning, debugging, performance tuning, and general analysis of behavior.
 
