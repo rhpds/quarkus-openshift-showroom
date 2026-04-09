@@ -37,7 +37,7 @@
 ** xref:m2/messaging.adoc[Asynchronous messaging between beans]
 ** xref:m2/kafka.adoc[Reactive Streams with Quarkus and Kafka]
 ** xref:m2/monitoring.adoc[Monitoring Quarkus Apps using Micrometer]
-** xref:m2/tracing.adoc[Tracing with MicroProfile OpenTracing]
+** xref:m2/tracing.adoc[MicroProfile OpenTracing]
 ** xref:m2/security.adoc[Securing Quarkus APIs]
 
 * xref:final/next-steps.adoc[Next steps]
