@@ -11,19 +11,21 @@ With Panache, we took an opinionated approach to make hibernate as easy as possi
 * Lots of super-useful static methods for access like `listAll()`, `find()`, etc.
 * No need for custom queries for basic operations, e.g. `Person.find("name", "stef")`
 
-That’s all there is to it: with Panache, Hibernate ORM has never looked so trim and neat.
+That's all there is to it: with Panache, Hibernate ORM has never looked so trim and neat.
 
 == People
 
-You may have wondered why we are using `people` in our Java APIs, and now you'll find out; we'll be creating a simple data-driven application that manages a set of people, who have a name, birth date, and eye color. In the previous lab we added the extension for Panache to our project, but we will need a few more for connecting to databases. Add these extensions with the following command:
+You may have wondered why we are using `people` in our Java APIs, and now you'll find out; we'll be creating a simple data-driven application that manages a set of people, who have a name, birth date, and eye color. In the previous lab we added the extension for Panache to our project, but we will need a few more for connecting to databases. 
 
+. Add these extensions with the following command:
++
 [source,sh,role="copypaste"]
 ----
 mvn quarkus:add-extension -Dextensions="hibernate-orm-panache, jdbc-postgresql"
 ----
 
-You should see:
-
+. You should see:
++
 [source,console]
 ----
 [INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-hibernate-orm-panache has been installed
@@ -149,8 +151,10 @@ Extending `PanacheEntity` is referred to as the https://quarkus.io/guides/hibern
 
 == Define RESTful endpoint
 
-Next, we'll create a `PersonResource` class which we will use for our RESTful endpoint. Create a new Java class in the `src/main/java/org/acme/people/rest` directory called `PersonResource.java` with the following code:
+Next, we'll create a `PersonResource` class which we will use for our RESTful endpoint. 
 
+. Create a new Java class in the `src/main/java/org/acme/people/rest` directory called `PersonResource.java` with the following code:
++
 [source,java,role="copypaste"]
 ----
 package org.acme.people.rest;
@@ -206,10 +210,12 @@ As you can see we've implemented our first Panache-based query, the `getAll` met
 
 == Add sample data
 
-Let's add some sample data to the database so we can test things out. Create a new file `src/main/resources/import.sql` and add some SQL statements to the file to run on startup:
+Let's add some sample data to the database so we can test things out. 
 
-Add these lines to `import.sql` file you just created:
+. Create a new file `src/main/resources/import.sql` and add some SQL statements to the file to run on startup.
 
+. Add these lines to `import.sql` file you just created:
++
 [source,sql,role="copypaste"]
 ----
 INSERT INTO person(id, name, birth, eyes) VALUES (1, 'Farid Ulyanov', '1974-08-15', 'BLUE');
@@ -218,7 +224,7 @@ INSERT INTO person(id, name, birth, eyes) VALUES (3, 'Kim Hu', '1999-04-25', 'HA
 ALTER SEQUENCE person_seq RESTART WITH 4;
 ----
 
-These statements will add some fake people to our database on startup.
+. These statements will add some fake people to our database on startup.
 
 == Test the app
 
@@ -595,7 +601,7 @@ Adding 1k entries will make startup time artificially high, around 1 second.
 
 Our production environment needs a "real" database so let's deploy a Postgres database to OpenShift. 
 
-. Back in the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^], select **Software Catalog**, under **Ecosystem** on the left.
+. Access the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[OpenShift console^], select **Software Catalog**, under **Ecosystem** on the left.
 +
 image::db.png[db, 300, link=self,window=blank]
 
@@ -606,6 +612,7 @@ image::db-postgres.png[postrgesdb, 700, link=self,window=blank]
 . Select *Instantiate Template* and fill in the following fields, leaving the others as their default values:
 +
 * **Namespace** (the first one): Select `{user}-quarkus`
+* **Memory Limit** : Keep the default `512Mi`.
 * **Namespace** (the _second_ one): `openshift`
 * **Database Service Name**: `postgres-database`
 * **PostgreSQL Connection Username**: `sa`

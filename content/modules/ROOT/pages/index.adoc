@@ -1,4 +1,4 @@
-:imagesdir: ../assets/images
+:imagesdir: ../../assets/images
 
 = What is Quarkus?
 :navtitle: What is Quarkus?
@@ -12,4 +12,48 @@ Throughout this lab you'll discover how Quarkus can make your development of clo
 
 == Workshop Overview
 
-TODO: describe the upcoming content sections, time expectations per section, list of takeaways
+This workshop is divided into two modules that progressively build your Quarkus expertise:
+
+[cols="a,a",options="header"]
+|===
+|Module 1: Basic Quarkus Development |Module 2: Advanced Quarkus Development
+
+|*Duration:* ~1.5 hours
+|*Duration:* ~1.5 hours
+
+|*Topics Covered:*
+
+* *Quarkus Dev Mode & Live Coding* for instant code reload without an application restart
+* Manage *application dependencies* and component lifecycle using CDI
+* *Testing & Continuous Testing* as you code
+* *Debug* applications easily with breakpoints and real-time inspection
+* Compile applications to *native executables using GraalVM* for faster startup and lower memory footprint
+* Add *health checks and externalize configuration* for cloud-native deployments
+* Package and deploy your *containerized application* to Red Hat OpenShift
+
+|*Topics Covered:*
+
+* Discover and add new capabilities to your application using the *Quarkus extension ecosystem*
+* Simplify database operations with *Hibernate ORM with Panache*
+* Auto-generate interactive API documentation with *OpenAPI and Swagger UI*
+* *Asynchronous Messaging* between application components using reactive messaging
+* Build *event-driven microservices* with Apache Kafka and reactive programming
+* Expose *application metrics for monitoring* with Prometheus and Grafana using Micrometer
+* *Distributed Tracing* to track and visualize requests across distributed microservices 
+* *API Security* to Protect REST endpoints with JWT authentication and role-based access control
+
+|*Key Takeaways:*
+
+* Master Quarkus developer productivity features
+* Build and test cloud-native applications
+* Deploy containerized apps to OpenShift
+* Leverage GraalVM for native compilation
+
+|*Key Takeaways:*
+
+* Implement data persistence patterns
+* Build reactive, event-driven microservices
+* Add observability to production apps
+* Secure APIs with modern authentication
+
+|===

@@ -1,5 +1,13 @@
-:imagesdir: ../assets/images
+:imagesdir: ../../assets/images
 = Web IDE Access
+
+++++
+<style>
+span.next {
+  display: none;
+}
+</style>
+++++
 
 You will use Visual Studio Code (VS Code) based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^]. **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
 
@@ -47,8 +55,16 @@ TIP:  If things get weird or your browser appears, you can simply reload the bro
 
 . Many features of VS Code are accessed via *Command Palette*. You can see a few of the tutorials on the *Get Started* page (e.g. _Login/Provision OpenShift Cluster_, _Create Component from Devfile registries webview_, and others).
 
++
 TIP: If you ever need to run commands that you don't see in a menu, you can press kbd:[F1] to open the command window, or the more traditional kbd:[Control+SHIFT+P] (or kbd:[Command+SHIFT+P] on macOS).
 
-. Keep this browser tab open throughout the course of this workshop.
 
-Ready? Let's go!
+== Next Steps
+
+You can now choose either the *Basic or Advanced* module to start learning about Quarkus development. 
+
+TIP: Keep this browser tab with the instructions open throughout the course of this workshop.
+
+* If you are new to Quarkus, or want to learn the *basics of Quarkus development*, start with the xref:m1/basics.adoc[Basic Quarkus Development module^].
+* If you have some experience with Quarkus and want to learn more about *advanced features and capabilities*, start with the xref:m2/advanced.adoc[Advanced Quarkus Development module^].
+

@@ -75,104 +75,106 @@ Compared to vanilla JAX-RS, with Quarkus there is no need to create an `Applicat
 
 **Live Coding** (also referred to as _Quarkus dev mode_) allows us to run the app and make changes on the fly. Quarkus will automatically re-compile and reload the app when changes are made. This is a powerful and efficient style of developing that you will use throughout the lab.
 
-Before starting the dev mode, you need to *append* the following configuration to `application.properties` in the `src/main/resources` directory. This allows you to access the https://quarkus.io/guides/dev-ui[Dev UI^] from the cloud IDE since the Dev UI is designed for running your localhost.
-
+. Before starting the dev mode, you need to *append* the following configuration to `application.properties` in the `src/main/resources` directory. This allows you to access the https://quarkus.io/guides/dev-ui[Dev UI^] from the cloud IDE since the Dev UI is designed for running your localhost.
++
 [source, properties,role="copypaste",subs="attributes"]
 ----
 %dev.quarkus.dev-ui.hosts={user}-quarkus-workshop-index-webpage.{openshift_cluster_ingress_domain}
 ----
++
+NOTE: Note that the changes will be automatially saved in the IDE.
 
-Note that the changes will be automatially saved in the IDE.
-
-Open a new terminal windown on the VS Code.
-
+. Open a new terminal windown on the VS Code.
++
 image::new-terminal.png[commands, 600, link=self,window=blank]
 
-Run the following `mvn` (Maven) commands to run Quarkus dev mode in the terminal.
-
+. Run the following `mvn` (Maven) commands to run Quarkus dev mode in the terminal.
++
 [source, shell,role="copypaste"]
 ----
 mvn clean quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.analytics.disabled=true
 ----
 
-When the dev mode starts, you will see a popup to access the *welcome* page.
-
+. When the dev mode starts, you will see a popup to access the *welcome* page.
++
 image::cmd-livecoding.png[livecoding, 900, link=self,window=blank]
 
-*Leave this terminal window open throughout the lab!* You will complete the entire lab without shutting down Quarkus Live Coding mode, so be careful not to close the tab (if you do, you re-run it). This is very useful for quick experimentation.
-
+. *Leave this terminal window open throughout the lab!* You will complete the entire lab without shutting down Quarkus Live Coding mode, so be careful not to close the tab (if you do, you re-run it). This is very useful for quick experimentation.
++
 [NOTE]
 ====
 The first time you build the app, new dependencies may be downloaded via maven. This should only happen once, after that things will go even faster
 ====
-
++
 [NOTE]
 ====
 You may see WARNINGs like `Unrecognized configuration key` or `Duplicate entry`. These are configuration values that will take effect later on and can be safely ignored for now.
 Occasionally you may get an error (e.g. `NullPointerException`) during Live Reloading. In this case, simply close the terminal and restart live coding using the task.
 ====
 
-Note the amazingly fast startup time! The app is now running *locally* (within the VS Code container in which the workspace is also running). `localhost` refers to the Kubernetes pod, not *your* laptop (so therefore opening localhost:8080 in your browser will not do anything).
+. Note the amazingly fast startup time! The app is now running *locally* (within the VS Code container in which the workspace is also running). `localhost` refers to the Kubernetes pod, not *your* laptop (so therefore opening localhost:8080 in your browser will not do anything).
 
-You can also see *Tests paused* by default when a Quarkus application gets started. We will learn more details in the _Testing Quarkus App_ lab.
+. You can also see *Tests paused* by default when a Quarkus application gets started. We will learn more details in the _Testing Quarkus App_ lab.
 
-When you select *Open In New Tab* to access the welcome page, you should see the popup message below. 
-
+. When you select *Open In New Tab* to access the welcome page, you should see the popup message below. 
++
 image::open-external.png[port, 700, link=self,window=blank]
 
-Select `Open`. A new tab in your web browser will open automatically.
-
+. Select `Open`. A new tab in your web browser will open automatically.
++
 image::welcome-quarkus.png[port, 900, link=self,window=blank]
 
-Select `/hello` enpoint on the Quarkus welcome. You should see the following page:
-
+. Select `/hello` enpoint on the Quarkus welcome. You should see the following page:
++
 image::crw-open-page-hello.png[page, 800, link=self,window=blank]
 
-When you fail to access the *hello* endpoint URL, make sure if the new opened tab has the *http* protocol.
+. When you fail to access the *hello* endpoint URL, make sure if the new opened tab has the *http* protocol.
 
-You can also test the endpoint using the _curl_ command. Open a *new* terminal by selecting `+` icon:
-
+. You can also test the endpoint using the _curl_ command. Open a *new* terminal by selecting `+` icon:
++
 image::cmd-terminal.png[livecoding, 900, link=self,window=blank]
 
-Invoke the `hello` endpoint using the following _curl_ command:
-
+. Invoke the `hello` endpoint using the following _curl_ command:
++
 [source,sh,role="copypaste"]
 ----
 curl http://localhost:8080/hello
 ----
 
-The output should look like this:
-
+. The output should look like this:
++
 [source,sh]
 ----
 Hello from Quarkus REST
 ----
 
-Now, let's exercise the **live reload** capabilities of Quarkus. In VS Code, open the `GreetingResource.java` file in the *src/main/java/org/acme/people/rest* directory and change `return "Hello from Quarkus REST";` to `return "Hola from Quarkus REST";` in the editor. After making this change, reload the same brower tab that was showing `Hello from Quarkus REST`. It should now show `Hola from Quarkus REST`.
+. Now, let's exercise the **live reload** capabilities of Quarkus. In VS Code, open the `GreetingResource.java` file in the *src/main/java/org/acme/people/rest* directory and change `return "Hello from Quarkus REST";` to `return "Hola from Quarkus REST";` in the editor. After making this change, reload the same brower tab that was showing `Hello from Quarkus REST`. It should now show `Hola from Quarkus REST`.
 
-Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it a few more times and access the endpoint again. And we're just getting started. Leave the app running so we can continue to change it on the fly in the next section.
-
+. Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it a few more times and access the endpoint again. And we're just getting started. Leave the app running so we can continue to change it on the fly in the next section.
++
 [NOTE]
 ====
 `quarkus:dev` runs Quarkus in development mode. This enables live reload with background compilation, which means that when you modify your Java files your resource files and refresh your browser these changes will automatically take effect.
 ====
-
++
 [NOTE]
 ====
-This will also listen for a debugger on port `5005`. If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line. If you don’t want the debugger at all you can use `-Ddebug=false`. We'll use this later.
+This will also listen for a debugger on port `5005`. If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line. If you don't want the debugger at all you can use `-Ddebug=false`. We'll use this later.
 ====
 
 === Login to OpenShift
 
-Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. Execute the following command in the VS Code terminal:
+Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. 
 
+. Execute the following command in the VS Code terminal:
++
 [source,sh,role="copypaste",subs="attributes"]
 ----
 oc login -u {user} -p {password} https://openshift.default.svc:443
 ----
 
-You should see:
-
+. You should see:
++
 [source, none,subs="attributes"]
 ----
 Login successful.
@@ -190,31 +192,29 @@ Congratulations, you are now authenticated to the OpenShift server via the CLI. 
 
 === Deploy app
 
-Deploy the `people` microservice by executing the following shell script in a CodeReady Workspaces Terminal:
-
+. Deploy the `people` microservice by executing the following shell script in a CodeReady Workspaces Terminal:
++
 [source, shell, role="copypaste",subs="attributes"]
 ----
 sh scripts/deploy-people.sh {user}
 ----
 
-Wait for the script to complete before continuing.
+. Wait for the script to complete before continuing.
 
-When the script completes, the app is deployed to OpenShift. You can see it in the https://console-openshift-console.{openshift_cluster_ingress_domain}[OpenShift Console^]. Login with your assigned username and password (e.g. `{user}/{password}`):
-
+. When the script completes, the app is deployed to OpenShift. You can see it in the https://console-openshift-console.{openshift_cluster_ingress_domain}[OpenShift Console^]. Login with your assigned username and password (e.g. `{user}/{password}`):
++
 image::che-login.png[login,700, link=self,window=blank]
 
-Once logged in, select the name of your project (`{user}-quarkus`):
-
+. Once logged in, select the name of your project (`{user}-quarkus`):
++
 image::ocpproj.png[project,700, link=self,window=blank]
 
-In the sidebar menu, switch to the Topology View using the drop-down under Workloads:
+. In the sidebar menu, navigate to Workloads -> Topology menu.
 
-image::devperspective.png[perspective, 500, link=self,window=blank]
-
-You can see the single `people` deployment that we just deployed earlier using the CLI:
-
+. You can see the single `people` deployment that we just deployed earlier using the CLI:
++
 image::peopledc.png[project,600, link=self,window=blank]
-
++
 [IMPORTANT]
 ====
 You have to restore the following configuration to `application.properties` in the `src/main/resources` directory to access the Dev UI from the cloud IDE since the above bash script overwrote it.

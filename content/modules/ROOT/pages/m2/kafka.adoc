@@ -150,7 +150,7 @@ The process method is called for every Kafka record from the `names` topic (conf
 
 == Expose to front end
 
-Finally, let’s bind our stream to a JAX-RS resource. Create a new Java class in the same package called `NameResource.java`. Use this code:
+Finally, let's bind our stream to a JAX-RS resource. Create a new Java class in the same package called `NameResource.java`. Use this code:
 
 [source,java,role="copypaste"]
 ----

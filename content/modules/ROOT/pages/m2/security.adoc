@@ -221,7 +221,7 @@ smallrye.jwt.client.tls.trust-all=true
 
 3: Since we are using self-signed certificates, we manually supply the self-signed public key certificate used to for TLS certificate validation.
 
-4: For simplicity we trust all hosts in this example since we’re using self-signed certs. In practice you would not be using self-signed certs, so proper trust chains can be formed.
+4: For simplicity we trust all hosts in this example since we're using self-signed certs. In practice you would not be using self-signed certs, so proper trust chains can be formed.
 ====
 
 == Create protected endpoints
