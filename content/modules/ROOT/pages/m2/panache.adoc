@@ -601,7 +601,9 @@ Adding 1k entries will make startup time artificially high, around 1 second.
 
 Our production environment needs a "real" database so let's deploy a Postgres database to OpenShift. 
 
-. Access the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[OpenShift console^], select **Software Catalog**, under **Ecosystem** on the left.
+. Access the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[OpenShift console^]. If needed, login *{user} / {password}*.
+
+. Select **Software Catalog**, under **Ecosystem** on the left.
 +
 image::db.png[db, 300, link=self,window=blank]
 

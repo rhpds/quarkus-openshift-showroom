@@ -65,6 +65,6 @@ You can now choose either the *Basic or Advanced* module to start learning about
 
 TIP: Keep this browser tab with the instructions open throughout the course of this workshop.
 
-* If you are new to Quarkus, or want to learn the *basics of Quarkus development*, start with the xref:m1/basics.adoc[Basic Quarkus Development module^].
-* If you have some experience with Quarkus and want to learn more about *advanced features and capabilities*, start with the xref:m2/advanced.adoc[Advanced Quarkus Development module^].
+* If you are new to Quarkus, or want to learn the *basics of Quarkus development*, start with the xref:m1/basics.adoc[Basic Quarkus Development module].
+* If you have some experience with Quarkus and want to learn more about *advanced features and capabilities*, start with the xref:m2/advanced.adoc[Advanced Quarkus Development module].
 

@@ -40,30 +40,32 @@ https://vertx.io/[Eclipse Vert.x^] is a toolkit for building reactive applicatio
 
 == Create RESTful resource
 
-We'll start by creating a new asynchronous endpoint. Open the `PersonResource` class and add a new field which will provide access to the Vert.x event bus which is used to pass messages between components:
+We'll start by creating a new asynchronous endpoint. 
 
+. Open the `PersonResource` class and add a new field which will provide access to the Vert.x event bus which is used to pass messages between components:
++
 [source,java,role="copypaste"]
 ----
     @Inject EventBus bus;
 ----
 
-You'll also need to add more import statements at the top:
-
+. You'll also need to add more import statements at the top:
++
 [source,java,role="copypaste"]
 ----
 import io.vertx.mutiny.core.eventbus.EventBus;
 import jakarta.inject.Inject;
 ----
 
-Next, create two new endpoints in the same class which creates new people in our database given a name, and finds people by their name:
-
+. Next, create two new endpoints in the same class which creates new people in our database given a name, and finds people by their name:
++
 [source,java,role="copypaste"]
 ----
     @POST
     @Path("/{name}")
     public Uni<Person> addPerson(String name) {
-          return bus.<Person>request("add-person", name) <1>
-                .onItem().transform(response -> response.body()); <2>
+          return bus.<Person>request("add-person", name) // (1)
+                .onItem().transform(response -> response.body()); // (2)
     }
 
     @GET
@@ -72,11 +74,11 @@ Next, create two new endpoints in the same class which creates new people in our
         return Person.find("name", name).firstResult();
     }
 ----
-<1> send the name to the `add-person` address
-<2> when we get the reply, extract the body and send this as response to the user
+(1) send the name to the `add-person` address
+(2) when we get the reply, extract the body and send this as response to the user
 
-And add the imports:
-
+. And add the imports:
++
 [source,java,role="copypaste"]
 ----
 import io.smallrye.mutiny.Uni;
@@ -143,7 +145,7 @@ import io.quarkus.vertx.ConsumeEvent;
 @ApplicationScoped
 public class PersonService {
 
-    @ConsumeEvent(value = "add-person", blocking = true) // <1>
+    @ConsumeEvent(value = "add-person", blocking = true) // (1)
     @Transactional
     public Person addPerson(String name) {
         LocalDate birth = LocalDate.now().plusWeeks(Math.round(Math.floor(Math.random() * 20 * 52 * -1)));
@@ -152,15 +154,16 @@ public class PersonService {
         p.birth = birth;
         p.eyes = color;
         p.name = name;
-        Person.persist(p); // <2>
-        return p; // <3>
+        Person.persist(p); // (2)
+        return p; // (3)
     }
 
 }
 ----
-<1> By default, the code consuming the event _must_ be non-blocking, as it's called on the Vert.x event loop. Since our method will block to wait for the transaction, we use `blocking = true` to force this consumer to be run in a _worker thread_.
-<2> A new Person entity is created and persisted
-<3> The return value of a method annotated with `@ConsumeEvent` is used as response to the incoming message.
++
+(1) By default, the code consuming the event _must_ be non-blocking, as it's called on the Vert.x event loop. Since our method will block to wait for the transaction, we use `blocking = true` to force this consumer to be run in a _worker thread_. +
+(2) A new Person entity is created and persisted +
+(3) The return value of a method annotated with `@ConsumeEvent` is used as response to the incoming message.
 
 This bean receives the name, and creates a new `Person` entity and persists it, and then echos back the name (or a well defined failure if things go wrong).
 
