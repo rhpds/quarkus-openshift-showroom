@@ -160,7 +160,7 @@ public class PersonService {
 
 }
 ----
-+
+
 (1) By default, the code consuming the event _must_ be non-blocking, as it's called on the Vert.x event loop. Since our method will block to wait for the transaction, we use `blocking = true` to force this consumer to be run in a _worker thread_. +
 (2) A new Person entity is created and persisted +
 (3) The return value of a method annotated with `@ConsumeEvent` is used as response to the incoming message.

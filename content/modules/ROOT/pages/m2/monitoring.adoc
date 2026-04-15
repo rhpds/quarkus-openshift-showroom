@@ -44,53 +44,53 @@ scrape_configs:
 
 === Deploy Prometheus from Container Image
 
-From the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View for your project^], click on the `+` icon in the header menu, and choose "Container Image"
-
+. From the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View for your project^], click on the `+` icon in the header menu, and choose "Container Image"
++
 image::add-container.png[Prometheus, 900, link=self,window=blank]
 
-Type in `quay.io/prometheus/prometheus` in *Image Name from external registry* field. You will see *green checked* icon and *Validated* under the input box.
+. Type in `quay.io/prometheus/prometheus` in *Image Name from external registry* field. You will see *green checked* icon and *Validated* under the input box.
 
-Next, fill out the following fields:
+. Next, fill out the following fields:
 
 * *Application*: `Create Application`
 * *Application Name*: `prometheus`
 * *Name*: `prometheus`
 
-Leave the rest as-is and select *Create*:
-
+. Leave the rest as-is and select *Create*:
++
 image::search-prometheus-image.png[Prometheus, 800, link=self,window=blank]
 
-On the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View for your project^], you'll see prometheus spinning up.
+. On the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View for your project^], you'll see prometheus spinning up.
 
-Finally, mount the ConfigMap into the running container:
-
+. Finally, mount the ConfigMap into the running container:
++
 [source,sh,role="copypaste"]
 ----
 oc set volume deployment/prometheus --add -t configmap --configmap-name=prom -m /etc/prometheus/prometheus.yml --sub-path=prometheus.yml
 ----
-
++
 [NOTE]
 ====
 In case you see *Warning: would violate PodSecurity "restricted:v1.24"*, you can ignore it during the workshop.
 ====
 
-You should get `deployment.extensions/prometheus volume updated` and this will cause the contents of the `ConfigMap`'s prometheus.yml` data to be mounted at `/etc/prometheus/prometheus.yml` where Prometheus is expecting it, and it will start scraping metrics from our app. But our app does not yet expose metrics. We'll do that in the next step.
+. You should get `deployment.extensions/prometheus volume updated` and this will cause the contents of the `ConfigMap`'s prometheus.yml` data to be mounted at `/etc/prometheus/prometheus.yml` where Prometheus is expecting it, and it will start scraping metrics from our app. But our app does not yet expose metrics. We'll do that in the next step.
 
-Verify Prometheus is up and running:
-
+. Verify Prometheus is up and running:
++
 [source,sh,role="copypaste"]
 ----
 oc rollout status -w deployment/prometheus
 ----
 
-You should see `deployment "prometheus" successfully rolled out`.
+. You should see `deployment "prometheus" successfully rolled out`.
 
-Once it completes, select on the arrow to access the prometheus query UI:
-
+. Once it completes, select on the arrow to access the prometheus query UI:
++
 image::prometheus-route.png[Prometheus, 700, link=self,window=blank]
 
-Which should load the Prometheus Web UI (we'll use this later). If you see a dark mode, you can simply turn it off:
-
+. Which should load the Prometheus Web UI (we'll use this later). If you see a dark mode, you can simply turn it off:
++
 image::promgui.png[Prometheus, 800, link=self,window=blank]
 
 == Add Metrics to Quarkus
@@ -228,13 +228,13 @@ Replace the `process()` method with the following code for adding the `counter` 
     @Broadcast                       
     public String process(String name) {
         String honorific = honorifics[(int)Math.floor(Math.random() * honorifics.length)];
-        registry.counter("nameconvert.process.counter").increment(); <1>
-        registry.timer("nameconvert.process.timer").record(3000, TimeUnit.MILLISECONDS); <2>
+        registry.counter("nameconvert.process.counter").increment(); // (1)
+        registry.timer("nameconvert.process.timer").record(3000, TimeUnit.MILLISECONDS); // (2)
         return honorific + " " + name;
     }
 ----
-<1> This metric will count the number of times this method is called
-<2> This metric will measure how long it takes the method to run
+(1) This metric will count the number of times this method is called
+(2) This metric will measure how long it takes the method to run
 
 Don't forget to import the correct classes as before using _Quick Fix..._ or simply add these to the top of the class:
 

@@ -173,7 +173,7 @@ This is the same output you saw earlier when you ran it "locally" with its super
 image::routelink.png[logs,40%, link=self,window=blank]
 . This will open a new tab in your browser with the URL to your app, and append `/hello` endpoint to the end of the URL to access the endpoint.
 +
-You can also access the URL by clicking on this link: https://people-{user}-quarkus.apps.{openshift_cluster_ingress_domain}/hello[hello endpoint^]
+You can also access the URL by clicking on this link: https://people-{user}-quarkus.{openshift_cluster_ingress_domain}/hello[hello endpoint^]
 +
 You should see the output `hi production quarkus!`:
 +

@@ -136,9 +136,12 @@ You as an application developer have a few choices in documenting your APIs:
 
 Additionally, a https://github.com/eclipse/microprofile-open-api/blob/main/spec/src/main/asciidoc/microprofile-openapi-spec.asciidoc#filter[Filter^] is described which can update the OpenAPI model after it has been built from the previously described documentation mechanisms.
 
-So let's add a bit more documentation to our `/person/birth/before/\{year\}` endpoint using the first option (annotations). Open the `PersonResource` class, and find the `getBeforeYear` method -- this method implements our endpoint.
 
 === Add OpenAPI annotations
+
+So let's add a bit more documentation to our `/person/birth/before/\{year\}` endpoint using the first option (annotations). 
+
+Open the `PersonResource` class, and find the `getBeforeYear` method -- this method implements our endpoint.
 
 Add a few annotations:
 

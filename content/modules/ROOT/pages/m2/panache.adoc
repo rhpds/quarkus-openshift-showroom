@@ -40,7 +40,7 @@ When testing or running in dev mode Quarkus can provide you with a zero-config d
 
 Red Hat Dev Spaces enables you to run the Quarkus Dev Services in the terminal using the _KUBEDOCK_ tool. Unlikely a local environment, you need to set the `quarkus.datasource.devservices.volumes` where the PostgreSQL's data is stored inside a container.
 
-. From the web IDEA, access the file _src/main/resources/application.properties_, to see the following configuration which has been already added in advance.
+. From the web IDE, access the file _src/main/resources/application.properties_, to see the following configuration which has been already added in advance.
 +
 [source,properties]
 ----
@@ -558,7 +558,7 @@ This code will insert 1,000 fake people with random birthdates in the last 40 ye
 Although our lifecycle code is listening for `StartupEvent`, and our application has already started, in `quarkus:dev` mode Quarkus will still fire this event once. So let's test it out and see if it picks up our new data. 
 
 . We'll search for a single letter `F` and limit the results to `2`:
-
++
 [source,sh,role="copypaste"]
 ----
 curl -s "http://localhost:8080/person/datatable?draw=1&start=0&length=2&search\[value\]=F" | jq
@@ -620,11 +620,11 @@ image::db-postgres.png[postrgesdb, 700, link=self,window=blank]
 * **PostgreSQL Connection Username**: `sa`
 * **PostgreSQL Connection Password**: `sa`
 * **PostgreSQL Database Name**: `person`
-* **Version of PostgreSQL Image*: `12-el8`
+* **Version of PostgreSQL Image**: `12-el8`
 +
 image::db-postgres-values.png[db, 700, link=self,window=blank]
 
-. Select *Create*, and label the items with proper icons:
+. Select *Create*, and run the following commans in the web IDE to label the items with proper icons:
 +
 [source,sh,role="copypaste"]
 ----

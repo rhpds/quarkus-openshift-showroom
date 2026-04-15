@@ -7,7 +7,7 @@ default_width: 40
 persist_url_state: true
 
 view_switcher:
-  enabled: true
+  enabled: false
   default_mode: split
 
 tabs:
