@@ -58,6 +58,8 @@ spec:
       backend: memory
   jaegerui:
     enabled: true
+    route:
+      enabled: true
 ```
 
 image::jaegerdone.png[kafkacatalog,800]
@@ -66,11 +68,11 @@ This will create a new `TempoMonolithic` Kubernetes object in your namespace, tr
 
 image::jaegerspin.png[spin, 600]
 
-Tempo exposes its collector at different ports for different protocols. Most use the HTTP collector at `tempo-collector:14268` but other protocols like gRPC are also supported on different ports. You can see them by clicking on the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-quarkus/services/tempo-collector[Service details^]:
+Tempo exposes its data at different ports for different protocols. Most interactions involve the HTTP collector at `tempo-tempo:3200` but other protocols like gRPC are also supported on different ports. You can see them by clicking on the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-quarkus/services/tempo-tempo[Service details^]:
 
 image::jaegersvcs.png[spin, 700]
 
-The endpoint on port `14250` is the one we'll use for our app.
+Your app will use the otlp endpoints on ports `4317` and `4318` to interact with OpenTelemetry in the next section.
 
 == Install OpenTelemetry Collector
 
