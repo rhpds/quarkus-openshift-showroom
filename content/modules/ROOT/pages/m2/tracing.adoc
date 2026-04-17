@@ -63,7 +63,7 @@ spec:
       enabled: true
 ```
 
-image::jaegerdone.png[kafkacatalog,800]
+Click the *Create* button to deploy your new `TempoMonolithic` instance.
 
 This will create a new `TempoMonolithic` Kubernetes object in your namespace, triggering the Operator to deploy Tempo. In the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^] you'll see Tempo spin up:
 
