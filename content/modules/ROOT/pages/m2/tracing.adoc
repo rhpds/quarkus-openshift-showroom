@@ -35,11 +35,11 @@ Each component (microservice) in a distributed trace will contribute its own spa
 
 Tempo is installed and managed through its Kubernetes Operator (just like AMQ Streams and Kafka that you used in previous exercises).
 
-From the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^], click on **Installed Operators** in the sidebar menu and select **Tempo**
+Under **Ecosystem** in the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[sidebar menu^], click on **Installed Operators** and then select **TempoMonolithic**
 
 image::operators-list.png[operators,800]
 
-Select **Create TempoMonolithic**:
+Select the **Current namespace only** option before clicking on the **Create TempoMonolithic** button:
 
 image::jaegers-list.png[jaegers,800]
 
