@@ -170,7 +170,7 @@ Although your VS Code is running on the Kubernetes cluster, it's running with a 
 +
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc login -u {user} -p {password} https://openshift.default.svc:443
+oc login -u {user} -p {password} https://openshift.default.svc:443 && oc project {user}-quarkus
 ----
 
 . You should see:
@@ -181,11 +181,10 @@ Login successful.
 
 You have access to the following projects and can switch between them with 'oc project <projectname>':
 
-  * {user}-devspaces
-    {user}-quarkus
+  * {user}-quarkus
+    {user}-devspaces
 
-Using project "user1-devspaces".
-Welcome! See 'oc help' to get started.
+Using project "{user}-quarkus"
 ----
 
 Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
