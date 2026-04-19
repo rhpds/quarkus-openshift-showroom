@@ -209,6 +209,12 @@ image::che-login.png[login,700, link=self,window=blank]
 image::ocpproj.png[project,700, link=self,window=blank]
 
 . In the sidebar menu, navigate to Workloads -> Topology menu.
++
+image::topology.png[topology,link=self,window=blank]
+
+. If needed, switch from *List view* to *Graph view* using the view mode button in the upper right:
++
+image::graph-view.png[graph-view,link=self,window=blank]
 
 . You can see the single `people` deployment that we just deployed earlier using the CLI:
 +

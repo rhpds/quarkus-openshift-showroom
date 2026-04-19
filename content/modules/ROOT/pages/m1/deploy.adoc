@@ -151,11 +151,15 @@ image::quarkus-project-overview.png[project,700, link=self,window=blank]
 +
 image::topology.png[topology,link=self,window=blank]
 
-. You can see the single `people` deployment that we deployed earlier using the CLI:
+. If needed, switch from *List view* to *Graph view* using the view mode button in the upper right:
++
+image::graph-view.png[graph-view,link=self,window=blank]
+
+. You will the `people` deployment that we deployed earlier using the CLI:
 +
 image::peopledc.png[project,700, link=self,window=blank]
 
-. Select the circle to get details:
+. Click on the circle to access operational details:
 +
 image::container1.png[container,700, link=self,window=blank]
 
