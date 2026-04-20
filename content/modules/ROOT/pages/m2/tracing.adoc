@@ -142,13 +142,12 @@ This will add the necessary entries in your `pom.xml` to bring in the OpenTracin
 
 == Configure Quarkus
 
-Next, open the `application.properties` file (in the `src/main/resources` directory). Add the following lines to it to configure the OTLP gRPC Exporter in Quarkus:
+Next, open the `application.properties` file (in the `src/main/resources` directory). Add the following lines to it to configure Tempo to send spans via the OTLP gRPC Exporter in Quarkus:
 
 [source,none,role="copypaste"]
 ----
-%prod.quarkus.otel.exporter.otlp.traces.endpoint=http://otel-collector:4317 <1>
+%prod.quarkus.otel.exporter.otlp.traces.endpoint=http://otel-collector:4317
 ----
-<1> gRPC endpoint (Tempo collector service) to send spans.
 
 == Test it out
 
@@ -258,15 +257,15 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 
-@RegisterRestClient // <1>
-@Path("/api") // <2>
+@RegisterRestClient //// <1>
+@Path("/api") //// <2>
 public interface StarWarsService {
 
     @GET
-    @Path("/people/{id}") // <2>
-    @Produces("application/json") // <3>
-    @ClientHeaderParam(name="User-Agent", value="QuarkusLab") // <4>
-    StarWarsPerson getPerson(@PathParam("id") int id); // <5>
+    @Path("/people/{id}") //// <2>
+    @Produces("application/json") //// <3>
+    @ClientHeaderParam(name="User-Agent", value="QuarkusLab") //// <4>
+    StarWarsPerson getPerson(@PathParam("id") int id); //// <5>
 }
 ----
 <1> `@RegisterRestClient` allows Quarkus to know that this interface is meant to be available for CDI injection as a REST Client
@@ -322,15 +321,15 @@ We need to `@Inject` an instance of our new `StarWarsService` and call it. Open 
 ----
     @Inject
     @RestClient
-    StarWarsService swService; // <1>
+    StarWarsService swService; //// <1>
 
     @GET
     @Path("/swpeople")
     @Produces(MediaType.APPLICATION_JSON)
     public List<StarWarsPerson> getCharacters() {
-        return IntStream.range(1, 6) // <2>
-            .mapToObj(swService::getPerson)  // <3>
-            .collect(Collectors.toList());  // <4>
+        return IntStream.range(1, 6) //// <2>
+            .mapToObj(swService::getPerson)  //// <3>
+            .collect(Collectors.toList());  //// <4>
     }
 ----
 <1> Our injected service
