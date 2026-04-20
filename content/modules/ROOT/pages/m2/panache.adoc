@@ -576,7 +576,7 @@ Adding 1k entries will make startup time artificially high, around 1 second.
 {
   "draw": 1,
   "recordsTotal": 1003,
-  "recordsFiltered": 140, // <1>
+  "recordsFiltered": 140, //// <1>
   "data": [
     {
       "id": 1,

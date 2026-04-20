@@ -257,21 +257,21 @@ import org.eclipse.microprofile.jwt.Claims;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 @Path("/secured")
-@RequestScoped // <1>
+@RequestScoped //// <1>
 public class JWTResource {
 
     @Inject
-    JsonWebToken jwt;  // <2>
+    JsonWebToken jwt;  //// <2>
 
     @Inject
     @Claim(standard = Claims.iss)
-    Optional<JsonString> issuer; // <3>
+    Optional<JsonString> issuer; //// <3>
 
     @GET
     @Path("/me")
     @RolesAllowed("user")
     @Produces(MediaType.TEXT_PLAIN)
-    public String me(@Context SecurityContext ctx) {  // <4>
+    public String me(@Context SecurityContext ctx) {  //// <4>
         Principal caller = ctx.getUserPrincipal();
         String name = caller == null ? "anonymous" : caller.getName();
         boolean hasJWT = jwt != null;
@@ -282,14 +282,14 @@ public class JWTResource {
     @Path("/me/admin")
     @RolesAllowed("admin")
     @Produces(MediaType.TEXT_PLAIN)
-    public String meJwt(@Context SecurityContext ctx) {   // <4>
+    public String meJwt(@Context SecurityContext ctx) {   //// <4>
         Principal caller = ctx.getUserPrincipal();
         String name = caller == null ? "anonymous" : caller.getName();
         boolean hasJWT = jwt != null;
 
         final StringBuilder helloReply = new StringBuilder(String.format("hello %s, isSecure: %s, authScheme: %s, hasJWT: %s\n", name, ctx.isSecure(), ctx.getAuthenticationScheme(), hasJWT));
         if (hasJWT && (jwt.getClaimNames() != null)) {
-            helloReply.append("Injected issuer: [" + issuer.get() + "]\n"); // <5>
+            helloReply.append("Injected issuer: [" + issuer.get() + "]\n"); //// <5>
             jwt.getClaimNames().forEach(n -> {
                 helloReply.append("\nClaim Name: [" + n + "] Claim Value: [" + jwt.getClaim(n) + "]");
             });
@@ -553,15 +553,15 @@ import jakarta.ws.rs.core.MediaType;
 
 import io.quarkus.security.identity.SecurityIdentity;
 
-@Path("/secured") // <1>
+@Path("/secured") //// <1>
 public class KeycloakResource {
 
     @Inject
-    SecurityIdentity identity; // <2>
+    SecurityIdentity identity; //// <2>
 
 
     @GET
-    @Path("/confidential") // <1>
+    @Path("/confidential") //// <1>
     @Produces(MediaType.TEXT_PLAIN)
     public String confidential() {
         return ("confidential access for: " + identity.getPrincipal().getName() +
