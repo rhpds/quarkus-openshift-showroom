@@ -8,7 +8,7 @@ persist_url_state: true
 
 view_switcher:
   enabled: false
-  default_mode: split
+  default_mode: instructions
 
 tabs:
   # OCP Console
