@@ -87,4 +87,4 @@ NOTE: Note we are exercising our new bean using the `/hello/greeting/quarkus` en
 
 == Congratulations!
 
-It's a familiar CDI-based environment for you Enterprise Java developers out there, with powerful mechanisms to reload your code _as you type_ (or very close to realtime). In the next step, we'll create some tests for our app, which should also be familiar to _all_ developers.
+It's a familiar CDI-based environment for you Enterprise Java developers out there, with advanced mechanisms to reload your code _as you type_ (or very close to realtime). In the next step, we'll create some tests for our app, which should also be familiar to _all_ developers.

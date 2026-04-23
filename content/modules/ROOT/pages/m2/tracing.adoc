@@ -37,17 +37,18 @@ Tempo is installed and managed through its Kubernetes Operator (just like AMQ St
 
 Under **Ecosystem** in the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[sidebar menu^], click on **Installed Operators** and then select **TempoMonolithic**
 
-image::operators-list.png[operators,800]
+image::operators-list.png[operators,800, link=self,window=blank]
 
 Select the **Current namespace only** option before clicking on the **Create TempoMonolithic** button:
 
-image::jaegers-list.png[jaegers,800]
+image::jaegers-list.png[jaegers,800, link=self,window=blank]
 
 This will open a dialog for you to configure the Tempo service before it's installed.
 
 Change the input type to YAML, then paste in the following:
 
-```
+[source,yaml,role="copypaste",subs="attributes"]
+----
 apiVersion: tempo.grafana.com/v1alpha1
 kind: TempoMonolithic
 metadata:
@@ -61,17 +62,17 @@ spec:
     enabled: true
     route:
       enabled: true
-```
+----
 
 Click the *Create* button to deploy your new `TempoMonolithic` instance.
 
 This will create a new `TempoMonolithic` Kubernetes object in your namespace, triggering the Operator to deploy Tempo. In the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/{user}-quarkus[Topology View^] you'll see Tempo spin up:
 
-image::jaegerspin.png[spin, 600]
+image::jaegerspin.png[spin, 600, link=self,window=blank]
 
 Tempo exposes its data at different ports for different protocols. Most interactions involve the HTTP collector at `tempo-tempo:3200` but other protocols like gRPC are also supported on different ports. You can see them by clicking on the https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/{user}-quarkus/services/tempo-tempo[Service details^]:
 
-image::jaegersvcs.png[spin, 700]
+image::jaegersvcs.png[spin, 700, link=self,window=blank]
 
 Your app will use the otlp endpoints on ports `4317` and `4318` to interact with OpenTelemetry in the next section.
 
@@ -117,7 +118,7 @@ oc apply -f src/main/kubernetes/otel.yml
 
 Go back to the Topology view, you will see the otel-collector deployed.
 
-image::devconsole-otel.png[devconsole-otel,800]
+image::devconsole-otel.png[devconsole-otel,800, link=self,window=blank]
 
 == Add OpenTelemetry to Quarkus
 
@@ -177,7 +178,7 @@ You'll need to trigger some HTTP endpoints to generate traces. Access the https:
 
 Exercise the table a bit by paging through the entries and using various search terms to force several RESTful calls back to our app:
 
-image::paging.png[paging,600]
+image::paging.png[paging,600, link=self,window=blank]
 
 == Inspect traces
 
@@ -188,11 +189,11 @@ Open the https://tempo-tempo-jaegerui-{user}-quarkus.{openshift_cluster_ingress_
 
 Then, click **Allow Selected Permissions** to allow Tempo to access your account details. You'll end up on the Jaeger query page. Using the menu on the left, select the `people` Service, and click **Find Traces**. Jaeger will show the collected traces on the right:
 
-image::find1.png[tempo,600]
+image::find1.png[tempo,600, link=self,window=blank]
 
 Select one of the traces from "a few seconds ago" to show the individual _spans_ of each trace:
 
-image::trace1.png[tempo,600]
+image::trace1.png[tempo,600, link=self,window=blank]
 
 You can see that this trace (along with the others) shows the incoming HTTP GET operation to the `/datatable` endpoint we created earlier, along with the time it took, and other ancillary info about the request. Not terribly interesting as it's a single call, but you can imagine with a real world app and multiple microservices working together, that traces could reveal a lot of detail.
 
@@ -408,15 +409,15 @@ You should see:
 
 Reload the https://tempo-tempo-jaegarui-{user}-quarkus.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. Then, select `GET /person/swpeople` in the Operation and click **Find Traces**.
 
-image::swpeople-search.png[swpeople,800]
+image::swpeople-search.png[swpeople,800, link=self,window=blank]
 
 The new trace should appear the top with multiple spans. Select it to display details:
 
-image::swpeople.png[swpeople,800]
+image::swpeople.png[swpeople,800, link=self,window=blank]
 
 You can see that this trace (along with the others) shows multiple spans: the incoming HTTP GET operation to the `/swperson` endpoint we created earlier, and the external calls to the Star Wars API. Expand the traces to show the detail:
 
-image::swpeopleext.png[swpeopleext,800]
+image::swpeopleext.png[swpeopleext,800, link=self,window=blank]
 
 == Extra credit: Explicit method tracing
 

@@ -73,7 +73,7 @@ Compared to vanilla JAX-RS, with Quarkus there is no need to create an `Applicat
 
 == Running the Application in Quarkus Dev Mode for Live Coding
 
-**Live Coding** (also referred to as _Quarkus dev mode_) allows us to run the app and make changes on the fly. Quarkus will automatically re-compile and reload the app when changes are made. This is a powerful and efficient style of developing that you will use throughout the lab.
+**Live Coding** (also referred to as _Quarkus dev mode_) allows us to run the app and make changes on the fly. Quarkus will automatically re-compile and reload the app when changes are made. This is an efficient style of developing that you will use throughout the lab.
 
 . Before starting the dev mode, you need to *append* the following configuration to `application.properties` in the `src/main/resources` directory. This allows you to access the https://quarkus.io/guides/dev-ui[Dev UI^] from the cloud IDE since the Dev UI is designed for running your localhost.
 +

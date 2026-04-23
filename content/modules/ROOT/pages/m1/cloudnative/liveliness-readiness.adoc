@@ -16,7 +16,8 @@ curl http://localhost:8080/q/health/live
 +
 Output:
 +
-```
+[source,json]
+----
 {
     "status": "UP",
     "checks": [
@@ -34,7 +35,7 @@ Output:
         }
     ]
 }
-```
+----
 
 .. The following command displays only the *single Readiness Probe*. 
 +
@@ -45,7 +46,8 @@ curl http://localhost:8080/q/health/ready
 +
 Output:
 +
-```
+[source,json]
+----
 {
     "status": "UP",
     "checks": [
@@ -55,7 +57,7 @@ Output:
         }
     ]
 }
-```
+----
 
 . Go back to Dev UI and select `Health` in SmallRye Health extension:
 +

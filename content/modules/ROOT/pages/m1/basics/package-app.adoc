@@ -41,9 +41,10 @@ curl http://localhost:8081/hello
 
 . You should see:
 +
-```console
+[source,json]
+----
 Hola from Quarkus REST
-```
+----
 
 == Cleanup
 
