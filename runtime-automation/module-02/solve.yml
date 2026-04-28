@@ -1,0 +1,349 @@
+---
+- name: Solve Module 02 — Advanced Quarkus on OpenShift
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Read namespace from service account
+      ansible.builtin.slurp:
+        src: /var/run/secrets/kubernetes.io/serviceaccount/namespace
+      register: r_ns
+
+    - name: Set username and namespace facts
+      ansible.builtin.set_fact:
+        username: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}"
+        quarkus_namespace: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}-quarkus"
+
+    # -------------------------------------------------------------------
+    # Panache: PostgreSQL database
+    # -------------------------------------------------------------------
+    - name: Check if postgres-database Deployment already exists
+      kubernetes.core.k8s_info:
+        api_version: apps/v1
+        kind: Deployment
+        name: postgres-database
+        namespace: "{{ quarkus_namespace }}"
+      register: r_postgres_check
+
+    - name: Create postgres-database Secret
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: postgres-database
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: postgres-database
+          stringData:
+            database-name: "people"
+            database-password: "mysecretpassword"
+            database-user: "quarkus"
+      when: r_postgres_check.resources | length == 0
+
+    - name: Create postgres-database Deployment
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: postgres-database
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: postgres-database
+              app.openshift.io/runtime: postgresql
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: postgres-database
+            template:
+              metadata:
+                labels:
+                  app: postgres-database
+              spec:
+                containers:
+                  - name: postgres-database
+                    image: registry.redhat.io/rhel9/postgresql-16:latest
+                    ports:
+                      - containerPort: 5432
+                    env:
+                      - name: POSTGRESQL_USER
+                        valueFrom:
+                          secretKeyRef:
+                            name: postgres-database
+                            key: database-user
+                      - name: POSTGRESQL_PASSWORD
+                        valueFrom:
+                          secretKeyRef:
+                            name: postgres-database
+                            key: database-password
+                      - name: POSTGRESQL_DATABASE
+                        valueFrom:
+                          secretKeyRef:
+                            name: postgres-database
+                            key: database-name
+                    resources:
+                      requests:
+                        memory: 256Mi
+                        cpu: 100m
+                      limits:
+                        memory: 512Mi
+                        cpu: 500m
+      when: r_postgres_check.resources | length == 0
+
+    - name: Create postgres-database Service
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: postgres-database
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: postgres-database
+          spec:
+            selector:
+              app: postgres-database
+            ports:
+              - name: postgresql
+                port: 5432
+                targetPort: 5432
+            type: ClusterIP
+      when: r_postgres_check.resources | length == 0
+
+    # -------------------------------------------------------------------
+    # Monitoring: Prometheus
+    # -------------------------------------------------------------------
+    - name: Check if prometheus Deployment already exists
+      kubernetes.core.k8s_info:
+        api_version: apps/v1
+        kind: Deployment
+        name: prometheus
+        namespace: "{{ quarkus_namespace }}"
+      register: r_prometheus_check
+
+    - name: Create Prometheus ConfigMap
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: prom
+            namespace: "{{ quarkus_namespace }}"
+          data:
+            prometheus.yml: |
+              global:
+                scrape_interval: 10s
+              scrape_configs:
+                - job_name: prometheus
+                  static_configs:
+                    - targets:
+                        - localhost:9090
+                - job_name: people-app
+                  static_configs:
+                    - targets:
+                        - people:8080
+                  metrics_path: /q/metrics
+      when: r_prometheus_check.resources | length == 0
+
+    - name: Create Prometheus Deployment
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: prometheus
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: prometheus
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: prometheus
+            template:
+              metadata:
+                labels:
+                  app: prometheus
+              spec:
+                containers:
+                  - name: prometheus
+                    image: quay.io/prometheus/prometheus:latest
+                    ports:
+                      - containerPort: 9090
+                    args:
+                      - "--config.file=/etc/prometheus/prometheus.yml"
+                    volumeMounts:
+                      - name: prom-config
+                        mountPath: /etc/prometheus/prometheus.yml
+                        subPath: prometheus.yml
+                    resources:
+                      requests:
+                        memory: 256Mi
+                        cpu: 100m
+                      limits:
+                        memory: 512Mi
+                        cpu: 500m
+                volumes:
+                  - name: prom-config
+                    configMap:
+                      name: prom
+      when: r_prometheus_check.resources | length == 0
+
+    - name: Create Prometheus Service
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: prometheus
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: prometheus
+          spec:
+            selector:
+              app: prometheus
+            ports:
+              - name: web
+                port: 9090
+                targetPort: 9090
+            type: ClusterIP
+      when: r_prometheus_check.resources | length == 0
+
+    - name: Create Prometheus Route
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: route.openshift.io/v1
+          kind: Route
+          metadata:
+            name: prometheus
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: prometheus
+          spec:
+            to:
+              kind: Service
+              name: prometheus
+            port:
+              targetPort: web
+            tls:
+              termination: edge
+              insecureEdgeTerminationPolicy: Redirect
+      when: r_prometheus_check.resources | length == 0
+
+    # -------------------------------------------------------------------
+    # Monitoring: Grafana
+    # -------------------------------------------------------------------
+    - name: Check if grafana Deployment already exists
+      kubernetes.core.k8s_info:
+        api_version: apps/v1
+        kind: Deployment
+        name: grafana
+        namespace: "{{ quarkus_namespace }}"
+      register: r_grafana_check
+
+    - name: Create Grafana Deployment
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: grafana
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: grafana
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: grafana
+            template:
+              metadata:
+                labels:
+                  app: grafana
+              spec:
+                containers:
+                  - name: grafana
+                    image: quay.io/grafana/grafana:latest
+                    ports:
+                      - containerPort: 3000
+                    resources:
+                      requests:
+                        memory: 256Mi
+                        cpu: 100m
+                      limits:
+                        memory: 512Mi
+                        cpu: 500m
+      when: r_grafana_check.resources | length == 0
+
+    - name: Create Grafana Service
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: grafana
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: grafana
+          spec:
+            selector:
+              app: grafana
+            ports:
+              - name: web
+                port: 3000
+                targetPort: 3000
+            type: ClusterIP
+      when: r_grafana_check.resources | length == 0
+
+    - name: Create Grafana Route
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: route.openshift.io/v1
+          kind: Route
+          metadata:
+            name: grafana
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: grafana
+          spec:
+            to:
+              kind: Service
+              name: grafana
+            port:
+              targetPort: web
+            tls:
+              termination: edge
+              insecureEdgeTerminationPolicy: Redirect
+      when: r_grafana_check.resources | length == 0
+
+    - name: Show completion message
+      ansible.builtin.copy:
+        content: |
+          [INFO]
+          [OK] Module 02 solved
+
+          Created:
+          - Deployment postgres-database in {{ quarkus_namespace }}
+          - Deployment prometheus in {{ quarkus_namespace }}
+          - Route prometheus in {{ quarkus_namespace }}
+          - Deployment grafana in {{ quarkus_namespace }}
+          - Route grafana in {{ quarkus_namespace }}
+
+          Wait for pods to reach Running state, then click Validate.
+        dest: "{{ job_info_dir }}/validation_failure.out"
+        mode: '0644'
+      delegate_to: localhost
+      when: job_info_dir is defined

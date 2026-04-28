@@ -1,0 +1,70 @@
+---
+- name: Validate Module 02 — Advanced Quarkus on OpenShift
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Read namespace from service account
+      ansible.builtin.slurp:
+        src: /var/run/secrets/kubernetes.io/serviceaccount/namespace
+      register: r_ns
+
+    - name: Set username and namespace facts
+      ansible.builtin.set_fact:
+        username: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}"
+        quarkus_namespace: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}-quarkus"
+
+    - name: Get postgres-database Deployment
+      kubernetes.core.k8s_info:
+        api_version: apps/v1
+        kind: Deployment
+        name: postgres-database
+        namespace: "{{ quarkus_namespace }}"
+      register: r_postgres
+
+    - name: Get prometheus Deployment
+      kubernetes.core.k8s_info:
+        api_version: apps/v1
+        kind: Deployment
+        name: prometheus
+        namespace: "{{ quarkus_namespace }}"
+      register: r_prometheus
+
+    - name: Get grafana Deployment
+      kubernetes.core.k8s_info:
+        api_version: apps/v1
+        kind: Deployment
+        name: grafana
+        namespace: "{{ quarkus_namespace }}"
+      register: r_grafana
+
+    - name: Evaluate checks
+      ansible.builtin.set_fact:
+        postgres_running: >-
+          {{
+            r_postgres.resources | length > 0 and
+            (r_postgres.resources[0].status.readyReplicas | default(0)) > 0
+          }}
+        prometheus_running: >-
+          {{
+            r_prometheus.resources | length > 0 and
+            (r_prometheus.resources[0].status.readyReplicas | default(0)) > 0
+          }}
+        grafana_running: >-
+          {{
+            r_grafana.resources | length > 0 and
+            (r_grafana.resources[0].status.readyReplicas | default(0)) > 0
+          }}
+
+    - name: Validate all tasks
+      validation_check:
+        check: "{{ postgres_running and prometheus_running and grafana_running }}"
+        pass_msg: |
+          ✅ Deployment postgres-database is Running in {{ quarkus_namespace }}
+          ✅ Deployment prometheus is Running in {{ quarkus_namespace }}
+          ✅ Deployment grafana is Running in {{ quarkus_namespace }}
+        error_msg: |
+          {{ '✅' if postgres_running else '❌' }} Deployment postgres-database is Running in {{ quarkus_namespace }}
+          {{ '✅' if prometheus_running else '❌' }} Deployment prometheus is Running in {{ quarkus_namespace }}
+          {{ '✅' if grafana_running else '❌' }} Deployment grafana is Running in {{ quarkus_namespace }}

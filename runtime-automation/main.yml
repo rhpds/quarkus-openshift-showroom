@@ -1,0 +1,6 @@
+---
+# Entry point for FTL runtime automation discovery.
+# The FTL runner scans this file to locate module directories.
+modules:
+  - module-01
+  - module-02

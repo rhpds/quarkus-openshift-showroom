@@ -1,0 +1,52 @@
+---
+- name: Validate Module 01 — Deploy people app to OpenShift
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Read namespace from service account
+      ansible.builtin.slurp:
+        src: /var/run/secrets/kubernetes.io/serviceaccount/namespace
+      register: r_ns
+
+    - name: Set username and namespace facts
+      ansible.builtin.set_fact:
+        username: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}"
+        quarkus_namespace: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}-quarkus"
+
+    - name: Get people Deployment
+      kubernetes.core.k8s_info:
+        api_version: apps/v1
+        kind: Deployment
+        name: people
+        namespace: "{{ quarkus_namespace }}"
+      register: r_people_deploy
+
+    - name: Get people Route
+      kubernetes.core.k8s_info:
+        api_version: route.openshift.io/v1
+        kind: Route
+        name: people
+        namespace: "{{ quarkus_namespace }}"
+      register: r_people_route
+
+    - name: Evaluate checks
+      ansible.builtin.set_fact:
+        people_deployed: >-
+          {{
+            r_people_deploy.resources | length > 0 and
+            (r_people_deploy.resources[0].status.readyReplicas | default(0)) > 0
+          }}
+        people_route_exists: >-
+          {{ r_people_route.resources | length > 0 }}
+
+    - name: Validate all tasks
+      validation_check:
+        check: "{{ people_deployed and people_route_exists }}"
+        pass_msg: |
+          ✅ Deployment people is Running in {{ quarkus_namespace }}
+          ✅ Route people exists in {{ quarkus_namespace }}
+        error_msg: |
+          {{ '✅' if people_deployed else '❌' }} Deployment people is Running in {{ quarkus_namespace }}
+          {{ '✅' if people_route_exists else '❌' }} Route people exists in {{ quarkus_namespace }}

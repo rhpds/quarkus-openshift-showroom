@@ -31,3 +31,20 @@ tabs:
   # External page
   - name: Quarkus Community
     url: 'https://quarkus.io/'
+
+antora:
+  name: modules
+  dir: www
+  modules:
+  - name: module-01
+    label: "Module 1: Deploy people app to OpenShift"
+    solveButton: true
+    scripts:
+    - solve
+    - validation
+  - name: module-02
+    label: "Module 2: Advanced Quarkus (Panache, Monitoring)"
+    solveButton: true
+    scripts:
+    - solve
+    - validation

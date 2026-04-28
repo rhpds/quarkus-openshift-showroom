@@ -1,0 +1,6 @@
+---
+# validation_check is a module built into the ZT runner image at runtime.
+# It is not installable in CI, so exclude validation.yml files from ansible-lint.
+exclude_paths:
+  - module-01/validation.yml
+  - module-02/validation.yml

@@ -1,0 +1,138 @@
+---
+- name: Solve Module 01 — Deploy people app to OpenShift
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Read namespace from service account
+      ansible.builtin.slurp:
+        src: /var/run/secrets/kubernetes.io/serviceaccount/namespace
+      register: r_ns
+
+    - name: Set username and namespace facts
+      ansible.builtin.set_fact:
+        username: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}"
+        quarkus_namespace: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}-quarkus"
+
+    - name: Check if people Deployment already exists
+      kubernetes.core.k8s_info:
+        api_version: apps/v1
+        kind: Deployment
+        name: people
+        namespace: "{{ quarkus_namespace }}"
+      register: r_people_check
+
+    - name: Create people Deployment
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: people
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: people
+              app.kubernetes.io/name: people
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: people
+            template:
+              metadata:
+                labels:
+                  app: people
+              spec:
+                containers:
+                  - name: people
+                    image: quay.io/quarkus-workshop-m1m2/people:native
+                    imagePullPolicy: Always
+                    ports:
+                      - containerPort: 8080
+                        name: http
+                        protocol: TCP
+                    readinessProbe:
+                      httpGet:
+                        path: /q/health/ready
+                        port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 5
+                      failureThreshold: 20
+                    livenessProbe:
+                      httpGet:
+                        path: /q/health/live
+                        port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 5
+                      failureThreshold: 20
+                    resources:
+                      requests:
+                        memory: 256Mi
+                        cpu: 250m
+                      limits:
+                        memory: 512Mi
+                        cpu: "1"
+      when: r_people_check.resources | length == 0
+
+    - name: Create people Service
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: people
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: people
+          spec:
+            selector:
+              app: people
+            ports:
+              - name: http
+                port: 8080
+                targetPort: 8080
+                protocol: TCP
+            type: ClusterIP
+      when: r_people_check.resources | length == 0
+
+    - name: Create people Route
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: route.openshift.io/v1
+          kind: Route
+          metadata:
+            name: people
+            namespace: "{{ quarkus_namespace }}"
+            labels:
+              app: people
+          spec:
+            to:
+              kind: Service
+              name: people
+            port:
+              targetPort: http
+            tls:
+              termination: edge
+              insecureEdgeTerminationPolicy: Allow
+      when: r_people_check.resources | length == 0
+
+    - name: Show completion message
+      ansible.builtin.copy:
+        content: |
+          [INFO]
+          [OK] Module 01 solved
+
+          Created:
+          - Deployment people in {{ quarkus_namespace }}
+          - Service people in {{ quarkus_namespace }}
+          - Route people in {{ quarkus_namespace }}
+
+          Wait for the pod to reach Running state, then click Validate.
+        dest: "{{ job_info_dir }}/validation_failure.out"
+        mode: '0644'
+      delegate_to: localhost
+      when: job_info_dir is defined
