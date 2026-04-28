@@ -29,6 +29,7 @@
 *** xref:m1/cloudnative/config-options.adoc[Quarkus Configuration options]
 
 ** xref:m1/deploy.adoc[Deploy to OpenShift]
+** xref:module-01.adoc[✅ Module 1 Checkpoint]
 
 * xref:m2/advanced.adoc[Advanced Quarkus Development]
 ** xref:m2/extensions.adoc[Quarkus Extensions]
@@ -39,5 +40,6 @@
 ** xref:m2/monitoring.adoc[Monitoring Quarkus Apps using Micrometer]
 ** xref:m2/tracing.adoc[MicroProfile OpenTracing]
 ** xref:m2/security.adoc[Securing Quarkus APIs]
+** xref:module-02.adoc[✅ Module 2 Checkpoint]
 
 * xref:final/next-steps.adoc[Next steps]

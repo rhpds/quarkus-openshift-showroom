@@ -1,0 +1,18 @@
+= Module 1 Checkpoint: Deploy to OpenShift
+:navtitle: ✅ Module 1 Checkpoint
+
+== What you should have completed
+
+By this point in Module 1 you have:
+
+* Built the `people` application as a native binary using the Quarkus OpenShift extension
+* Deployed the `people` Deployment to your `{user}-quarkus` namespace
+* Verified a `Route` was created and the application is accessible
+
+== Validate your work
+
+Click *Validate* to confirm the `people` Deployment is Running and a Route exists in your namespace.
+
+If you haven't completed the deploy step yet, go back to xref:m1/deploy.adoc[Deploy to OpenShift] and follow the instructions.
+
+If you're stuck, click *Solve* to have the environment automatically configured for you so you can continue with Module 2.

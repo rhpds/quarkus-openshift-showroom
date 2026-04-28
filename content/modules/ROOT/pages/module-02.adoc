@@ -1,0 +1,21 @@
+= Module 2 Checkpoint: Advanced Quarkus
+:navtitle: ✅ Module 2 Checkpoint
+
+== What you should have completed
+
+By this point in Module 2 you have:
+
+* Deployed a PostgreSQL database (`postgres-database`) for use with Hibernate ORM + Panache
+* Deployed Prometheus to scrape metrics from your `people` application
+* Deployed Grafana to visualize those metrics
+
+== Validate your work
+
+Click *Validate* to confirm that `postgres-database`, `prometheus`, and `grafana` Deployments are Running in your namespace.
+
+If you haven't completed these steps yet, go back to:
+
+* xref:m2/panache.adoc[Hibernate ORM with Panache] for PostgreSQL setup
+* xref:m2/monitoring.adoc[Monitoring Quarkus Apps using Micrometer] for Prometheus and Grafana
+
+If you're stuck, click *Solve* to have the environment automatically configured for you.
