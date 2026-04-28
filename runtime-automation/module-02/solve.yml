@@ -15,11 +15,22 @@
         username: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}"
         quarkus_namespace: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}-quarkus"
 
+    - name: Authenticate to OpenShift as student user
+      kubernetes.core.k8s_auth:
+        host: "{{ openshift_api_url }}"
+        username: "{{ user }}"
+        password: "{{ password }}"
+        validate_certs: false
+      register: k8s_auth
+
     # -------------------------------------------------------------------
     # Panache: PostgreSQL database
     # -------------------------------------------------------------------
     - name: Check if postgres-database Deployment already exists
       kubernetes.core.k8s_info:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         api_version: apps/v1
         kind: Deployment
         name: postgres-database
@@ -28,6 +39,9 @@
 
     - name: Create postgres-database Secret
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: v1
@@ -45,6 +59,9 @@
 
     - name: Create postgres-database Deployment
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: apps/v1
@@ -67,7 +84,7 @@
               spec:
                 containers:
                   - name: postgres-database
-                    image: registry.redhat.io/rhel9/postgresql-16:latest
+                    image: quay.io/centos7/postgresql-12-centos7:latest
                     ports:
                       - containerPort: 5432
                     env:
@@ -97,6 +114,9 @@
 
     - name: Create postgres-database Service
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: v1
@@ -121,6 +141,9 @@
     # -------------------------------------------------------------------
     - name: Check if prometheus Deployment already exists
       kubernetes.core.k8s_info:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         api_version: apps/v1
         kind: Deployment
         name: prometheus
@@ -129,6 +152,9 @@
 
     - name: Create Prometheus ConfigMap
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: v1
@@ -154,6 +180,9 @@
 
     - name: Create Prometheus Deployment
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: apps/v1
@@ -199,6 +228,9 @@
 
     - name: Create Prometheus Service
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: v1
@@ -220,6 +252,9 @@
 
     - name: Create Prometheus Route
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: route.openshift.io/v1
@@ -245,6 +280,9 @@
     # -------------------------------------------------------------------
     - name: Check if grafana Deployment already exists
       kubernetes.core.k8s_info:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         api_version: apps/v1
         kind: Deployment
         name: grafana
@@ -253,6 +291,9 @@
 
     - name: Create Grafana Deployment
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: apps/v1
@@ -288,6 +329,9 @@
 
     - name: Create Grafana Service
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: v1
@@ -309,6 +353,9 @@
 
     - name: Create Grafana Route
       kubernetes.core.k8s:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         state: present
         definition:
           apiVersion: route.openshift.io/v1

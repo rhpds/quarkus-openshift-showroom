@@ -15,8 +15,19 @@
         username: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}"
         quarkus_namespace: "{{ r_ns.content | b64decode | trim | regex_replace('-showroom$', '') }}-quarkus"
 
+    - name: Authenticate to OpenShift as student user
+      kubernetes.core.k8s_auth:
+        host: "{{ openshift_api_url }}"
+        username: "{{ user }}"
+        password: "{{ password }}"
+        validate_certs: false
+      register: k8s_auth
+
     - name: Get people Deployment
       kubernetes.core.k8s_info:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         api_version: apps/v1
         kind: Deployment
         name: people
@@ -25,6 +36,9 @@
 
     - name: Get people Route
       kubernetes.core.k8s_info:
+        host: "{{ openshift_api_url }}"
+        api_key: "{{ k8s_auth.openshift_auth.api_key }}"
+        validate_certs: false
         api_version: route.openshift.io/v1
         kind: Route
         name: people
@@ -45,8 +59,8 @@
       validation_check:
         check: "{{ people_deployed and people_route_exists }}"
         pass_msg: |
-          ✅ Deployment people is Running in {{ quarkus_namespace }}
-          ✅ Route people exists in {{ quarkus_namespace }}
+          [OK] Deployment people is Running in {{ quarkus_namespace }}
+          [OK] Route people exists in {{ quarkus_namespace }}
         error_msg: |
-          {{ '✅' if people_deployed else '❌' }} Deployment people is Running in {{ quarkus_namespace }}
-          {{ '✅' if people_route_exists else '❌' }} Route people exists in {{ quarkus_namespace }}
+          {{ '[OK]' if people_deployed else '[FAIL]' }} Deployment people is Running in {{ quarkus_namespace }}
+          {{ '[OK]' if people_route_exists else '[FAIL]' }} Route people exists in {{ quarkus_namespace }}
