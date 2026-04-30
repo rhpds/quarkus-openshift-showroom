@@ -3,7 +3,7 @@
 == Quarkus Dev Mode - An Introduction
 
 
-Quarkus provides a dev mode which greatly aids during development by providing a number of features .n keeping with the mantra of providing developer joy. Some of the features include:
+Quarkus provides a dev mode which greatly aids during development by providing a number of features in keeping with the mantra of providing developer joy. Some of the features include:
 
 * Live coding: Code -> refresh browser -> repeat. Code changes are automatically reflected in the running application. 
 * Dev UI: visualize and configure extensions as well as access to application logs and testing components
@@ -20,7 +20,7 @@ Quarkus provides a dev mode which greatly aids during development by providing a
 %dev.quarkus.dev-ui.hosts={user}-quarkus-workshop-index-webpage.{openshift_cluster_ingress_domain}
 ----
 
-. Open a new terminal windown on the VS Code.
+. Open a new terminal window on the VS Code.
 +
 image::new-terminal.png[commands, 600, link=self,window=blank]
 
@@ -61,7 +61,7 @@ image::open-external.png[port, 700, link=self,window=blank]
 +
 image::welcome-quarkus.png[port, 900, link=self,window=blank]
 
-. Select `/hello` enpoint on the Quarkus welcome. You should see the following page:
+. Select `/hello` endpoint on the Quarkus welcome. You should see the following page:
 +
 image::crw-open-page-hello.png[page, 800, link=self,window=blank]
 

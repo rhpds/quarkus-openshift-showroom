@@ -22,7 +22,7 @@ image::login_with_openshift.png[login,800, link=self,window=blank]
 
 image::auth-access.png[auth-access, 800, link=self,window=blank]
 
-. The next page will display progess as devspaces is *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process.
+. The next page will display progress as devspaces is *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process.
 +
 image::starting-workspace.png[ds, 800, link=self,window=blank]
 +

@@ -6,7 +6,7 @@ This exercise shows how your Quarkus application can utilize https://opentelemet
 
 OpenTelemetry Metrics and Logging are not yet supported.
 
-* Quarkus now supports the OpenTelemetry Autoconfiguration for Traces. The configurations match what you can see at https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md[OpenTelemetry SDK Autoconfigure] with the `quarkus.*`` prefix.
+* Quarkus now supports the OpenTelemetry Autoconfiguration for Traces. The configurations match what you can see at https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md[OpenTelemetry SDK Autoconfigure] with the `quarkus.*` prefix.
 
 * Extensions and the libraries they provide, are directly instrumented in Quarkus. The use of the https://opentelemetry.io/docs/instrumentation/java/automatic/[OpenTelemetry Agent^] is not needed nor recommended due to context propagation issues between imperative and reactive libraries.
 
@@ -204,7 +204,7 @@ Service Mesh technologies like https://istio.io[Istio^] can provide even more tr
 
 == Tracing external calls
 
-This exercise showa how to use the https://github.com/eclipse/microprofile-rest-client[MicroProfile REST Client^] with Quarkus in order to trace _external_, outbound requests with very little effort.
+This exercise shows how to use the https://github.com/eclipse/microprofile-rest-client[MicroProfile REST Client^] with Quarkus in order to trace _external_, outbound requests with very little effort.
 
 We will use the publicly available https://swapi.info[Star Wars API^] to fetch some characters from the Star Wars universe. Our first order of business is to setup the model we will be using, in the form of a StarWarsPerson POJO.
 

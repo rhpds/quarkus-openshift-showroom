@@ -8,7 +8,7 @@ It is also possible to directly inject the URL into the test which can make it e
 . Let's write a simple test that shows this off to load some static resources. 
 . Create a new file names `test.html` file in *src/main/resources/META-INF/resources/*. 
 
-. Paste the folloing HTML code to the file:
+. Paste the following HTML code to the file:
 +
 [source,html,role="copypaste"]
 ----

@@ -40,7 +40,7 @@ scrape_configs:
     - targets: ['people:8080']
 ----
 <1> Configures Prometheus to scrape metrics from itself
-<2> COnfigures Prometheus to scrape metrics from Kubernetes service `people` on port `8080` with HTTP, at the default metrics endpoint of `/q/metrics`
+<2> Configures Prometheus to scrape metrics from Kubernetes service `people` on port `8080` with HTTP, at the default metrics endpoint of `/q/metrics`
 
 === Deploy Prometheus from Container Image
 

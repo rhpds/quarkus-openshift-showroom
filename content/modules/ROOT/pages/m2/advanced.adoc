@@ -84,7 +84,7 @@ Compared to vanilla JAX-RS, with Quarkus there is no need to create an `Applicat
 +
 NOTE: Note that the changes will be automatially saved in the IDE.
 
-. Open a new terminal windown on the VS Code.
+. Open a new terminal window on the VS Code.
 +
 image::new-terminal.png[commands, 600, link=self,window=blank]
 
@@ -124,7 +124,7 @@ image::open-external.png[port, 700, link=self,window=blank]
 +
 image::welcome-quarkus.png[port, 900, link=self,window=blank]
 
-. Select `/hello` enpoint on the Quarkus welcome. You should see the following page:
+. Select `/hello` endpoint on the Quarkus welcome. You should see the following page:
 +
 image::crw-open-page-hello.png[page, 800, link=self,window=blank]
 

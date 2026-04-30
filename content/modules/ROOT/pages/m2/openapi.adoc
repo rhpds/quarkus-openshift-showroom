@@ -110,7 +110,7 @@ Then, add `/q/swagger-ui` to the end of the URL to access the Swagger UI and pla
 
 image::swagger.png[swagger,700, link=self,window=blank]
 
-Using the UI, expand the `/person/birth/before/\{year\}` endpoint. Here you can basic detail about the endpoint: the name of the endpoint, parameters and their type, and the response type one can expect.
+Using the UI, expand the `/person/birth/before/\{year\}` endpoint. Here you can see basic detail about the endpoint: the name of the endpoint, parameters and their type, and the response type one can expect.
 
 image::swaggeryear.png[swaggeryear,900, link=self,window=blank]
 
