@@ -84,7 +84,7 @@
               spec:
                 containers:
                   - name: postgres-database
-                    image: quay.io/centos7/postgresql-12-centos7:latest
+                    image: quay.io/sclorg/postgresql-15-c9s:latest
                     ports:
                       - containerPort: 5432
                     env:
@@ -213,6 +213,8 @@
                       - name: prom-config
                         mountPath: /etc/prometheus/prometheus.yml
                         subPath: prometheus.yml
+                      - name: prom-data
+                        mountPath: /prometheus
                     resources:
                       requests:
                         memory: 256Mi
@@ -224,6 +226,8 @@
                   - name: prom-config
                     configMap:
                       name: prom
+                  - name: prom-data
+                    emptyDir: {}
       when: r_prometheus_check.resources | length == 0
 
     - name: Create Prometheus Service
@@ -315,7 +319,7 @@
               spec:
                 containers:
                   - name: grafana
-                    image: quay.io/grafana/grafana:latest
+                    image: quay.io/openshiftlabs/ccn-grafana:1.0
                     ports:
                       - containerPort: 3000
                     resources:
