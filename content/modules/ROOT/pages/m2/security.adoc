@@ -424,7 +424,7 @@ Access Tokens have a defined lifespan that's typically short (e.g. 5 minutes), s
 
 Obtain an Admin token:
 
-[source,sh,role="copypaste"]
+[source,sh,role="copypaste",subs="attributes"]
 ----
 export ADMIN_TOKEN=$(\
     curl -ks -X POST https://keycloak-{user}-quarkus.{openshift_cluster_ingress_domain}/realms/quarkus/protocol/openid-connect/token \
@@ -436,7 +436,7 @@ export ADMIN_TOKEN=$(\
 
 And try again with your new token:
 
-[source,sh,role="copypaste"]
+[source,sh,role="copypaste",subs="attributes"]
 ----
 curl -i https://$(oc get route people -o=go-template --template='{{ .spec.host }}')/secured/me/admin \
   -H "Authorization: Bearer $ADMIN_TOKEN"

@@ -407,7 +407,7 @@ You should see:
 
 == Inspect traces
 
-Reload the https://tempo-tempo-jaegarui-{user}-quarkus.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. Then, select `GET /person/swpeople` in the Operation and click **Find Traces**.
+Reload the https://tempo-tempo-jaegerui-{user}-quarkus.{openshift_cluster_ingress_domain}[Jaeger Query UI^]. Then, select `GET /person/swpeople` in the Operation and click **Find Traces**.
 
 image::swpeople-search.png[swpeople,800, link=self,window=blank]
 
