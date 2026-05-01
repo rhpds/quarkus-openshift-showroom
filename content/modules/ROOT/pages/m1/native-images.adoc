@@ -49,7 +49,7 @@ mvn package -Pnative -DskipTests
 
 [NOTE]
 ====
-Since we are on Linux in this environment, and the OS that will eventually run our application is also Linux, we can use our local OS to build the native Quarkus app. If you need to build native Linux binaries when on other OS's like Windows or Mac OS X, you can use `-Dquarkus.native.container-runtime=[podman | docker]`. You'll need either Docker or https://podman.io[Podman,target=_blank] installed depending on which runtime you want to use!
+Since we are on Linux in this environment, and the OS that will eventually run our application is also Linux, we can use our local OS to build the native Quarkus app. If you need to build native Linux binaries when on other OS's like Windows or Mac OS X, you can use `-Dquarkus.native.container-runtime=[podman | docker]`. You'll need either Docker or https://podman.io[Podman^] installed depending on which runtime you want to use!
 ====
 
 The output of the native build is a native Linux binary, which you can see using the readelf command. Run this in a Terminal:
