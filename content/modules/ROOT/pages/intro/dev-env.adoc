@@ -22,7 +22,7 @@ image::login_with_openshift.png[login,800, link=self,window=blank]
 
 image::auth-access.png[auth-access, 800, link=self,window=blank]
 
-. The next page will display progress as devspaces is *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process.
+. The next page will display progress as Dev Spaces is *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process.
 +
 image::starting-workspace.png[ds, 800, link=self,window=blank]
 +
@@ -44,13 +44,13 @@ image::ds-trust-popup.png[ds, 800, link=self,window=blank]
 
 == Explore the IDE
 
-This workshop's IDE is based on Eclipse Che (which is in turn based on MicroSoft VS Code editor).
+This workshop's IDE is based on Eclipse Che (which is in turn based on Microsoft VS Code editor).
 
 . Explore the icons on the left for navigating between project explorer, search, version control (e.g. Git), debugging, and other plugins.  You'll use these during the course of this workshop. Feel free to select them and see what they do:
 +
 image::ds-icons.png[cdw, 500, link=self,window=blank]
 +
-TIP:  If things get weird or your browser appears, you can simply reload the browser tab to refresh the view.
+TIP:  If things get weird or your browser appears unresponsive, you can simply reload the browser tab to refresh the view.
 
 
 . Many features of VS Code are accessed via *Command Palette*. You can see a few of the tutorials on the *Get Started* page (e.g. _Login/Provision OpenShift Cluster_, _Create Component from Devfile registries webview_, and others).
@@ -61,7 +61,7 @@ TIP: If you ever need to run commands that you don't see in a menu, you can pres
 
 == Next Steps
 
-You can now choose either the *Basic or Advanced* module to start learning about Quarkus development. 
+You can now choose either the *Basic* or *Advanced* module to start learning about Quarkus development.
 
 TIP: Keep this browser tab with the instructions open throughout the course of this workshop.
 

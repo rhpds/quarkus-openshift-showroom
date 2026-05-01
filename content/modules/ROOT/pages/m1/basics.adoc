@@ -20,7 +20,7 @@ After completing this module, you will be able to:
 
 == Explore the Project
 
-Let's take a look at the *Explorer* menu on the left hand of the IDE. Your Quarkus project was already imported when the workspace was created. 
+Let's take a look at the *Explorer* menu on the left-hand side of the IDE. Your Quarkus project was already imported when the workspace was created.
 
 . The project contains:
 

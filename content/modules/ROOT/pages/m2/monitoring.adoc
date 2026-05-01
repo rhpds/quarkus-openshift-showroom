@@ -424,6 +424,6 @@ Beautiful, and useful! You can add many more metrics to monitor and alert for Qu
 
 == Congratulations!
 
-This exercise demonstrates how your Quarkus application the https://quarkus.io/guides/micrometer[Micrometer Metrics^] specification through the Micrometer Registry Prometheus extension. You also consumed these metrics using a popular monitoring stack with Prometheus and Grafana.
+This exercise demonstrates how your Quarkus application can utilize the https://quarkus.io/guides/micrometer[Micrometer Metrics^] specification through the Micrometer Registry Prometheus extension. You also consumed these metrics using a popular monitoring stack with Prometheus and Grafana.
 
 There are many more possibilities for application metrics, and it's a useful way to not only gather metrics, but act on them through alerting and other features of the monitoring stack you may be using.

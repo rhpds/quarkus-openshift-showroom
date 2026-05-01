@@ -82,7 +82,7 @@ If you do not see red squigglies, or you can't make them disappear, try to close
 curl http://localhost:8080/hello/greeting/quarkus
 ----
 +
-NOTE: Note we are exercising our new bean using the `/hello/greeting/quarkus` endpoint, and you should see `hello quarkus`. In this case, the hostname is the hostname from the pod the app is running on within Kubernetes and will change later on.
+NOTE: We are exercising our new bean using the `/hello/greeting/quarkus` endpoint, and you should see `hello quarkus`. In this case, the hostname is the hostname from the pod the app is running on within Kubernetes and will change later on.
 
 
 == Congratulations!

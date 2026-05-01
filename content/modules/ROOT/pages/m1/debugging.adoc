@@ -23,7 +23,7 @@ Open up the `GreetingResource.java` class again, and add another RESTful endpoin
     }
 ----
 
-A a bug has been reported where the last letter is not working. To reproduce the bug, try to retrieve the last letter of the string `Foo` by running this in a Terminal (your app should still be running - if it is not, use _Start Live Coding_ again):
+A bug has been reported where the last letter is not working. To reproduce the bug, try to retrieve the last letter of the string `Foo` by running this in a Terminal (your app should still be running - if it is not, use _Start Live Coding_ again):
 
 [source,sh,role="copypaste"]
 ----
