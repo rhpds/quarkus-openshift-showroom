@@ -4,42 +4,6 @@
 
 With our app fully ready for its first cloud native deployment, let's package it up for deployment to our Kubernetes platform as a native image. We'll use some OpenShift tooling to accomplish this, as outlined in the https://quarkus.io/guides/kubernetes-guide[Quarkus - Deploying on Kubernetes Guide^].
 
-== Login to OpenShift
-
-Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. 
-
-. Execute the following command in the VS Code terminal:
-+
-[source,sh,role="copypaste",subs="attributes"]
-----
-oc login -u {user} -p {password} https://openshift.default.svc:443 && oc project {user}-quarkus
-----
-
-. You should see:
-+
-[source, none,subs="attributes"]
-----
-Login successful.
-
-You have access to the following projects and can switch between them with 'oc project <projectname>':
-
-  * {user}-quarkus
-    {user}-devspaces
-
-Using project "{user}-quarkus"
-----
-
-. Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
-+
-[WARNING]
-====
-The login session might timeout after long periods of inactivity. If this happens, you'll get messages like `Error from server (Forbidden): xxxxx is forbidden: User "system:anonymous" cannot xxxxx`. Simply login again!
-====
-
-https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/[Namespaces^] are a top level concept to help you organize your deployments and teams of developers. A namespace allows a community of users (or a user) to organize and manage their content in isolation from other communities. OpenShift _projects_ provide additional functionality for managing Kubernetes namespaces.
-
-For this scenario, a project has been created for you called `{user}-quarkus`. You will use this project to deploy your developed project in the next step.
-
 == Build and Deploy native image
 
 Quarkus offers the ability to automatically generate OpenShift resources based on sane default and user supplied configuration. The OpenShift extension is actually a wrapper extension that brings together the https://quarkus.io/guides/deploying-to-kubernetes[kubernetes^] and https://quarkus.io/guides/container-image#s2i[container-image-s2i^] extensions with defaults so that it's easier for the user to get started with Quarkus on OpenShift.
@@ -203,4 +167,4 @@ image::redeploy.png[logs,600, link=self,window=blank]
 
 This step covered the deployment of a native Quarkus application on OpenShift. However, there is much more, and the integration with these cloud native platforms (through health checks, configuration management, and monitoring) has been tailored to make Quarkus applications execution very smooth.
 
-This is the end of the *Quarkus Fundamentals Hands-On Lab*. You can now proceed to the  the *Advanced Quarkus Hands-On Module*.
+Congratulations! You have reached the conclusion of the *Quarkus Basics Lab*. If time allows, you may now proceed to the *Advanced Quarkus Module*.

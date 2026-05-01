@@ -84,10 +84,6 @@ Compared to vanilla JAX-RS, with Quarkus there is no need to create an `Applicat
 +
 NOTE: Note that the changes will be automatically saved in the IDE.
 
-. Open a new terminal window on the VS Code.
-+
-image::new-terminal.png[commands, 600, link=self,window=blank]
-
 . Run the following `mvn` (Maven) commands to run Quarkus dev mode in the terminal.
 +
 [source, shell,role="copypaste"]
@@ -161,33 +157,6 @@ Hello from Quarkus REST
 ====
 This will also listen for a debugger on port `5005`. If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line. If you don't want the debugger at all you can use `-Ddebug=false`. We'll use this later.
 ====
-
-=== Login to OpenShift
-
-Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. 
-
-. Execute the following command in the VS Code terminal:
-+
-[source,sh,role="copypaste",subs="attributes"]
-----
-oc login -u {user} -p {password} https://openshift.default.svc:443 && oc project {user}-quarkus
-----
-
-. You should see:
-+
-[source, none,subs="attributes"]
-----
-Login successful.
-
-You have access to the following projects and can switch between them with 'oc project <projectname>':
-
-  * {user}-quarkus
-    {user}-devspaces
-
-Using project "{user}-quarkus"
-----
-
-Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
 
 === Deploy app
 
