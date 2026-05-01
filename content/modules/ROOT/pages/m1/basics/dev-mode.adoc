@@ -20,10 +20,6 @@ Quarkus provides a dev mode which greatly aids during development by providing a
 %dev.quarkus.dev-ui.hosts={user}-quarkus-workshop-index-webpage.{openshift_cluster_ingress_domain}
 ----
 
-. Open a new terminal window on the VS Code.
-+
-image::new-terminal.png[commands, 600, link=self,window=blank]
-
 . Run the following `mvn` (Maven) commands to run Quarkus dev mode in the terminal.
 +
 [source, shell,role="copypaste"]
