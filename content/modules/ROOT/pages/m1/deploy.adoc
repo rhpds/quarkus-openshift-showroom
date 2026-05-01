@@ -119,7 +119,7 @@ image::topology.png[topology,link=self,window=blank]
 +
 image::graph-view.png[graph-view,link=self,window=blank]
 
-. You will the `people` deployment that we deployed earlier using the CLI:
+. You will see the `people` deployment that we deployed earlier using the CLI:
 +
 image::peopledc.png[project,700, link=self,window=blank]
 

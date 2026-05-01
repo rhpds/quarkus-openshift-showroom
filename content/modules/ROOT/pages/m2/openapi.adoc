@@ -106,7 +106,7 @@ Then, click on `Open`.
 
 image::weblink-open.png[swagger,700, link=self,window=blank]
 
-Then, add `/q/swagger-ui` to the end of the URL to access the Swagger UI and play with your API. Be sure to use *http* protocal to access the Swagger UI page.
+Then, add `/q/swagger-ui` to the end of the URL to access the Swagger UI and play with your API. Be sure to use *http* protocol to access the Swagger UI page.
 
 image::swagger.png[swagger,700, link=self,window=blank]
 
