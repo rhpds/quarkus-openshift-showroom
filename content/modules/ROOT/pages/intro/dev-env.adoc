@@ -9,7 +9,7 @@ span.next {
 </style>
 ++++
 
-You will use Visual Studio Code (VS Code) based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^]. **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
+This workshop uses Visual Studio Code (VS Code) based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^]. **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
 
 . https://devspaces.{openshift_cluster_ingress_domain}#https://github.com/learn-quarkus/redhat-quarkus-workshop-labs/tree/rh-summit-2026[Launch a new Red Hat OpenShift Dev Spaces instance^] then click the *Log in with OpenShift* button:
 +
@@ -22,7 +22,7 @@ image::login_with_openshift.png[login,800, link=self,window=blank]
 
 image::auth-access.png[auth-access, 800, link=self,window=blank]
 
-. The next page will display progress as devspaces is *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process.
+. The next page will display progress as devspaces is *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process. If the process takes substantially longer than 60 seconds to complete, click on the "Progress" tab before reloading the page.
 +
 image::starting-workspace.png[ds, 800, link=self,window=blank]
 +
@@ -52,12 +52,48 @@ image::ds-icons.png[cdw, 500, link=self,window=blank]
 +
 TIP:  If things get weird or your browser appears, you can simply reload the browser tab to refresh the view.
 
-
 . Many features of VS Code are accessed via *Command Palette*. You can see a few of the tutorials on the *Get Started* page (e.g. _Login/Provision OpenShift Cluster_, _Create Component from Devfile registries webview_, and others).
 
 +
 TIP: If you ever need to run commands that you don't see in a menu, you can press kbd:[F1] to open the command window, or the more traditional kbd:[Control+SHIFT+P] (or kbd:[Command+SHIFT+P] on macOS).
 
+== Terminal Access
+
+Open a new terminal window using the menu:
+
+image::new-terminal.png[commands, 600, link=self,window=blank]
+
+This workshop includes example code and commands which can be copied to your system clipboard using the clipboard icon in the top right corner.
+
+1. Validate your terminal environment by using the clipboard icon to copy the following command:
++
+[source,sh,role="copypaste"]
+----
+oc whoami
+----
+
+2. Then paste the command into your terminal window and press kbd:[Enter]. You will see your username ({user}) as the response:
++
+[source, none,subs="attributes"]
+----
+{user}
+----
+
+3. Ensure that the correct project has been selected by using the clipboard icon to copy the following command:
++
+[source,sh,role="copypaste",subs="attributes"]
+----
+oc project {user}-quarkus
+----
+
+4. Then paste the command into your terminal window and press kbd:[Enter]. The response should be: 
++
+[source, none,subs="attributes"]
+----
+Now using project "{user}-quarkus" on server "https://openshift.default.svc:443".
+----
+
+If everything went as expected in the above section, then you are ready to start building your application.  If not, you can try https://devspaces.{openshift_cluster_ingress_domain}/dashboard/[deleting your existing IDE workspace^] before starting this section over with a fresh IDE.
 
 == Next Steps
 
